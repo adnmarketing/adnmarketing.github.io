@@ -1,0 +1,1024 @@
+/* Carrusel de clientes */
+.customer-carousel {
+  width: 100%;
+  overflow: hidden;
+  padding: 1.8rem 0 1.3rem 0;
+  /* Reducido ligeramente para mantener proporción */
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 2.8rem;
+  /* Reducido para ajustar el espaciado con círculos más pequeños */
+  align-items: center;
+  will-change: transform;
+}
+
+.carousel-track img {
+  height: 160px;
+  /* Reducido de 216px para que sean más pequeños en escritorio */
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(0.2) brightness(0.95) drop-shadow(0 1px 4px rgba(0, 0, 0, 0.08));
+  opacity: 0.85;
+  transition: filter 0.15s ease-out, opacity 0.15s ease-out, transform 0.15s ease-out;
+  /* Transiciones más rápidas y suaves */
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  /* Optimizaciones de rendimiento */
+  will-change: transform, filter, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  /* Activar aceleración por hardware */
+}
+
+.carousel-track img:hover,
+.carousel-track img.js-forced-hover {
+  filter: none;
+  opacity: 1;
+  transform: scale(1.08) translateZ(0);
+  /* Mantener aceleración por hardware en hover */
+  background: #f5f5f5;
+}
+
+@media (max-width: 800px) {
+  .customer-carousel {
+    width: 100vw;
+    min-height: 90px;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding: 1.2rem 0 1rem 0;
+    box-sizing: border-box;
+  }
+
+  .carousel-track {
+    min-width: 600px;
+    width: max-content;
+    flex-wrap: nowrap;
+    overflow: visible;
+    gap: 1.2rem;
+  }
+
+  .carousel-track img {
+    height: 64px;
+    width: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    padding: 0.2rem 0.2rem;
+    /* Optimizaciones para móvil */
+    will-change: auto;
+    /* En móvil no necesitamos will-change siempre activo */
+    transform: translateZ(0);
+    /* Mantener aceleración por hardware */
+    transition: transform 0.1s ease-out;
+    /* Transición más rápida en móvil */
+  }
+
+  /* Responsive styles for the customer modal */
+  .customer-modal__content {
+    width: 90vw;
+    max-height: 90vh;
+    margin: 1rem;
+  }
+
+  .customer-modal__header {
+    padding: 2rem 1rem 1rem 1rem;
+  }
+
+  .customer-modal__body {
+    padding: 1rem;
+  }
+
+  .customer-modal__footer {
+    padding: 0.8rem 1rem;
+    flex-direction: row;
+    /* Cambio a row para mantener alineación horizontal */
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .customer-partners {
+    margin: 0;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .customer-partners h4 {
+    font-size: 0.9rem;
+  }
+
+  .partners-list {
+    gap: 0.4rem;
+  }
+
+  .customer-dates {
+    margin: 0;
+    width: auto;
+    justify-content: flex-end;
+    font-size: 0.85rem;
+  }
+
+  /* Ajustes para reels de Instagram en móvil */
+  .instagram-reels-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .instagram-embed-container {
+    height: 700px;
+    min-height: 650px;
+  }
+
+  .instagram-embed {
+    min-height: 700px;
+    height: 100%;
+  }
+}
+
+[data-theme="dark"] .carousel-track img {
+  background: #2a2a2a;
+}
+
+/* Estilos del modal de cliente */
+.customer-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.customer-modal[open],
+.customer-modal.show {
+  display: flex;
+  pointer-events: auto;
+}
+
+.customer-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+/* Ajustes para el modal con nuevo contenido */
+.customer-modal__content {
+  position: relative;
+  background: #ffffff;
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  padding: 0;
+  /* Quitamos el padding general para controlarlo por secciones */
+  overflow: hidden;
+  /* Evitar desbordamientos */
+  animation: modalIn 0.3s cubic-bezier(.4, 2, .6, 1) both;
+  max-width: 90vw;
+  width: 700px;
+  /* Aumentado para acomodar mejor el contenido */
+  max-height: 90vh;
+  /* Aumentado para acomodar más contenido */
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes modalIn {
+  from {
+    transform: translateY(40px) scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.customer-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+
+.customer-modal__close:hover {
+  color: #e00;
+}
+
+/* Header del modal */
+.customer-modal__header {
+  position: relative;
+  width: 100%;
+  padding: 2.2rem 1.5rem 1rem 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Cuerpo del modal */
+.customer-modal__body {
+  width: 100%;
+  padding: 1.5rem;
+  text-align: center;
+  flex: 1;
+  overflow-y: auto;
+  /* Scroll más suave */
+  scroll-behavior: smooth;
+  /* Barras de scroll personalizadas */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.customer-modal__body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.customer-modal__body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.customer-modal__body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.customer-modal__body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .customer-modal__body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .customer-modal__body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Footer del modal */
+.customer-modal__footer {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+  color: #666;
+}
+
+/* Indicador de presencia */
+.customer-presence {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.customer-presence.activo {
+  color: #1d9d38;
+  background-color: rgba(29, 157, 56, 0.1);
+  border-color: rgba(29, 157, 56, 0.3);
+}
+
+.customer-presence.inactivo {
+  color: #d32f2f;
+  background-color: rgba(211, 47, 47, 0.1);
+  border-color: rgba(211, 47, 47, 0.3);
+}
+
+.customer-presence.parcial {
+  color: #1976d2;
+  background-color: rgba(25, 118, 210, 0.1);
+  border-color: rgba(25, 118, 210, 0.3);
+}
+
+/* Fechas en el footer */
+.customer-dates {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+
+.customer-dates .date-range {
+  font-style: italic;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+}
+
+[data-theme="dark"] .customer-dates .date-range {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para la sección de marketing partners */
+.customer-partners {
+  margin-right: auto;
+  font-size: 0.9rem;
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.partners-logos-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 0;
+  justify-content: flex-start;
+  width: auto;
+}
+
+.partner-logo-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  vertical-align: middle;
+  height: 40px;
+}
+
+.partner-logo {
+  height: 36px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+/* Hacemos el logo de LiveLare2 un poco más grande */
+img[src*="livelare2.png"] {
+  height: 40px;
+  max-width: 130px;
+}
+
+/* Ajustamos el tamaño del logo ADN para que sea proporcionado */
+img[src*="just_logo"] {
+  height: 32px;
+  max-width: 110px;
+}
+
+/* Logo para modo claro (visible por defecto) */
+.partner-logo-light {
+  display: block;
+}
+
+/* Logo para modo oscuro (oculto por defecto) */
+.partner-logo-dark {
+  display: none;
+}
+
+/* Cuando estamos en modo oscuro */
+[data-theme="dark"] .partner-logo-light {
+  display: none;
+}
+
+[data-theme="dark"] .partner-logo-dark {
+  display: block;
+}
+
+.partner-plus {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0 0.5rem;
+  color: #666;
+  align-self: center;
+}
+
+[data-theme="dark"] .partner-plus {
+  color: #ddd;
+}
+
+/* Adaptaciones para modo oscuro */
+[data-theme="dark"] .customer-modal__content {
+  background-color: #212121;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .customer-modal__header,
+[data-theme="dark"] .customer-modal__footer {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .customer-modal__header h2 {
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .customer-modal__header p {
+  color: #ccc;
+}
+
+[data-theme="dark"] .customer-modal__body {
+  color: #ddd;
+}
+
+[data-theme="dark"] .customer-dates {
+  color: #aaa;
+}
+
+[data-theme="dark"] .customer-presence.activo {
+  background-color: rgba(29, 157, 56, 0.2);
+}
+
+[data-theme="dark"] .customer-presence.inactivo {
+  background-color: rgba(211, 47, 47, 0.2);
+}
+
+[data-theme="dark"] .customer-presence.parcial {
+  background-color: rgba(25, 118, 210, 0.2);
+}
+
+/* Instagram embed container and loading indicator */
+.instagram-reels-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.instagram-embed-container {
+  position: relative;
+  width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  /* Altura optimizada para mostrar el reel completo con controles */
+  height: 950px;
+  min-height: 900px;
+  /* Centrar el contenido */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.instagram-embed {
+  width: 100%;
+  /* Altura que permita ver todo el contenido incluyendo botones */
+  height: 100%;
+  min-height: 950px;
+  border: none;
+  display: block;
+  background: transparent;
+  /* Permitir scroll mínimo interno si es necesario */
+  overflow: auto;
+  /* Positioning para control completo */
+  position: relative;
+}
+
+.loading-indicator {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  color: #666;
+  font-size: 0.9rem;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #666;
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* No content placeholder */
+.no-content-placeholder {
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  text-align: center;
+  min-height: 200px;
+}
+
+.no-content-placeholder svg {
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.no-content-placeholder p {
+  margin: 0 0 0.5rem;
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+.no-content-placeholder span {
+  font-size: 0.85rem;
+}
+
+[data-theme="dark"] .loading-indicator {
+  background: #222;
+  color: #ccc;
+}
+
+[data-theme="dark"] .spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #ccc;
+}
+
+[data-theme="dark"] .no-content-placeholder {
+  color: #aaa;
+}
+
+/* Estilos para el badge 'Actual' en las fechas */
+.current-badge {
+  background-color: #1d9d38;
+  color: white;
+  font-style: normal;
+  font-weight: 500;
+  padding: 0.25rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  margin-left: 0.2rem;
+}
+
+[data-theme="dark"] .current-badge {
+  background-color: #2aae47;
+}
+
+/* Estilos para logos de partners en el modal */
+
+/* Media queries para los logos de partners */
+@media (max-width: 576px) {
+  .partner-logo {
+    height: 28px;
+    max-width: 90px;
+  }
+
+  /* Ajustar el logo de LiveLare2 en móvil */
+  img[src*="livelare2.png"] {
+    height: 32px;
+    max-width: 100px;
+  }
+
+  /* Ajustar el logo de ADN en móvil */
+  img[src*="just_logo"] {
+    height: 26px;
+    max-width: 85px;
+  }
+
+  .partner-plus {
+    font-size: 18px;
+    margin: 0 0.3rem;
+  }
+
+  .partners-logos-list {
+    gap: 0.5rem;
+  }
+
+  /* Mantener la alineación horizontal en móviles más grandes */
+  .customer-modal__footer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .customer-partners {
+    margin: 0;
+    width: auto;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .customer-dates {
+    margin: 0;
+    width: auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Ajustes para reels de Instagram en móvil */
+  .instagram-reels-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .instagram-embed-container {
+    height: 800px;
+    min-height: 750px;
+  }
+
+  .instagram-embed {
+    min-height: 800px;
+    height: 100%;
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .partner-logo {
+    height: 24px;
+    max-width: 70px;
+  }
+
+  /* Ajustar el logo de LiveLare2 en pantallas muy pequeñas */
+  img[src*="livelare2.png"] {
+    height: 26px;
+    max-width: 80px;
+  }
+
+  /* Ajustar el logo de ADN en pantallas muy pequeñas */
+  img[src*="just_logo"] {
+    height: 22px;
+    max-width: 65px;
+  }
+
+  .partner-plus {
+    font-size: 16px;
+    margin: 0 0.2rem;
+  }
+
+  .partners-logos-list {
+    gap: 0.3rem;
+  }
+
+  /* En pantallas muy pequeñas, volver a columna */
+  .customer-modal__footer {
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: stretch;
+  }
+
+  .customer-partners {
+    width: 100%;
+    margin: 0 0 0.3rem 0;
+    justify-content: center;
+  }
+
+  .partners-logos-list {
+    justify-content: center;
+  }
+
+  .customer-dates {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Estilos para las nuevas secciones de contenido */
+.content-section {
+  margin-bottom: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .content-section {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .section-header {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+}
+
+.section-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.section-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+[data-theme="dark"] .section-header h4 {
+  color: #e0e0e0;
+}
+
+.content-container {
+  padding: 1.5rem;
+}
+
+/* Estilos para el contenedor de Instagram (ya existe, mantener compatibilidad) */
+.instagram-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Estilos para TikTok embebido - Versión consolidada y optimizada */
+.tiktok-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  justify-items: center;
+}
+
+.tiktok-embed-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  /* Usar aspect ratio específico para TikTok (9:16) */
+  aspect-ratio: 9 / 16;
+  /* Altura mínima para evitar problemas */
+  min-height: 500px;
+  /* Centrar contenido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Eliminar cualquier espacio extra */
+  padding: 0;
+  margin: 0 auto;
+  /* Fondo negro para ocultar cualquier franja */
+  background: #000;
+  /* Bordes redondeados */
+  border-radius: 1rem;
+  /* Overflow hidden para evitar desbordamientos */
+  overflow: hidden;
+  /* Sombra para mejor presentación */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tiktok-embed-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  z-index: -1;
+  border-radius: 1rem;
+}
+
+/* Específico para el iframe de TikTok */
+.tiktok-embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 1rem;
+  background: #000;
+  /* Transformación para cubrir completamente */
+  transform: scale(1.05);
+  transform-origin: center;
+  /* Ocultar scrollbars */
+  overflow: hidden;
+  /* Transición suave */
+  transition: opacity 0.3s ease;
+  /* Eliminar cualquier padding o margin del iframe */
+  margin: 0;
+  padding: 0;
+}
+
+/* Asegurar que el contenido interno del iframe no tenga scroll */
+.tiktok-embed::-webkit-scrollbar {
+  display: none;
+}
+
+/* Asegurar que el loading indicator esté bien posicionado */
+.tiktok-embed-container .loading-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+}
+
+/* Estilos específicos para ocultar elementos innecesarios del embed */
+.tiktok-embed {
+  /* Ocultar cualquier elemento de UI innecesario */
+  filter: contrast(1.1) brightness(1.05);
+}
+
+[data-theme="dark"] .tiktok-embed-container {
+  background: #000;
+}
+
+/* Estilos para Google Maps embebido */
+.maps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.maps-embed-container {
+  position: relative;
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #f8f8f8;
+}
+
+.maps-embed {
+  width: 100%;
+  height: 300px;
+  border: none;
+  display: block;
+  background: transparent;
+}
+
+[data-theme="dark"] .maps-embed-container {
+  background: #1a1a1a;
+}
+
+.address-info {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+[data-theme="dark"] .address-info {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ccc;
+}
+
+.address-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+[data-theme="dark"] .address-info p {
+  color: #ccc;
+}
+
+/* Responsive para las nuevas secciones */
+@media (max-width: 800px) {
+  .content-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .section-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .content-container {
+    padding: 1rem;
+  }
+
+  .instagram-container,
+  .tiktok-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .tiktok-embed-container {
+    aspect-ratio: 9 / 16;
+    max-width: 100%;
+    min-height: 400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .tiktok-embed {
+    height: 100%;
+    width: 100%;
+    transform: scale(1.03);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .maps-embed {
+    height: 250px;
+  }
+
+  .section-logo {
+    width: 20px;
+    height: 20px;
+  }
+
+  .section-header h4 {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .tiktok-embed-container {
+    aspect-ratio: 9 / 16;
+    min-height: 350px;
+    border-radius: 0.75rem;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  .tiktok-embed {
+    height: 100%;
+    transform: scale(1.02);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0.75rem;
+  }
+
+  .maps-embed {
+    height: 200px;
+  }
+
+  .address-info {
+    padding: 0.75rem;
+  }
+}
+
+/* Responsive adicional para TikTok */
+@media (max-width: 400px) {
+  .tiktok-embed-container {
+    height: 380px;
+    min-height: 360px;
+    aspect-ratio: 9 / 16;
+  }
+
+  .tiktok-embed {
+    transform: scale(1.01);
+  }
+}
+
+/* Para pantallas muy anchas, limitar el tamaño máximo */
+@media (min-width: 1200px) {
+  .tiktok-container {
+    grid-template-columns: repeat(auto-fit, minmax(380px, 400px));
+    justify-content: center;
+  }
+
+  .tiktok-embed-container {
+    max-width: 400px;
+    height: 650px;
+    aspect-ratio: 9 / 16;
+  }
+}

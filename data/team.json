@@ -1,0 +1,177 @@
+{
+  "rubi": {
+    "FullName": "Rubí Urioste",
+    "Role": "CEO",
+    "Skills": [
+      "Pensamiento Estratégico y Estructura de Paquetes",
+      "Enfoque en Resultados",
+      "Dominio de Redes Sociales",
+      "Copywriting Emocional y Comercial",
+      "Storytelling para Branding",
+      "Liderazgo de Proyecto y Trabajo en Equipo",
+      "Comunicación con Clientes"
+    ],
+    "Quote": "\"Trabajamos con excelencia no para agradar a los hombres, sino porque servimos al Señor en todo lo que hacemos.\"",
+    "ImagePath": "assets/images/team/rubi/rubi-nobg.webp",
+    "Socials": {
+      "linkedin": null,
+      "instagram": "uriosterubi",
+      "twitter": null,
+      "facebook": null,
+      "github": null,
+      "behance": null,
+      "dribbble": null,
+      "vimeo": null,
+      "youtube": null
+    }
+  },
+  "jack": {
+    "FullName": "Jack Urioste",
+    "Role": "Fotógrafo",
+    "Skills": [
+      "Fotografía Profesional",
+      "Videografía y Producción Audiovisual",
+      "Edición de Video",
+      "Aparición en Cámara y Storytelling",
+      "Comunicación y Creatividad",
+      "Trabajo en Equipo y Producción Multidisciplinaria"
+    ],
+    "Quote": "\"Contar historias con luz, movimiento y emoción: eso es hacer marketing que conecta.\"",
+    "ImagePath": "assets/images/team/jack/jack-nobg.webp",
+    "Socials": {
+      "linkedin": null,
+      "instagram": "jackurioste20",
+      "twitter": null,
+      "facebook": null,
+      "github": null,
+      "behance": null,
+      "dribbble": null,
+      "vimeo": null,
+      "youtube": null
+    }
+  },
+  "alex": {
+    "FullName": "Alex Mansilla",
+    "Role": "Videógrafo",
+    "Skills": [
+      "Grabación Profesional de Video",
+      "Dirección de Producción",
+      "Edición y Postproducción",
+      "Producción de Video para Marketing Digital",
+      "Narrativa Visual y Storytelling",
+      "Trabajo en Equipo y Adaptabilidad"
+    ],
+    "Quote": "\"Cada toma tiene un propósito, cada corte una emoción: así se construye un video que vende.\"",
+    "ImagePath": "assets/images/team/alex/alex-nobg.webp",
+    "Socials": {
+      "linkedin": null,
+      "instagram": null,
+      "twitter": null,
+      "facebook": null,
+      "github": null,
+      "behance": null,
+      "dribbble": null,
+      "vimeo": null,
+      "youtube": null
+    }
+  },
+  "gabo": {
+    "FullName": "Gabriel Suárez",
+    "Role": "Diseñador Gráfico",
+    "Skills": [
+      "Diseño Gráfico Profesional",
+      "Diseño Web Visual y Funcional",
+      "Dirección de Arte y Esética Visual",
+      "Diseño Publicitario y Promocional",
+      "Diseño para Impresión y Empaques",
+      "Trabajo en Equipo y Comunicación Visual"
+    ],
+    "Quote": "\"Diseñar no es solo hacer que se vea bonito, es lograr que cada marca se quede en la mente.\"",
+    "ImagePath": "assets/images/team/gabo/gabo-nobg.webp",
+    "Socials": {
+      "linkedin": null,
+      "instagram": null,
+      "twitter": null,
+      "facebook": null,
+      "github": null,
+      "behance": null,
+      "dribbble": null,
+      "vimeo": null,
+      "youtube": null
+    }
+  },
+  "raul": {
+    "FullName": "Raúl Montes",
+    "Role": "Programador",
+    "Skills": [
+      "Automatizaciones y Sistemas",
+      "Soporte Técnico y Mantenimiento",
+      "Colaboración con el Equipo Creativo",
+      "Seguridad, copias de respaldo y control de errores",
+      "Implementación de análitica y seguimiento de tráfico web",
+      "Desarrollo Web Frontend"
+    ],
+    "Quote": "\"Donde tú ves una idea, yo veo un sistema listo para hacerla funcionar.\"",
+    "ImagePath": "assets/images/team/raul/raul-nobg.webp",
+    "Socials": {
+      "linkedin": null,
+      "instagram": "rule.means",
+      "twitter": null,
+      "facebook": null,
+      "github": "rulesion",
+      "behance": null,
+      "dribbble": null,
+      "vimeo": null,
+      "youtube": null
+    }
+  },
+  "jota": {
+    "FullName": "José Campo",
+    "Role": "Community Manager",
+    "Skills": [
+      "Gestión de Comunidad (Community Management)",
+      "Estrategia de Ventas Digitales",
+      "Prospección y Cierres",
+      "Gestión de Proyectos (Project Manager)",
+      "Ecommerce y Ventas en Línea",
+      "Gestión de Tráfico y Audiencias"
+    ],
+    "Quote": "\"Transformar seguidores en comunidad, y comunidad en clientes: esa es la verdadera estrategia.\"",
+    "ImagePath": "assets/images/team/jota/jota-nobg.webp",
+    "Socials": {
+      "linkedin": null,
+      "instagram": null,
+      "twitter": null,
+      "facebook": null,
+      "github": null,
+      "behance": null,
+      "dribbble": null,
+      "vimeo": null,
+      "youtube": null
+    }
+  },
+  "bryan": {
+    "FullName": "Brayan Zanjuampa",
+    "Role": "Tafficker",
+    "Skills": [
+      "Gestión avanzado de campañas publicitarias (Meta Ads & Google Ads).",
+      "Segmentación de audencias y embudos de conversión.",
+      "Copywriting publicitario y escritura estratégica de contenidos.",
+      "Automatización de herramientas de seguimiento.",
+      "Presentaciones comerciales y storytelling visual."
+    ],
+    "Quote": "\"La magia no está en gastar más, sino en mostrar el mensaje correcto , a la persona correcta, en el momento correcto.\"",
+    "ImagePath": "assets/images/team/bryan/bryan-nobg.webp",
+    "Socials": {
+      "linkedin": null,
+      "instagram": null,
+      "twitter": null,
+      "facebook": null,
+      "github": null,
+      "behance": null,
+      "dribbble": null,
+      "vimeo": null,
+      "youtube": null
+    }
+  }
+}

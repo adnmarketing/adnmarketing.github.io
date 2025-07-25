@@ -1,0 +1,142 @@
+/* Redes sociales - estilos y animaciones */
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 16px 0 0 0;
+  padding: 0;
+}
+
+.social-links li {
+  display: flex;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  cursor: pointer;
+}
+
+.social-links a:hover,
+.social-links a:focus {
+  transform: scale(1.12) rotate(-6deg);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  background: #f5f5f5;
+}
+
+.social-links img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: grayscale(0.2) brightness(0.95) drop-shadow(0 0 0 white);
+  transition: filter 0.2s, filter 0.2s linear;
+}
+
+.social-links a:hover img,
+.social-links a:focus img {
+  filter: none drop-shadow(0 0 0 var(--nav-text, #000));
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .social-links {
+    gap: 1.2rem;
+  }
+
+  .social-links a {
+    width: 44px;
+    height: 44px;
+  }
+
+  .social-links img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Tema oscuro */
+[data-theme="dark"] .social-links a {
+  background: #2a2a2a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+[data-theme="dark"] .social-links a:hover {
+  background: #3a3a3a;
+}
+
+[data-theme="dark"] .social-links img {
+  filter: brightness(0) invert(1) drop-shadow(0 0 0 white);
+}
+
+[data-theme="dark"] .social-links a:hover img,
+[data-theme="dark"] .social-links a:focus img {
+  filter: brightness(0) invert(1) drop-shadow(0 0 0 var(--text-body, #fff));
+}
+
+
+#Contactus h2 {
+  margin-bottom: 1.2rem;
+}
+
+#Contactus h3 {
+  color: #734726;
+  /* Café capuchino modo claro */
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+
+[data-theme="dark"] #Contactus h3 {
+  color: #ffe066;
+  /* Amarillo pastel modo oscuro */
+}
+
+#Contactus h3 a {
+  color: var(--nav-text);
+  /* Mantiene el color original del enlace */
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+#Contactus h3 a:hover {
+  color: #0077ff;
+}
+
+@media (max-width: 600px) {
+  #Contactus {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #Contactus h2 {
+    font-size: 1.3rem;
+  }
+
+  #Contactus p {
+    font-size: 0.98rem;
+  }
+}
+
+.social-title {
+  color: #7c4f2c;
+  /* Café capuchino para modo claro */
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+
+[data-theme="dark"] .social-title {
+  color: #ffe066;
+  /* Amarillo pastel para modo oscuro */
+}

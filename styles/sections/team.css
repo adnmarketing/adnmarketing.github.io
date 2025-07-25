@@ -1,0 +1,1338 @@
+/* Estilos para la sección de Equipo */
+/* Space Mono 700 */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap');
+
+.team-section {
+  position: relative;
+  padding: 2.5rem 1rem 4rem;
+  overflow: hidden;
+  background: var(--bg-section) !important;
+  /* Para asegurar que el canvas no se salga */
+}
+
+/* Canvas de fondo para la animación de ADN */
+.team-background-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Permitir interacciones con elementos debajo */
+  z-index: -1;
+  /* Suavizar la transición entre imágenes */
+  image-rendering: optimizeQuality;
+  /* Capa de filtro para mejorar el efecto visual */
+  filter: saturate(0.3) contrast(1.1);
+}
+
+/* Estilos para el efecto glitch */
+.glitch-wrap {
+  position: relative;
+  cursor: default;
+  display: inline-block;
+}
+
+.glitch {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 4rem;
+  display: inline-block;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+/* Pseudoelementos para el efecto glitch */
+.glitch:before,
+.glitch:after {
+  content: "EQUIPO";
+  position: absolute;
+  left: 2px;
+  z-index: -1;
+  visibility: hidden;
+}
+
+.glitch:before {
+  top: 0;
+  color: inherit;
+  /* Usar el mismo color que el texto principal */
+  opacity: 0.8;
+}
+
+.glitch:after {
+  bottom: 0;
+  color: inherit;
+  /* Usar el mismo color que el texto principal */
+  opacity: 0.8;
+}
+
+/* Animación solo cuando tiene la clase .glitching */
+.glitch.glitching {
+  animation: glitch 1s linear;
+}
+
+.glitch.glitching:before {
+  animation: glitchTop 1.2s linear;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  visibility: visible;
+}
+
+.glitch.glitching:after {
+  animation: glitchBotom 1.7s linear;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  visibility: visible;
+}
+
+/* Keyframes para la animación glitch principal */
+@keyframes glitch {
+
+  3%,
+  60% {
+    transform: skew(5deg);
+  }
+
+  62% {
+    transform: translate(-10px, 2px) skew(30deg);
+  }
+
+  64% {
+    transform: translate(6px, -1px) skew(-15deg);
+  }
+}
+
+/* Keyframes para la parte superior del glitch */
+@keyframes glitchTop {
+
+  1%,
+  60% {
+    transform: translate(-2px, 0);
+    visibility: visible;
+  }
+
+  64% {
+    transform: translate(-5px, 1px);
+    visibility: visible;
+  }
+
+  62% {
+    transform: translate(15px, -1px) skew(-13deg);
+    visibility: visible;
+  }
+}
+
+/* Keyframes para la parte inferior del glitch */
+@keyframes glitchBotom {
+
+  1%,
+  64% {
+    transform: translate(-2px, 0);
+    visibility: visible;
+  }
+
+  4%,
+  60% {
+    transform: translate(-2px, 0);
+    visibility: visible;
+  }
+
+  62% {
+    transform: translate(-22px, 5px) skew(21deg);
+    visibility: visible;
+  }
+}
+
+/* Galería de tarjetas del equipo */
+.team-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 2rem;
+  width: 85%;
+  max-width: 1000px;
+  margin: 2.5rem auto 0;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Diseño especial para la galería de 7 tarjetas en forma de rombo */
+.team-gallery-special {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  /* 6 columnas para mejor control */
+  grid-template-rows: auto auto auto;
+  gap: 0.075rem 0.075rem;
+  /* Espacio horizontal aún más pequeño */
+  row-gap: 1rem;
+  /* Espacio entre filas reducido a la mitad */
+  justify-content: center;
+  width: 85%;
+  /* Reducir ancho para minimizar espacio lateral */
+  max-width: 1000px;
+  /* Reducir max-width para compactar más */
+  margin: 2.5rem auto 0;
+  padding: 0;
+}
+
+/* Primera fila: 2 tarjetas centradas */
+.team-gallery-special .team-card:nth-child(1) {
+  grid-column: 2 / 4;
+  /* Columnas 2-3 */
+  grid-row: 1;
+}
+
+.team-gallery-special .team-card:nth-child(2) {
+  grid-column: 4 / 6;
+  /* Columnas 4-5 */
+  grid-row: 1;
+}
+
+/* Segunda fila: 3 tarjetas en forma de rombo */
+.team-gallery-special .team-card:nth-child(3) {
+  grid-column: 1 / 3;
+  /* Izquierda */
+  grid-row: 2;
+}
+
+.team-gallery-special .team-card:nth-child(4) {
+  grid-column: 3 / 5;
+  /* Centro */
+  grid-row: 2;
+}
+
+.team-gallery-special .team-card:nth-child(5) {
+  grid-column: 5 / 7;
+  /* Derecha */
+  grid-row: 2;
+}
+
+/* Tercera fila: 2 tarjetas que completan el rombo */
+.team-gallery-special .team-card:nth-child(6) {
+  grid-column: 2 / 4;
+  /* Centrada izquierda */
+  grid-row: 3;
+}
+
+.team-gallery-special .team-card:nth-child(7) {
+  grid-column: 4 / 6;
+  /* Centrada derecha */
+  grid-row: 3;
+}
+
+/* Ajustes adicionales para el efecto rombo */
+.team-gallery-special .team-card {
+  transition: transform 0.3s ease;
+}
+
+/* Efecto hover mejorado para el diseño en rombo */
+.team-gallery-special .team-card:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+/* Ajustes para desktop - diseño en rombo */
+@media (min-width: 993px) {
+  .team-gallery-special {
+    width: 85%;
+    max-width: 1000px;
+    gap: 0.075rem;
+    /* Espacio horizontal aún más pequeño */
+    row-gap: 1rem;
+    /* Espacio entre filas reducido a la mitad */
+  }
+
+  .team-gallery-special .team-card {
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Mejorar el efecto hover en el diseño rombo */
+  .team-gallery-special .team-card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* Ajustar el diseño para dispositivos no-desktop */
+@media (max-width: 992px) {
+  .team-gallery-special {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "card1 card2 card3"
+      "card4 card5 card6"
+      "card7 . .";
+    width: 100%;
+    gap: 0.6rem;
+    padding: 0 1rem;
+  }
+
+  /* Resetear posicionamiento en tablets */
+  .team-gallery-special .team-card {
+    grid-column: auto;
+    grid-row: auto;
+    margin-top: 0;
+    z-index: auto;
+  }
+
+  .team-gallery-special .team-card:nth-child(1) {
+    grid-area: card1;
+  }
+
+  .team-gallery-special .team-card:nth-child(2) {
+    grid-area: card2;
+  }
+
+  .team-gallery-special .team-card:nth-child(3) {
+    grid-area: card3;
+  }
+
+  .team-gallery-special .team-card:nth-child(4) {
+    grid-area: card4;
+  }
+
+  .team-gallery-special .team-card:nth-child(5) {
+    grid-area: card5;
+  }
+
+  .team-gallery-special .team-card:nth-child(6) {
+    grid-area: card6;
+  }
+
+  .team-gallery-special .team-card:nth-child(7) {
+    grid-area: card7;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-gallery-special {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "card1 card2"
+      "card3 card4"
+      "card5 card6"
+      "card7 .";
+    width: 90%;
+    gap: 1rem;
+  }
+
+  /* Mantener reset en móviles */
+  .team-gallery-special .team-card {
+    margin-top: 0;
+    z-index: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .team-gallery-special {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "card1"
+      "card2"
+      "card3"
+      "card4"
+      "card5"
+      "card6"
+      "card7";
+    width: 90%;
+    max-width: 350px;
+    gap: 1.2rem;
+    margin: 1.5rem auto 0;
+  }
+
+  /* Reset completo en móvil */
+  .team-gallery-special .team-card {
+    grid-column: auto;
+    grid-row: auto;
+    margin-top: 0;
+    z-index: auto;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.team-section {
+  /* Sin fondo específico para adaptarse al tema */
+  position: relative;
+}
+
+.team-section p {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Adaptación para modo oscuro */
+[data-theme="light"] .glitch {
+  color: #222222;
+}
+
+[data-theme="dark"] .glitch {
+  color: #ffffff;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .glitch {
+    font-size: 3rem;
+  }
+
+  .team-container {
+    padding: 1.5rem;
+  }
+
+  .team-section {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* Mejoras para el efecto de relieve del fondo */
+[data-theme="light"] .team-background-canvas {
+  filter: saturate(0.3) contrast(1.1) brightness(1.05);
+  opacity: 0.9;
+  background-color: rgba(245, 245, 245, 0.03);
+  /* Fondo sutil usando la nueva paleta clara */
+}
+
+[data-theme="dark"] .team-background-canvas {
+  filter: saturate(0.2) contrast(1.2) brightness(1.1);
+  opacity: 0.95;
+  background-color: rgba(33, 33, 33, 0.02);
+  /* Fondo sutil usando la nueva paleta */
+}
+
+/* Estilos para las tarjetas del equipo */
+.team-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  aspect-ratio: 3/4;
+  width: 100%;
+  /* Usar todo el ancho disponible del contenedor */
+  max-width: 290px;
+  /* Aumentado un poco más para mejor visualización */
+  margin: 0;
+  /* Eliminar cualquier margen automático */
+  cursor: pointer;
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease;
+  transform-origin: center;
+  will-change: transform;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s ease, background-color 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.team-card:hover {
+  transform: translateY(-5px) scale(1.08);
+  box-shadow: 0 15px 28px rgba(0, 0, 0, 0.3), 0 5px 10px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+  backdrop-filter: blur(0);
+}
+
+.team-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  isolation: isolate;
+  /* Para el efecto glitch */
+}
+
+.team-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    filter 0.6s ease,
+    -webkit-filter 0.6s ease,
+    transform 0.5s ease;
+  filter: grayscale(100%) brightness(0.9) contrast(1.1);
+  -webkit-filter: grayscale(100%) brightness(0.9) contrast(1.1);
+  transform: scale(1.05);
+  /* Ligero zoom para compensar el blur en bordes */
+  will-change: filter, transform;
+}
+
+.team-card:hover img {
+  filter: grayscale(0%) blur(0) brightness(1) contrast(1);
+  -webkit-filter: grayscale(0%) blur(0) brightness(1) contrast(1);
+  transform: scale(1);
+}
+
+/* Animación de entrada para las tarjetas */
+.team-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Imagen con efecto de carga suave */
+.team-card img.loaded {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.7;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Eliminado efecto de brillo al pasar el mouse */
+
+/* Adaptaciones específicas para cada tema */
+[data-theme="light"] .team-card {
+  background-color: rgba(245, 245, 245, 0.35);
+  border: 1px solid rgba(224, 224, 224, 0.5);
+}
+
+[data-theme="dark"] .team-card {
+  background-color: rgba(42, 42, 42, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Efecto hover según tema */
+[data-theme="light"] .team-card:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .team-card:hover {
+  background-color: rgba(58, 58, 58, 0.7);
+}
+
+/* Responsividad para la galería de equipo */
+@media (max-width: 992px) {
+  .team-gallery {
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+    gap: 1.5rem;
+    width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-gallery {
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    gap: 1.5rem;
+    width: 90%;
+  }
+}
+
+@media (max-width: 576px) {
+  .team-gallery {
+    grid-template-columns: 1fr;
+    /* Una columna para móviles */
+    max-width: 350px;
+    gap: 1.2rem;
+    margin: 1.5rem auto 0;
+  }
+}
+
+/* Estilos para las imágenes usando picture elements */
+.team-card[data-member] .team-card-inner {
+  background: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: filter 0.5s ease;
+  filter: grayscale(100%) brightness(0.9);
+}
+
+.team-card[data-member] .team-card-inner picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.team-card[data-member] .team-card-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: grayscale(100%) brightness(0.9) contrast(1.1) saturate(0.8);
+  -webkit-filter: grayscale(100%) brightness(0.9) contrast(1.1) saturate(0.8);
+  transition: filter 0.6s ease-in-out, -webkit-filter 0.6s ease-in-out, transform 0.5s ease;
+  will-change: filter, transform;
+}
+
+/* Estados del efecto glitch de imagen para todos los miembros */
+.team-card[data-member].image-glitch-1 .team-card-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.9;
+  animation: glitch-flicker-1 0.2s linear;
+}
+
+.team-card[data-member].image-glitch-2 .team-card-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.9;
+  animation: glitch-flicker-2 0.2s linear;
+}
+
+.team-card[data-member].image-glitch-3 .team-card-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.9;
+  animation: glitch-flicker-3 0.2s linear;
+}
+
+/* Animaciones de glitch para cada estado */
+@keyframes glitch-flicker-1 {
+  0% {
+    opacity: 0;
+    transform: translateX(0px);
+  }
+
+  10% {
+    opacity: 0.9;
+    transform: translateX(-2px);
+  }
+
+  20% {
+    opacity: 0.7;
+    transform: translateX(2px);
+  }
+
+  30% {
+    opacity: 0.9;
+    transform: translateX(-1px);
+  }
+
+  40% {
+    opacity: 0.8;
+    transform: translateX(1px);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: translateX(-2px);
+  }
+
+  60% {
+    opacity: 0.7;
+    transform: translateX(2px);
+  }
+
+  70% {
+    opacity: 0.9;
+    transform: translateX(-1px);
+  }
+
+  80% {
+    opacity: 0.8;
+    transform: translateX(1px);
+  }
+
+  90% {
+    opacity: 0.9;
+    transform: translateX(-2px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes glitch-flicker-2 {
+  0% {
+    opacity: 0;
+    transform: translateX(0px) skew(0deg);
+  }
+
+  15% {
+    opacity: 0.8;
+    transform: translateX(-3px) skew(2deg);
+  }
+
+  30% {
+    opacity: 0.9;
+    transform: translateX(3px) skew(-1deg);
+  }
+
+  45% {
+    opacity: 0.7;
+    transform: translateX(-2px) skew(1deg);
+  }
+
+  60% {
+    opacity: 0.9;
+    transform: translateX(2px) skew(-2deg);
+  }
+
+  75% {
+    opacity: 0.8;
+    transform: translateX(-3px) skew(1deg);
+  }
+
+  90% {
+    opacity: 0.9;
+    transform: translateX(3px) skew(-1deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(0px) skew(0deg);
+  }
+}
+
+@keyframes glitch-flicker-3 {
+  0% {
+    opacity: 0;
+    transform: translateY(0px) scale(1);
+  }
+
+  12% {
+    opacity: 0.9;
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  24% {
+    opacity: 0.7;
+    transform: translateY(1px) scale(0.99);
+  }
+
+  36% {
+    opacity: 0.8;
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  48% {
+    opacity: 0.9;
+    transform: translateY(2px) scale(0.98);
+  }
+
+  60% {
+    opacity: 0.7;
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  72% {
+    opacity: 0.9;
+    transform: translateY(1px) scale(0.99);
+  }
+
+  84% {
+    opacity: 0.8;
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  96% {
+    opacity: 0.9;
+    transform: translateY(2px) scale(0.98);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+/* Definir las imágenes glitch específicas con formatos modernos */
+.team-card[data-member="rubi"].image-glitch-1 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/rubi/adn-rubi-glitch-1.avif'),
+    url('../../assets/images/team/rubi/adn-rubi-glitch-1.webp'),
+    url('../../assets/images/team/rubi/adn-rubi-glitch-1.png');
+}
+
+.team-card[data-member="rubi"].image-glitch-2 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/rubi/adn-rubi-glitch-2.avif'),
+    url('../../assets/images/team/rubi/adn-rubi-glitch-2.webp'),
+    url('../../assets/images/team/rubi/adn-rubi-glitch-2.png');
+}
+
+.team-card[data-member="rubi"].image-glitch-3 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/rubi/adn-rubi-glitch-3.avif'),
+    url('../../assets/images/team/rubi/adn-rubi-glitch-3.webp'),
+    url('../../assets/images/team/rubi/adn-rubi-glitch-3.png');
+}
+
+.team-card[data-member="alex"].image-glitch-1 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/alex/adn-alex-glitch-1.avif'),
+    url('../../assets/images/team/alex/adn-alex-glitch-1.webp'),
+    url('../../assets/images/team/alex/adn-alex-glitch-1.png');
+}
+
+.team-card[data-member="alex"].image-glitch-2 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/alex/adn-alex-glitch-2.avif'),
+    url('../../assets/images/team/alex/adn-alex-glitch-2.webp'),
+    url('../../assets/images/team/alex/adn-alex-glitch-2.png');
+}
+
+.team-card[data-member="alex"].image-glitch-3 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/alex/adn-alex-glitch-3.avif'),
+    url('../../assets/images/team/alex/adn-alex-glitch-3.webp'),
+    url('../../assets/images/team/alex/adn-alex-glitch-3.png');
+}
+
+.team-card[data-member="bryan"].image-glitch-1 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/bryan/adn-bryan-glitch-1.avif'),
+    url('../../assets/images/team/bryan/adn-bryan-glitch-1.webp'),
+    url('../../assets/images/team/bryan/adn-bryan-glitch-1.png');
+}
+
+.team-card[data-member="bryan"].image-glitch-2 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/bryan/adn-bryan-glitch-2.avif'),
+    url('../../assets/images/team/bryan/adn-bryan-glitch-2.webp'),
+    url('../../assets/images/team/bryan/adn-bryan-glitch-2.png');
+}
+
+.team-card[data-member="bryan"].image-glitch-3 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/bryan/adn-bryan-glitch-3.avif'),
+    url('../../assets/images/team/bryan/adn-bryan-glitch-3.webp'),
+    url('../../assets/images/team/bryan/adn-bryan-glitch-3.png');
+}
+
+.team-card[data-member="gabo"].image-glitch-1 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/gabo/adn-gabo-glitch-1.avif'),
+    url('../../assets/images/team/gabo/adn-gabo-glitch-1.webp'),
+    url('../../assets/images/team/gabo/adn-gabo-glitch-1.png');
+}
+
+.team-card[data-member="gabo"].image-glitch-2 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/gabo/adn-gabo-glitch-2.avif'),
+    url('../../assets/images/team/gabo/adn-gabo-glitch-2.webp'),
+    url('../../assets/images/team/gabo/adn-gabo-glitch-2.png');
+}
+
+.team-card[data-member="gabo"].image-glitch-3 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/gabo/adn-gabo-glitch-3.avif'),
+    url('../../assets/images/team/gabo/adn-gabo-glitch-3.webp'),
+    url('../../assets/images/team/gabo/adn-gabo-glitch-3.png');
+}
+
+.team-card[data-member="jack"].image-glitch-1 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/jack/adn-jack-glitch-1.avif'),
+    url('../../assets/images/team/jack/adn-jack-glitch-1.webp'),
+    url('../../assets/images/team/jack/adn-jack-glitch-1.png');
+}
+
+.team-card[data-member="jack"].image-glitch-2 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/jack/adn-jack-glitch-2.avif'),
+    url('../../assets/images/team/jack/adn-jack-glitch-2.webp'),
+    url('../../assets/images/team/jack/adn-jack-glitch-2.png');
+}
+
+.team-card[data-member="jack"].image-glitch-3 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/jack/adn-jack-glitch-3.avif'),
+    url('../../assets/images/team/jack/adn-jack-glitch-3.webp'),
+    url('../../assets/images/team/jack/adn-jack-glitch-3.png');
+}
+
+.team-card[data-member="jota"].image-glitch-1 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/jota/adn-jota-glitch-1.avif'),
+    url('../../assets/images/team/jota/adn-jota-glitch-1.webp'),
+    url('../../assets/images/team/jota/adn-jota-glitch-1.png');
+}
+
+.team-card[data-member="jota"].image-glitch-2 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/jota/adn-jota-glitch-2.avif'),
+    url('../../assets/images/team/jota/adn-jota-glitch-2.webp'),
+    url('../../assets/images/team/jota/adn-jota-glitch-2.png');
+}
+
+.team-card[data-member="jota"].image-glitch-3 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/jota/adn-jota-glitch-3.avif'),
+    url('../../assets/images/team/jota/adn-jota-glitch-3.webp'),
+    url('../../assets/images/team/jota/adn-jota-glitch-3.png');
+}
+
+.team-card[data-member="raul"].image-glitch-1 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/raul/adn-raul-glitch-1.avif'),
+    url('../../assets/images/team/raul/adn-raul-glitch-1.webp'),
+    url('../../assets/images/team/raul/adn-raul-glitch-1.png');
+}
+
+.team-card[data-member="raul"].image-glitch-2 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/raul/adn-raul-glitch-2.avif'),
+    url('../../assets/images/team/raul/adn-raul-glitch-2.webp'),
+    url('../../assets/images/team/raul/adn-raul-glitch-2.png');
+}
+
+.team-card[data-member="raul"].image-glitch-3 .team-card-inner::before {
+  background-image:
+    url('../../assets/images/team/raul/adn-raul-glitch-3.avif'),
+    url('../../assets/images/team/raul/adn-raul-glitch-3.webp'),
+    url('../../assets/images/team/raul/adn-raul-glitch-3.png');
+}
+
+/* Remover filtro en hover para todos los miembros con transición mejorada */
+.team-card[data-member]:hover .team-card-inner {
+  filter: grayscale(0%) brightness(1);
+}
+
+.team-card[data-member]:hover .team-card-inner img {
+  filter: grayscale(0%) brightness(1) contrast(1.05) saturate(1.2);
+  -webkit-filter: grayscale(0%) brightness(1) contrast(1.05) saturate(1.2);
+  transform: scale(1.02);
+}
+
+/* Overlay para mostrar nombre y rol en la esquina inferior derecha */
+.team-member-overlay {
+  position: fixed;
+  /* Fixed para evitar recálculos y bugs de posición */
+  bottom: 1.5rem;
+  /* Menor distancia desde abajo para posicionarlo más abajo */
+  right: 3rem;
+  /* Distancia desde la derecha */
+  z-index: 100;
+  /* z-index adecuado */
+  opacity: 0;
+  visibility: hidden;
+  /* Oculto por defecto */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+  width: auto;
+  max-width: calc(50% - 2rem);
+  /* Limitar ancho para evitar desbordamiento */
+  text-align: right;
+  /* Alineación a la derecha */
+  padding: 0;
+  /* Sin padding */
+  background: none;
+  /* Sin fondo */
+  border-radius: 0;
+  box-shadow: none;
+  /* Sin sombra */
+  transform: none !important;
+  /* Prevenir transformaciones no deseadas */
+  will-change: opacity, visibility;
+  /* Optimizar para composición */
+}
+
+.team-member-name-role {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  color: inherit;
+  /* Hereda el color del padre para respetar los temas */
+  font-size: 1.8rem;
+  /* Tamaño más pequeño */
+  line-height: 1.2;
+  text-align: left;
+  display: block;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+/* Media queries para adaptar el texto del overlay según el tamaño de la ventana */
+@media (min-width: 1600px) {
+  .team-member-name-role {
+    font-size: 2rem;
+    /* Tamaño más grande para pantallas muy grandes */
+  }
+}
+
+@media (max-width: 1399px) {
+  .team-member-name-role {
+    font-size: 1.6rem;
+    /* Tamaño más pequeño para pantallas medianas */
+  }
+}
+
+@media (max-width: 1199px) {
+  .team-member-name-role {
+    font-size: 1.4rem;
+    /* Tamaño aún más pequeño para pantallas pequeñas de escritorio */
+  }
+}
+
+/* Mostrar overlay solo en desktop */
+@media (min-width: 993px) {
+
+  .team-member-overlay.visible,
+  .team-member-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Ocultar completamente el overlay en dispositivos móviles */
+@media (max-width: 992px) {
+  .team-member-overlay {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+/* Adaptación para modo oscuro - mismos colores que el título principal */
+[data-theme="light"] .team-member-name-role {
+  color: #222222;
+}
+
+[data-theme="dark"] .team-member-name-role {
+  color: #ffffff;
+}
+
+/* Efecto glitch para el texto del overlay - similar al título EQUIPO */
+.team-member-name-role.glitch-text {
+  position: relative;
+  display: inline-block;
+  text-shadow: none;
+  /* Sin sombra por defecto */
+  color: inherit;
+  /* Usar el color del tema actual */
+  transform: translateZ(0);
+  /* Activar aceleración GPU */
+  will-change: content;
+  /* Optimizar para animaciones */
+}
+
+/* Pseudoelementos para el efecto glitch del overlay */
+.team-member-name-role.glitch-text:before,
+.team-member-name-role.glitch-text:after {
+  content: attr(data-text);
+  position: absolute;
+  right: 2px;
+  /* Ajustado a la derecha */
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  color: inherit;
+  /* Usar el mismo color que el texto principal */
+  opacity: 0.8;
+  visibility: hidden;
+  /* Oculto por defecto, visible solo durante la animación */
+}
+
+.team-member-name-role.glitch-text:before {
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.team-member-name-role.glitch-text:after {
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+/* Activar efecto glitch inmediatamente cuando se agrega la clase glitching */
+.team-member-name-role.glitch-text.glitching {
+  animation: glitch-overlay-main 0.8s ease-in-out;
+}
+
+.team-member-name-role.glitch-text.glitching:before {
+  animation: glitch-overlay-top 1s ease-in-out;
+  visibility: visible;
+}
+
+.team-member-name-role.glitch-text.glitching:after {
+  animation: glitch-overlay-bottom 1.2s ease-in-out;
+  visibility: visible;
+}
+
+/* Keyframes para el efecto glitch del overlay - similares al título EQUIPO */
+@keyframes glitch-overlay-main {
+  0% {
+    transform: skew(0);
+  }
+
+  3%,
+  35% {
+    transform: skew(-3deg);
+    /* Dirección invertida para alineación derecha */
+  }
+
+  40% {
+    transform: translate(8px, 2px) skew(-20deg);
+    /* Invertido para alineación derecha */
+  }
+
+  45% {
+    transform: translate(-4px, -1px) skew(12deg);
+    /* Invertido para alineación derecha */
+  }
+
+  50% {
+    transform: translate(5px, 1px) skew(-8deg);
+  }
+
+  55% {
+    transform: translate(-3px, 0px) skew(5deg);
+  }
+
+  60% {
+    transform: skew(-2deg);
+  }
+
+  100% {
+    transform: skew(0);
+  }
+}
+
+@keyframes glitch-overlay-top {
+  0% {
+    transform: translate(0, 0);
+    visibility: visible;
+  }
+
+  10%,
+  30% {
+    transform: translate(2px, 0);
+    /* Invertido para alineación derecha */
+    visibility: visible;
+  }
+
+  40% {
+    transform: translate(5px, -1px);
+    /* Invertido para alineación derecha */
+    visibility: visible;
+  }
+
+  45% {
+    transform: translate(-12px, -2px) skew(10deg);
+    /* Invertido para alineación derecha */
+    visibility: visible;
+  }
+
+  50% {
+    transform: translate(4px, -1px) skew(-5deg);
+    visibility: visible;
+  }
+
+  55% {
+    transform: translate(-2px, 0) skew(2deg);
+    visibility: visible;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    visibility: visible;
+  }
+}
+
+@keyframes glitch-overlay-bottom {
+  0% {
+    transform: translate(0, 0);
+    visibility: visible;
+  }
+
+  5%,
+  25% {
+    transform: translate(3px, 0);
+    /* Invertido para alineación derecha */
+    visibility: visible;
+  }
+
+  30%,
+  40% {
+    transform: translate(2px, 1px);
+    /* Invertido para alineación derecha */
+    visibility: visible;
+  }
+
+  45% {
+    transform: translate(15px, 3px) skew(-15deg);
+    /* Invertido para alineación derecha */
+    visibility: visible;
+  }
+
+  50% {
+    transform: translate(-5px, 2px) skew(8deg);
+    visibility: visible;
+  }
+
+  55% {
+    transform: translate(3px, 1px) skew(-4deg);
+    visibility: visible;
+  }
+
+  60% {
+    transform: translate(1px, 0px);
+    visibility: visible;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    visibility: visible;
+  }
+}
+
+/* Asegurar que el overlay esté oculto por defecto en móvil */
+@media (max-width: 992px) {
+  .team-member-overlay {
+    display: none;
+  }
+}
+
+/* Keyframes para la secuencia de imágenes glitch */
+
+/* Keyframes específicos para cambiar imágenes durante la animación */
+@keyframes team-glitch-images {
+
+  0%,
+  86% {
+    background-image: var(--glitch-image-1);
+    opacity: 0;
+  }
+
+  87%,
+  91% {
+    background-image: var(--glitch-image-1);
+    opacity: 1;
+    transform: translateX(-2px);
+  }
+
+  92%,
+  96% {
+    background-image: var(--glitch-image-2);
+    opacity: 1;
+    transform: translateX(2px) scale(1.01);
+  }
+
+  97%,
+  100% {
+    background-image: var(--glitch-image-3);
+    opacity: 1;
+    transform: translateX(-1px) scale(0.99);
+  }
+}
+
+/* Contenedor para la imagen principal y las imágenes de glitch */
+.team-card[data-member] .team-card-inner {
+  position: relative;
+}
+
+/* Definir las variables CSS para cada miembro */
+.team-card[data-member="rubi"] {
+  --glitch-image-1: url('../../assets/images/team/rubi/adn-rubi-glitch-1.webp');
+  --glitch-image-2: url('../../assets/images/team/rubi/adn-rubi-glitch-2.webp');
+  --glitch-image-3: url('../../assets/images/team/rubi/adn-rubi-glitch-3.webp');
+}
+
+.team-card[data-member="jack"] {
+  --glitch-image-1: url('../../assets/images/team/jack/adn-jack-glitch-1.webp');
+  --glitch-image-2: url('../../assets/images/team/jack/adn-jack-glitch-2.webp');
+  --glitch-image-3: url('../../assets/images/team/jack/adn-jack-glitch-3.webp');
+}
+
+.team-card[data-member="gabo"] {
+  --glitch-image-1: url('../../assets/images/team/gabo/adn-gabo-glitch-1.webp');
+  --glitch-image-2: url('../../assets/images/team/gabo/adn-gabo-glitch-2.webp');
+  --glitch-image-3: url('../../assets/images/team/gabo/adn-gabo-glitch-3.webp');
+}
+
+.team-card[data-member="jota"] {
+  --glitch-image-1: url('../../assets/images/team/jota/adn-jota-glitch-1.webp');
+  --glitch-image-2: url('../../assets/images/team/jota/adn-jota-glitch-2.webp');
+  --glitch-image-3: url('../../assets/images/team/jota/adn-jota-glitch-3.webp');
+}
+
+.team-card[data-member="alex"] {
+  --glitch-image-1: url('../../assets/images/team/alex/adn-alex-glitch-1.webp');
+  --glitch-image-2: url('../../assets/images/team/alex/adn-alex-glitch-2.webp');
+  --glitch-image-3: url('../../assets/images/team/alex/adn-alex-glitch-3.webp');
+}
+
+.team-card[data-member="bryan"] {
+  --glitch-image-1: url('../../assets/images/team/bryan/adn-bryan-glitch-1.webp');
+  --glitch-image-2: url('../../assets/images/team/bryan/adn-bryan-glitch-2.webp');
+  --glitch-image-3: url('../../assets/images/team/bryan/adn-bryan-glitch-3.webp');
+}
+
+.team-card[data-member="raul"] {
+  --glitch-image-1: url('../../assets/images/team/raul/adn-raul-glitch-1.webp');
+  --glitch-image-2: url('../../assets/images/team/raul/adn-raul-glitch-2.webp');
+  --glitch-image-3: url('../../assets/images/team/raul/adn-raul-glitch-3.webp');
+}
+
+/* Contenedor e imágenes para el efecto glitch optimizados */
+.glitch-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.active-glitch-card .glitch-container {
+  opacity: 1;
+}
+
+.glitch-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: none;
+  /* Evitar transiciones para los frames de glitch */
+  filter: grayscale(100%) contrast(1.2) brightness(0.85);
+  -webkit-filter: grayscale(100%) contrast(1.2) brightness(0.85);
+  will-change: opacity;
+}
+
+/* Mostrar imágenes glitch según los frames */
+.glitch-frame-1 .glitch-image-1,
+.glitch-frame-2 .glitch-image-2,
+.glitch-frame-3 .glitch-image-3 {
+  opacity: 1;
+}

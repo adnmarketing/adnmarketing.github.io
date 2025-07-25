@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADN Marketing Agency</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/footer.css" />
+  <link rel="stylesheet" href="styles/sections/corevalues.css" />
+  <link rel="stylesheet" href="styles/sections/mission-vision.css" />
+  <link rel="stylesheet" href="styles/sections/portfolio.css" />
+  <link rel="stylesheet" href="styles/sections/contactus.css" />
+  <link rel="stylesheet" href="styles/sections/services.css" />
+  <link rel="stylesheet" href="styles/sections/services-responsive.css" />
+  <link rel="stylesheet" href="styles/sections/services-pillars.css" />
+  <link rel="stylesheet" href="styles/sections/team.css" />
+  <link rel="stylesheet" href="styles/sections/team-modal.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="styles/team-glitch.css" />
+  <link rel="stylesheet" href="styles/team-glitch-v2.css" />
+  <link rel="stylesheet" href="styles/glitch-effect.css" />
+  <link rel="stylesheet" href="styles/name-glitch-effect.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/images/logos/adn_logo_b.svg" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" />
+
+  <!-- Preload crítico para las primeras imágenes del equipo -->
+  <link rel="preload" as="image" href="assets/images/team/rubi/adn-rubi.avif" type="image/avif">
+  <link rel="preload" as="image" href="assets/images/team/jack/adn-jack.avif" type="image/avif">
+  <link rel="preload" as="image" href="assets/images/team/gabo/adn-gabo.avif" type="image/avif">
+</head>
+
+<body>
+  <nav class="main-nav">
+    <img class="nav-logo" src="assets/images/logos/just_logo_black.png" alt="Just Logo" />
+
+    <button class="nav-toggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav-menu">
+      <ul>
+        <li><a href="#MissionAndVision">Misión y Visión</a></li>
+        <li><a href="#CoreValues ">Valores</a></li>
+        <li><a href="#Team">Equipo</a></li>
+        <li><a href="#Services">Servicios</a></li>
+        <li><a href="#Portfolio">Nuestros clientes</a></li>
+        <li><a href="#Contactus">Contáctanos </a></li>
+      </ul>
+
+      <div class="tdnn">
+        <div class="moon"></div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <img class="animate-fade-down hero-logo" src="assets/images/logos/adn_logo_b.svg" alt="Logo ADN" />
+  </header>
+
+  <section id="MissionAndVision" class="section animate-fade-up mission-vision-section">
+    <h2>Misión y Visión</h2>
+    <div class="mission-vision-container">
+      <div class="glass-panel">
+        <!-- Navigation zones must be before arrows for CSS adjacent selector to work -->
+        <div class="nav-zone nav-zone-left"></div>
+        <button class="nav-arrow nav-arrow-left" aria-label="Anterior">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <div class="nav-zone nav-zone-right"></div>
+        <button class="nav-arrow nav-arrow-right" aria-label="Siguiente">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <!-- Content slides -->
+        <div class="slides-container">
+          <div class="slide active" data-slide="0">
+            <div class="slide-content">
+              <h3 class="slide-subtitle"><!-- Dynamic content --></h3>
+              <p class="slide-description"><!-- Dynamic content --></p>
+            </div>
+            <div class="slide-image">
+              <img src="" alt="Slide image" loading="lazy">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Pagination dots -->
+        <div class="pagination-dots">
+          <!-- Dynamic dots will be added here -->
+        </div>
+        
+        <!-- Progress bar -->
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="CoreValues" class="section animate-fade-right corevalues-section">
+    <!-- <canvas id="corevalues-particles" class="corevalues-particles-bg" aria-hidden="true"></canvas> -->
+    <h2>Nuestros valores</h2>
+    <div class="corevalues-grid">
+      <div class="corevalue-card" tabindex="0">
+        <div class="corevalue-card-inner">
+          <div class="corevalue-card-front">
+            <div class="corevalue-title">Fe</div>
+            <div class="corevalue-verse">“Así también la fe, si no tiene obras, es muerta en sí misma”</div>
+            <div class="corevalue-ref">Santiago 2:17</div>
+          </div>
+          <div class="corevalue-card-back">
+            <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
+            <div class="corevalue-back-content">
+              Aquí puedes agregar más información sobre el valor de la Fe, ejemplos, reflexiones o aplicaciones
+              prácticas.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="corevalue-card" tabindex="0">
+        <div class="corevalue-card-inner">
+          <div class="corevalue-card-front">
+            <div class="corevalue-title">Trabajo</div>
+            <div class="corevalue-verse">“No os engañéis; Dios no puede ser burlado: pues todo lo que el hombre
+              sembrare, eso también segará.”</div>
+            <div class="corevalue-ref">Gálatas 6:7</div>
+          </div>
+          <div class="corevalue-card-back">
+            <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
+            <div class="corevalue-back-content">
+              Más información sobre el valor del Trabajo, su importancia y cómo lo vivimos en la agencia.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="corevalue-card" tabindex="0">
+        <div class="corevalue-card-inner">
+          <div class="corevalue-card-front">
+            <div class="corevalue-title">Orden</div>
+            <div class="corevalue-verse">“Pero hágase todo decentemente y con orden”</div>
+            <div class="corevalue-ref">1 Corintios 14:40</div>
+          </div>
+          <div class="corevalue-card-back">
+            <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
+            <div class="corevalue-back-content">
+              Aquí puedes explicar cómo el orden es clave en el trabajo y la vida diaria.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="corevalue-card" tabindex="0">
+        <div class="corevalue-card-inner">
+          <div class="corevalue-card-front">
+            <div class="corevalue-title">Comunicación</div>
+            <div class="corevalue-verse">“La blanda respuesta quita la ira; más la palabra áspera hace subir el furor.”
+            </div>
+            <div class="corevalue-ref">Proverbios 15:1</div>
+          </div>
+          <div class="corevalue-card-back">
+            <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
+            <div class="corevalue-back-content">
+              Detalla cómo la comunicación efectiva es un pilar en la agencia y en la fe.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="corevalue-card" tabindex="0">
+        <div class="corevalue-card-inner">
+          <div class="corevalue-card-front">
+            <div class="corevalue-title">Confianza</div>
+            <div class="corevalue-verse">“Confía en Jehová con todo tu corazón, y no te apoyes en tu propia prudencia”
+            </div>
+            <div class="corevalue-ref">Proverbios 3:5</div>
+          </div>
+          <div class="corevalue-card-back">
+            <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
+            <div class="corevalue-back-content">
+              Explica cómo la confianza se vive en el equipo y con los clientes.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="corevalue-card" tabindex="0">
+        <div class="corevalue-card-inner">
+          <div class="corevalue-card-front">
+            <div class="corevalue-title">Respeto</div>
+            <div class="corevalue-verse">“Honrad a todos. Amad a los hermanos. Temed a Dios. Honrad al rey”</div>
+            <div class="corevalue-ref">1 Pedro 2:17</div>
+          </div>
+          <div class="corevalue-card-back">
+            <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
+            <div class="corevalue-back-content">
+              Aquí puedes poner ejemplos de respeto en la agencia y su fundamento bíblico.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="Team" class="section animate-fade-up team-section">
+    <div class="glitch-wrap">
+      <h2 class="glitch">EQUIPO</h2>
+    </div>
+    <!-- Overlay para mostrar información del miembro en hover -->
+    <div class="team-member-overlay">
+      <span class="team-member-name-role glitch-text"
+        data-text="MIEMBRO DEL EQUIPO"><!-- Se carga dinámicamente --></span>
+    </div>
+    <p>Conoce al talentoso equipo detrás de ADN Marketing Agency.</p>
+    <div class="team-gallery team-gallery-special">
+      <!-- Primera fila: 2 tarjetas - Rubí y Jack -->
+      <div class="team-card" data-member="rubi">
+        <div class="team-card-inner">
+          <picture>
+            <source srcset="assets/images/team/rubi/adn-rubi.avif" type="image/avif">
+            <source srcset="assets/images/team/rubi/adn-rubi.webp" type="image/webp">
+            <img src="assets/images/team/rubi/adn-rubi.JPG" alt="Rubi - ADN Marketing" loading="lazy">
+          </picture>
+        </div>
+      </div>
+      <div class="team-card" data-member="jack">
+        <div class="team-card-inner">
+          <picture>
+            <source srcset="assets/images/team/jack/adn-jack.avif" type="image/avif">
+            <source srcset="assets/images/team/jack/adn-jack.webp" type="image/webp">
+            <img src="assets/images/team/jack/adn-jack.JPG" alt="Jack - ADN Marketing" loading="lazy">
+          </picture>
+        </div>
+      </div>
+
+      <!-- Segunda fila: 3 tarjetas - Gabo, Jota y Alex -->
+      <div class="team-card" data-member="gabo">
+        <div class="team-card-inner">
+          <picture>
+            <source srcset="assets/images/team/gabo/adn-gabo.avif" type="image/avif">
+            <source srcset="assets/images/team/gabo/adn-gabo.webp" type="image/webp">
+            <img src="assets/images/team/gabo/adn-gabo.png" alt="Gabo - ADN Marketing" loading="lazy">
+          </picture>
+        </div>
+      </div>
+      <div class="team-card" data-member="jota">
+        <div class="team-card-inner">
+          <picture>
+            <source srcset="assets/images/team/jota/adn-jota.avif" type="image/avif">
+            <source srcset="assets/images/team/jota/adn-jota.webp" type="image/webp">
+            <img src="assets/images/team/jota/adn-jota.jpg" alt="Jota - ADN Marketing" loading="lazy">
+          </picture>
+        </div>
+      </div>
+      <div class="team-card" data-member="alex">
+        <div class="team-card-inner">
+          <picture>
+            <source srcset="assets/images/team/alex/adn-alex.avif" type="image/avif">
+            <source srcset="assets/images/team/alex/adn-alex.webp" type="image/webp">
+            <img src="assets/images/team/alex/adn-alex.jpg" alt="Alex - ADN Marketing" loading="lazy">
+          </picture>
+        </div>
+      </div>
+
+      <!-- Tercera fila: 2 tarjetas - Bryan y Raúl -->
+      <div class="team-card" data-member="bryan">
+        <div class="team-card-inner">
+          <picture>
+            <source srcset="assets/images/team/bryan/adn-bryan.avif" type="image/avif">
+            <source srcset="assets/images/team/bryan/adn-bryan.webp" type="image/webp">
+            <img src="assets/images/team/bryan/adn-bryan.png" alt="Bryan - ADN Marketing" loading="lazy">
+          </picture>
+        </div>
+      </div>
+      <div class="team-card" data-member="raul">
+        <div class="team-card-inner">
+          <picture>
+            <source srcset="assets/images/team/raul/adn-raul.avif" type="image/avif">
+            <source srcset="assets/images/team/raul/adn-raul.webp" type="image/webp">
+            <img src="assets/images/team/raul/adn-raul.png" alt="Raúl - ADN Marketing" loading="lazy">
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="Services" class="section services-section animate-fade-right">
+    <h2>Servicios</h2>
+    <div class="services-container">
+      <!-- Servicio 1: Contenido Visual -->
+      <div class="service-pillar has-background-image from-top" data-service-index="0">
+        <div class="service-bg-blur" style="background-image: url('assets/images/services/content_visual.webp');"></div>
+        <div class="service-content">
+          <h3 class="service-title">Contenido Visual Profesional</h3>
+        </div>
+      </div>
+
+      <!-- Servicio 2: Producción de Video -->
+      <div class="service-pillar has-background-image from-bottom" data-service-index="1">
+        <div class="service-bg-blur" style="background-image: url('assets/images/services/video_production.webp');"></div>
+        <div class="service-content">
+          <h3 class="service-title">Producción y Edición de Video</h3>
+        </div>
+      </div>
+
+      <!-- Servicio 3: Diseño Gráfico -->
+      <div class="service-pillar has-background-image from-top" data-service-index="2">
+        <div class="service-bg-blur" style="background-image: url('assets/images/services/graphic_design.webp');"></div>
+        <div class="service-content">
+          <h3 class="service-title">Diseño Gráfico Estratégico</h3>
+        </div>
+      </div>
+
+      <!-- Servicio 4: Gestión de Redes -->
+      <div class="service-pillar has-background-image from-bottom" data-service-index="3">
+        <div class="service-bg-blur" style="background-image: url('assets/images/services/social_media_management.webp');"></div>
+        <div class="service-content">
+          <h3 class="service-title">Gestión de Redes Sociales</h3>
+        </div>
+      </div>
+
+      <!-- Servicio 5: Publicidad Digital -->
+      <div class="service-pillar has-background-image from-top" data-service-index="4">
+        <div class="service-bg-blur" style="background-image: url('assets/images/services/digital_advertising.webp');"></div>
+        <div class="service-content">
+          <h3 class="service-title">Publicidad Digital</h3>
+        </div>
+      </div>
+
+      <!-- Servicio 6: Consultoría -->
+      <div class="service-pillar has-background-image from-bottom" data-service-index="5">
+        <div class="service-bg-blur" style="background-image: url('assets/images/services/brand_strategy.webp');"></div>
+        <div class="service-content">
+          <h3 class="service-title">Consultoría y Estrategia de Marca</h3>
+        </div>
+      </div>
+
+      <!-- Servicio 7: Automatización -->
+      <div class="service-pillar has-background-image from-top" data-service-index="6">
+        <div class="service-bg-blur" style="background-image: url('assets/images/services/automation_followup.webp');"></div>
+        <div class="service-content">
+          <h3 class="service-title">Automatización y Seguimiento</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay para mostrar nombre del servicio en hover -->
+    <div class="service-title-overlay"></div>
+  </section>
+
+  <section id="Portfolio" class="section animate-fade-up">
+    <h2>Nuestros clientes</h2>
+    <div class="customer-carousel">
+      <div class="carousel-track">
+        <img src="assets/images/customers/colmena.webp" alt="Colmena" loading="lazy" />
+        <img src="assets/images/customers/el_patron.webp" alt="El Patrón" loading="lazy" />
+        <img src="assets/images/customers/la_mariscana.webp" alt="La Mariscana" loading="lazy" />
+        <img src="assets/images/customers/livis.webp" alt="Livis" loading="lazy" />
+        <img src="assets/images/customers/nails.webp" alt="Nails" loading="lazy" />
+        <img src="assets/images/customers/paqueteria_universal.webp" alt="Paquetería Universal" loading="lazy" />
+        <img src="assets/images/customers/three_human.webp" alt="Three Human" loading="lazy" />
+        <img src="assets/images/customers/titos.webp" alt="Titos" loading="lazy" />
+        <img src="assets/images/customers/lonches_la_abuela.webp" alt="La Abuela" loading="lazy" />
+        <img src="assets/images/customers/tacolare.webp" alt="Tacolare" loading="lazy" />
+        <img src="assets/images/customers/tacos_kissi.webp" alt="Tacos Kissi" loading="lazy" />
+        <img src="assets/images/customers/otilias.webp" alt="Otilia's" loading="lazy" />
+        <img src="assets/images/customers/slimerella.webp" alt="Slimerella" loading="lazy" />
+        <img src="assets/images/customers/nurseyazz.webp" alt="Nurse Yazz" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section id="Contactus" class="section animate-fade-right">
+    <h2>Contáctanos</h2>
+    <h3>Llámanos al: <a href="tel:+19569066098">+1 956 906 6098</a></h3>
+    <h3>Envíanos un correo a: <a href="mailto:info@adnagencymk.com">info@adnagencymk.com</a></h3>
+    <h3 class="social-title">Síguenos en nuestras redes:</h3>
+    <ul class="social-links">
+      <li>
+        <a href="https://www.facebook.com/people/Adn-Marketing/61570056334498/" target="_blank" rel="noopener"
+          aria-label="Facebook">
+          <img src="assets/images/social/facebook.svg" alt="Facebook" />
+        </a>
+      </li>
+      <li>
+        <a href="https://www.instagram.com/adnmarketing_/" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="assets/images/social/instagram.svg" alt="Instagram" />
+        </a>
+      </li>
+      <li>
+        <a href="https://tiktok.com/@adn.marketing" target="_blank" rel="noopener" aria-label="TikTok">
+          <img src="assets/images/social/tiktok.svg" alt="TikTok" />
+        </a>
+      </li>
+      <li>
+        <a href="https://api.whatsapp.com/send/?phone=19569066098&text&type=phone_number&app_absent=0" target="_blank"
+          rel="noopener" aria-label="WhatsApp">
+          <img src="assets/images/social/whatsapp.svg" alt="WhatsApp" />
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Modal de cliente -->
+  <div id="customer-modal" class="customer-modal" aria-modal="true" role="dialog" tabindex="-1" style="display:none;">
+    <div class="customer-modal__backdrop"></div>
+    <div class="customer-modal__content" role="document">
+      <button class="customer-modal__close" aria-label="Cerrar">&times;</button>
+      <div class="customer-modal__header">
+        <!-- Aquí se inyectará el header con logo, nombre, descripción y badge -->
+      </div>
+      <div class="customer-modal__body">
+        <!-- Aquí se inyectará el contenido principal -->
+      </div>
+      <div class="customer-modal__footer">
+        <!-- Aquí se inyectará información adicional y fechas -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de tarjeta de miembro del equipo -->
+  <div id="team-modal" class="team-modal" aria-modal="true" role="dialog" tabindex="-1">
+    <div class="team-modal__backdrop"></div>
+    <div class="team-modal__card">
+      <button class="team-modal__close" aria-label="Cerrar">&times;</button>
+      <div class="team-modal__header">
+        <h3 class="team-modal__name"><!-- Se cargará dinámicamente --></h3>
+        <span class="team-modal__role"><!-- Se cargará dinámicamente --></span>
+      </div>
+      <div class="team-modal__body">
+        <div class="team-modal__skills">
+          <h4 class="team-modal__skills-title">HABILIDADES:</h4>
+          <ul class="team-modal__skills-list">
+            <!-- Se cargarán dinámicamente -->
+          </ul>
+        </div>
+      </div>
+      <div class="team-modal__footer">
+        <blockquote class="team-modal__quote">
+          <!-- Se cargará dinámicamente -->
+        </blockquote>
+      </div>
+      <div class="team-modal__image-container">
+        <img class="team-modal__image" src="" alt="Miembro del equipo" />
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__row">
+      <div class="footer__copyright">
+        &copy; <span id="footer-year-range"></span> ADN | Marketing Agency. Todos los derechos reservados.
+      </div>
+      <div class="footer__lang">
+        <label for="footer-lang-select" style="font-size:0.98em;">Idioma:</label>
+        <select id="footer-lang-select" class="footer__select" aria-label="Seleccionar idioma">
+          <option value="es">ES</option>
+          <option value="en">EN</option>
+        </select>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+  <script src="scripts/viewport-config.js"></script>
+  <script src="scripts/config/video-config.js"></script>
+  <script src="scripts/viewport-manager.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/sections/portfolio.js"></script>
+  <script src="scripts/sections/mission-vision.js"></script>
+  <script src="scripts/sections/services.js"></script>
+  <script src="scripts/sections/services-pillars-static.js"></script>
+  <script src="scripts/sections/corevalues.js"></script>
+  <!-- <script src="scripts/sections/corevalues-particles.js"></script> -->
+  <!-- <script src="scripts/utils/image-optimization.js"></script> -->
+  <script src="scripts/sections/team.js"></script>
+  <!-- <script src="scripts/sections/team-background.js"></script> -->
+  <script src="scripts/sections/team-modal.js"></script>
+  <script src="scripts/viewport-testing.js"></script>
+</body>
+
+</html>

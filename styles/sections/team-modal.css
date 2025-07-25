@@ -1,0 +1,731 @@
+/* Estilos para el modal de tarjeta del miembro del equipo */
+.team-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+.team-modal.active {
+  display: flex;
+}
+
+.team-modal__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.team-modal.active .team-modal__backdrop {
+  opacity: 1;
+}
+
+.team-modal__card {
+  position: relative;
+  width: 95%;
+  max-width: 700px;
+  /* Significativamente más grande que antes */
+  max-height: 90vh;
+  /* Ocupa más espacio vertical */
+  background-color: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 1002;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  /* Sombra más pronunciada */
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  /* Elimino la transformación inicial y transición CSS para que GSAP las maneje completamente */
+}
+
+.team-modal.active .team-modal__card {
+  /* La opacidad se manejará mediante GSAP */
+  opacity: 1;
+}
+
+/* Ajustes para tema oscuro */
+[data-theme="dark"] .team-modal__card {
+  background-color: #212121;
+  color: #fff;
+}
+
+/* Header de la tarjeta - Nombre y rol */
+.team-modal__header {
+  padding: 25px 30px;
+  /* Más padding */
+  background-color: #f5f5f5;
+  border-radius: 20px 20px 0 0;
+  position: relative;
+}
+
+[data-theme="dark"] .team-modal__header {
+  background-color: #2a2a2a;
+}
+
+.team-modal__name {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-size: 2.3rem;
+  /* Nombre más grande */
+  margin: 0 0 5px 0;
+  /* Reducimos margen inferior para que el rol esté más cerca */
+  line-height: 1.2;
+}
+
+.team-modal__role {
+  display: block;
+  /* Cambiamos a block para asegurar que esté debajo */
+  color: #666;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 0;
+  /* Eliminamos margen superior */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+[data-theme="dark"] .team-modal__role {
+  color: #aaa;
+}
+
+/* Contenido principal - Habilidades */
+.team-modal__body {
+  padding: 25px 30px;
+  /* Más padding */
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+  /* Ocupar todo el ancho */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.team-modal__skills {
+  margin-bottom: 20px;
+  width: 65%;
+  /* Aumentamos el ancho para permitir textos más largos */
+  position: relative;
+  z-index: 5;
+  /* Aseguramos que esté por encima de los degradados */
+}
+
+.team-modal__skills-title {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  /* Título más grande */
+}
+
+.team-modal__skills-list {
+  list-style-type: none;
+  padding-left: 5px;
+  width: 100%;
+  /* Aseguramos que ocupa todo el ancho disponible */
+}
+
+.team-modal__skills-list li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;
+  /* Más espaciado entre habilidades */
+  line-height: 1.5;
+  font-size: 1.05rem;
+  /* Texto ligeramente más grande */
+  max-width: 100%;
+  /* Aseguramos que no exceda el ancho del contenedor padre */
+  word-wrap: break-word;
+  /* Permitimos que las palabras largas se rompan */
+}
+
+.team-modal__skills-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #666;
+  font-weight: bold;
+}
+
+/* Footer de la tarjeta - Frase */
+.team-modal__footer {
+  padding: 25px 30px;
+  /* Más padding */
+  background-color: #f5f5f5;
+  border-radius: 0 0 20px 20px;
+  position: relative;
+  width: 100%;
+  /* Ocupa todo el ancho */
+  box-sizing: border-box;
+  /* Incluir padding en el cálculo del ancho */
+  display: flex;
+  flex-direction: column;
+  /* Organizar elementos en columna */
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+[data-theme="dark"] .team-modal__footer {
+  background-color: #2a2a2a;
+}
+
+.team-modal__quote {
+  font-style: italic;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 18px;
+  border-left: 4px solid #ddd;
+  /* Borde más grueso */
+  width: 65%;
+  /* Aumentamos el ancho para permitir textos más largos */
+  box-sizing: border-box;
+  /* Incluir padding en el cálculo del ancho */
+  margin-bottom: 20px;
+  /* Más espacio entre la cita y los iconos sociales */
+  font-size: 1.1rem;
+  /* Texto más grande */
+  z-index: 5;
+  /* Aseguramos que esté por encima de los degradados */
+}
+
+/* Aseguramos que los íconos sociales estén bien posicionados */
+.team-modal__footer .team-modal__social {
+  margin-top: 15px;
+  position: relative;
+  z-index: 1010;
+  /* Para asegurar que esté por encima del gradiente */
+}
+
+/* Mejoramos la integración visual entre footer e imagen */
+.team-modal__footer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45%;
+  /* Reducimos un poco el ancho del degradado */
+  height: 100%;
+  background: linear-gradient(to right, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .team-modal__footer::after {
+  background: linear-gradient(to right, rgba(51, 51, 51, 1) 0%, rgba(51, 51, 51, 0) 100%);
+}
+
+/* Mejoramos la integración visual entre el body y la imagen */
+.team-modal__body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45%;
+  /* Reducimos un poco el ancho del degradado */
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .team-modal__body::after {
+  background: linear-gradient(to right, rgba(34, 34, 34, 1) 0%, rgba(34, 34, 34, 0) 100%);
+}
+
+/* Imagen superpuesta con mejor posicionamiento */
+.team-modal__image-container {
+  position: absolute;
+  right: -62px;
+  /* Más espacio a la derecha */
+  bottom: 0;
+  height: 102%;
+  /* Un poco más alta */
+  width: 64%;
+  /* Ligeramente más ancho */
+  z-index: 1003;
+  overflow: visible;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  pointer-events: none;
+  /* Permite hacer clic a través de la imagen */
+}
+
+.team-modal__image {
+  height: auto;
+  max-height: 120%;
+  /* Permitir que la imagen sea aún más grande que su contenedor */
+  max-width: 125%;
+  object-fit: contain;
+  object-position: bottom right;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+  /* Sombra más pronunciada */
+  transition: opacity 0.3s ease;
+  transform-origin: bottom right;
+  mix-blend-mode: normal;
+}
+
+/* Eliminar borde blanco indeseado alrededor de las imágenes PNG con transparencia */
+.team-modal__image[src*="-nobg"] {
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+}
+
+/* Tema oscuro ajustes específicos para las imágenes */
+[data-theme="dark"] .team-modal__image[src*="-nobg"] {
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.4));
+}
+
+/* Botón cerrar */
+.team-modal__close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(0, 0, 0, 0.08);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #444;
+  z-index: 1004;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.team-modal__close:hover,
+.team-modal__close:focus {
+  background-color: rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+}
+
+.team-modal__close:active {
+  transform: scale(0.95);
+}
+
+[data-theme="dark"] .team-modal__close {
+  color: #eee;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .team-modal__close:hover,
+[data-theme="dark"] .team-modal__close:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Redes sociales */
+.team-modal__social {
+  display: flex;
+  gap: 12px;
+  width: 60%;
+  /* Alineado con el ancho de la cita */
+}
+
+.team-modal__social a {
+  width: 42px;
+  /* Íconos más grandes */
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #eaeaea;
+  color: #333;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-size: 1.2rem;
+  /* Íconos más grandes */
+}
+
+.team-modal__social a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Colores específicos de redes sociales */
+.team-modal__social a .fa-instagram:hover,
+.team-modal__social a:hover .fa-instagram {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.team-modal__social a .fa-linkedin-in:hover,
+.team-modal__social a:hover .fa-linkedin-in {
+  color: #0077B5;
+}
+
+.team-modal__social a .fa-twitter:hover,
+.team-modal__social a:hover .fa-twitter {
+  color: #1DA1F2;
+}
+
+.team-modal__social a .fa-behance:hover,
+.team-modal__social a:hover .fa-behance {
+  color: #1769ff;
+}
+
+.team-modal__social a .fa-github:hover,
+.team-modal__social a:hover .fa-github {
+  color: #333;
+}
+
+.team-modal__social a .fa-vimeo-v:hover,
+.team-modal__social a:hover .fa-vimeo-v {
+  color: #1ab7ea;
+}
+
+/* Tema oscuro para redes sociales */
+[data-theme="dark"] .team-modal__social a {
+  background-color: #2a2a2a;
+  color: #ddd;
+}
+
+[data-theme="dark"] .team-modal__social a:hover {
+  background-color: #3a3a3a;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .team-modal__card {
+    max-width: 95%;
+    max-height: 92vh;
+  }
+
+  .team-modal__name {
+    font-size: 2rem;
+  }
+
+  .team-modal__body {
+    width: 100%;
+  }
+
+  .team-modal__skills {
+    width: 55%;
+  }
+
+  .team-modal__footer {
+    width: 100%;
+  }
+
+  .team-modal__quote {
+    width: 55%;
+  }
+
+  .team-modal__social {
+    width: 55%;
+  }
+
+  .team-modal__image-container {
+    right: -32px;
+    width: 64%;
+    height: 94%;
+  }
+
+  .team-modal__social {
+    justify-content: flex-start;
+    /* Cambiamos a alineación izquierda siempre */
+  }
+}
+
+@media (max-width: 576px) {
+  .team-modal__card {
+    max-width: 92%;
+    height: auto;
+    max-height: 85vh;
+    border-radius: 16px;
+    margin: 30px auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .team-modal__header {
+    border-radius: 16px 16px 0 0;
+    padding: 20px 25px;
+  }
+
+  .team-modal__footer {
+    border-radius: 0 0 16px 16px;
+    padding: 20px 25px;
+  }
+
+  .team-modal__body {
+    width: 100%;
+    padding: 20px 25px;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  .team-modal__skills {
+    width: 90%;
+    /* Aumentamos significativamente el ancho para aprovechar mejor el espacio */
+    padding-right: 15px;
+  }
+
+  .team-modal__footer {
+    width: 100%;
+  }
+
+  .team-modal__quote {
+    width: 60%;
+    padding-right: 10px;
+    font-size: 0.95rem;
+  }
+
+  .team-modal__social {
+    width: 60%;
+    justify-content: flex-start;
+    /* Alineamos a la izquierda en lugar de centrar */
+  }
+
+  .team-modal__image-container {
+    height: 78%;
+    width: 58%;
+    opacity: 0.95;
+    right: -15px;
+    bottom: -5px;
+  }
+}
+
+/* Ajustes adicionales para dispositivos muy pequeños */
+@media (max-width: 480px) {
+  .team-modal__card {
+    max-width: 90%;
+    max-height: 80vh;
+    margin: 40px auto;
+  }
+
+  .team-modal__header {
+    padding: 18px 20px;
+  }
+
+  .team-modal__name {
+    font-size: 1.8rem;
+  }
+
+  .team-modal__role {
+    font-size: 0.9rem;
+  }
+
+  .team-modal__body {
+    padding: 18px 20px;
+    max-height: 45vh;
+  }
+
+  .team-modal__footer {
+    padding: 18px 20px;
+  }
+
+  .team-modal__skills-title {
+    font-size: 1.2rem;
+  }
+
+  .team-modal__skills {
+    width: 95%;
+    /* Aprovechamos casi todo el ancho disponible */
+    padding-right: 10px;
+  }
+
+  .team-modal__skills-list li {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+
+  .team-modal__image-container {
+    height: 68%;
+    width: 55%;
+    right: -10px;
+    bottom: -3px;
+    opacity: 0.9;
+  }
+
+  .team-modal__quote {
+    width: 65%;
+    font-size: 0.9rem;
+    border-left: 3px solid #ddd;
+    padding-left: 15px;
+  }
+
+  .team-modal__social {
+    width: 65%;
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+
+  /* Mejoramos la apariencia de los botones de cierre */
+  .team-modal__close {
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+  }
+
+  .team-modal__social {
+    width: 65%;
+  }
+
+  .team-modal__footer::after {
+    width: 25%;
+  }
+
+  .team-modal__body::after,
+  .team-modal__footer::after {
+    width: 35%;
+  }
+
+  .team-modal__skills {
+    width: 65%;
+  }
+}
+
+/* Las animaciones ahora son manejadas completamente por GSAP */
+
+/* Mejoras de accesibilidad */
+.team-card {
+  cursor: pointer;
+}
+
+.team-card:focus {
+  outline: 2px solid var(--accent-color, #00aaff);
+  outline-offset: 3px;
+}
+
+/* Eliminado el indicador visual de círculo para los usuarios */
+
+/* Efecto de partículas para el modal (opcional) */
+.team-modal__particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--accent-color, rgba(0, 170, 255, 0.7));
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Efecto de pulsación para la imagen (opcional) */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+  }
+
+  50% {
+    transform: scale(1.03);
+    filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4));
+  }
+
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+  }
+}
+
+.team-modal__image {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* Se elimina la animación de hover para nombre y rol */
+
+/* Estilos para efectos básicos */
+.team-modal__card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Contenedor de partículas */
+.particle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1100;
+}
+
+/* Estilos para el efecto de partículas */
+.team-modal__particle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1500;
+  border-radius: 50%;
+}
+
+/* Se elimina la animación de pulso para la imagen */
+.team-modal__image {
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3));
+}
+
+/* Ajustes específicos para mejorar la apariencia de las imágenes */
+.team-modal__image {
+  transition: opacity 0.3s ease;
+  transform-origin: bottom right;
+  mix-blend-mode: normal;
+}
+
+/* Ajustes específicos por persona si es necesario */
+[data-member="rubi"] .team-modal__image-container {
+  height: 108%;
+  /* Aún más alta */
+  width: 67%;
+  right: -52px;
+}
+
+/* Ajustes responsivos específicos para Rubí */
+@media (max-width: 768px) {
+  [data-member="rubi"] .team-modal__image-container {
+    height: 96%;
+    width: 66%;
+    right: -34px;
+  }
+}
+
+@media (max-width: 576px) {
+  [data-member="rubi"] .team-modal__image-container {
+    height: 82%;
+    width: 62%;
+    right: -18px;
+    bottom: -8px;
+  }
+
+  /* Mejoras en el degradado para mejor integración en móvil */
+  .team-modal__body::after {
+    background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+    width: 35%;
+    /* Reducimos el ancho del degradado */
+    right: 5%;
+    /* Ajustamos la posición */
+  }
+
+  [data-theme="dark"] .team-modal__body::after {
+    background: linear-gradient(to right, rgba(34, 34, 34, 1) 0%, rgba(34, 34, 34, 0.8) 50%, rgba(34, 34, 34, 0) 100%);
+    width: 35%;
+    right: 5%;
+  }
+}
+
+@media (max-width: 480px) {
+  [data-member="rubi"] .team-modal__image-container {
+    height: 70%;
+    width: 57%;
+    right: -14px;
+  }
+}

@@ -1,0 +1,57 @@
+/* Estilos para el efecto glitch en texto */
+.text-glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.text-glitch::before,
+.text-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.text-glitch.active::before {
+  left: -2px;
+  /* Usar el mismo color de la fuente original */
+  color: inherit;
+  opacity: 0.8;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  animation: glitch-anim 0.2s ease-out forwards;
+}
+
+.text-glitch.active::after {
+  left: 2px;
+  /* Usar el mismo color de la fuente original */
+  color: inherit;
+  opacity: 0.8;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  animation: glitch-anim 0.2s ease-out forwards;
+}
+
+@keyframes glitch-anim {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-2px);
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+}

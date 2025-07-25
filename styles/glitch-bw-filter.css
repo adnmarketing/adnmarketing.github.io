@@ -1,0 +1,77 @@
+/* 
+ * FILTRO BLANCO Y NEGRO PARA IMÁGENES GLITCH
+ *
+ * Este archivo CSS garantiza que todas las imágenes de glitch 
+ * aparezcan en blanco y negro independientemente de su formato original.
+ * Usa selectores de alta especificidad y !important para evitar sobrescrituras.
+ */
+
+/* Selector específico para las imágenes de glitch */
+.glitch-container .glitch-image {
+  filter: grayscale(100%) contrast(1.2) brightness(0.85) !important;
+  -webkit-filter: grayscale(100%) contrast(1.2) brightness(0.85) !important;
+}
+
+/* Asegurar que incluso al mostrar la imagen (opacity: 1) siga en blanco y negro */
+.team-card.glitch-frame-1 .glitch-image-1,
+.team-card.glitch-frame-2 .glitch-image-2,
+.team-card.glitch-frame-3 .glitch-image-3 {
+  filter: grayscale(100%) contrast(1.2) brightness(0.85) !important;
+  -webkit-filter: grayscale(100%) contrast(1.2) brightness(0.85) !important;
+}
+
+/* Hacer que el efecto de glitch sea más dramático */
+.team-card.active-glitch-card {
+  z-index: 10;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6) !important;
+  transform: scale(1.07) !important;
+}
+
+/* Aumentar el impacto visual del efecto */
+@keyframes strong-glitch-flicker {
+
+  0%,
+  100% {
+    opacity: 0.95;
+  }
+
+  25% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  75% {
+    opacity: 0.85;
+  }
+}
+
+/* Efecto de destello más notorio */
+.team-card.active-glitch-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  animation: strong-glitch-flicker 0.25s ease-in-out 3;
+  z-index: 6;
+  border-radius: 8px;
+}
+
+/* Distorsión más pronunciada */
+.team-card.glitch-frame-1 {
+  transform: scale(1.07) translateX(-3px) !important;
+}
+
+.team-card.glitch-frame-2 {
+  transform: scale(1.07) translateX(3px) !important;
+}
+
+.team-card.glitch-frame-3 {
+  transform: scale(1.07) translateX(-2px) !important;
+}

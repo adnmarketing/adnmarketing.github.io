@@ -1,0 +1,322 @@
+/* Tarjetas de valores cristianos - responsivo y modo claro/oscuro */
+.corevalues-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  margin: 3rem 0 0 0;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  perspective: 2000px; /* Añadir perspectiva al contenedor */
+}
+.corevalue-card {
+  background: var(--bg-section-alt);
+  color: var(--text-body);
+  border-radius: 2rem;
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.13);
+  padding: 0; /* Eliminado el padding aquí ya que se aplicará en front/back */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 380px;
+  position: relative;
+  overflow: visible;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+  /* Removimos perspective aquí ya que ya está en el contenedor */
+  will-change: transform; /* Mejora el rendimiento de la animación */
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  animation: float 3.5s ease-in-out infinite;
+}
+.corevalue-card:hover, .corevalue-card:focus {
+  box-shadow: 0 10px 40px 0 rgba(0,0,0,0.18);
+  background: var(--corevalue-bg-hover, #f7f7fa);
+  /* Mantener la animación float y el efecto hover */
+  animation-play-state: running !important;
+}
+.corevalue-card.flipped {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  transition: transform 0.7s ease;
+  -webkit-transition: -webkit-transform 0.7s ease;
+  -moz-transition: -moz-transform 0.7s ease;
+  animation: none; /* Deshabilitar la animación float cuando está volteada */
+}
+.corevalue-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s;
+}
+.corevalue-card-front,
+.corevalue-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0; top: 0;
+  backface-visibility: hidden;
+  border-radius: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 3.2rem 2.5rem 2.5rem 2.5rem;
+  box-sizing: border-box;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+}
+
+/* Especificamos explícitamente los fondos para cada cara */
+.corevalue-card-front {
+  background: var(--corevalue-bg, #fff); /* Fondo explícito para el frente */
+  border-radius: 2rem; /* Restaurar border-radius */
+}
+
+.corevalue-card-back {
+  background: var(--corevalue-back-bg, #e8f2ff); /* Fondo más contrastante para el reverso */
+  border-radius: 2rem; /* Restaurar border-radius */
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra interna sutil */
+  border: 1px solid rgba(0, 123, 255, 0.1); /* Borde sutil azul para modo claro */
+}
+.corevalue-card-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+.corevalue-card-back {
+  z-index: 1;
+  transform: rotateY(180deg);
+  background: var(--corevalue-back-bg, #e8f2ff);
+  color: var(--corevalue-text, #222);
+}
+.corevalue-back-content {
+  font-size: 1.1rem;
+  color: var(--corevalue-text, #222);
+  margin-top: 1.5rem;
+}
+[data-theme="dark"] .corevalue-card-back,
+body.dark .corevalue-card-back {
+  background: var(--corevalue-back-bg-dark, #2a2a35);
+  color: var(--corevalue-text, #fff);
+  box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(179, 209, 255, 0.15); /* Borde sutil azul claro para modo oscuro */
+}
+.corevalue-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 1.3rem;
+  letter-spacing: 0.02em;
+  color: var(--primary, #0078d4);
+}
+.corevalue-verse {
+  font-size: 1.25rem;
+  font-style: italic;
+  margin-bottom: 1rem;
+  color: var(--corevalue-verse, #444);
+}
+.corevalue-ref {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--corevalue-ref, #888);
+  margin-top: auto;
+}
+@media (max-width: 900px) {
+  .corevalues-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 600px;
+  }
+  .corevalue-card {
+    min-height: 280px; /* Aumentamos altura mínima para acomodar todo el contenido */
+    font-size: 1.05rem;
+  }
+  .corevalue-card-front,
+  .corevalue-card-back {
+    padding: 1.7rem 1.1rem 2rem 1.1rem; /* Aumentamos el padding inferior */
+    overflow: hidden; /* Evitar que el contenido se salga */
+  }
+  .corevalue-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem; /* Reducir el margen para mejor aprovechamiento del espacio */
+  }
+  .corevalue-verse {
+    font-size: 1.1rem; /* Reducir tamaño de texto para versículos largos */
+    margin-bottom: 0.7rem; /* Reducir margen */
+    overflow-wrap: break-word; /* Asegurar que las palabras largas se rompan */
+    word-wrap: break-word; /* Para navegadores más antiguos */
+    hyphens: auto; /* Permitir guiones para dividir palabras largas */
+  }
+  .corevalue-ref {
+    font-size: 1rem; /* Ajustar tamaño */
+    margin-top: 0.5rem; /* Menos espacio en móvil */
+  }
+}
+/* Correcciones específicas para móvil */
+@media (max-width: 480px) {
+  .corevalue-card {
+    min-height: 300px; /* Más altura para dispositivos más pequeños */
+    width: 100%;
+  }
+  
+  /* Asegurar que el contenido no se desborde en dispositivos pequeños */
+  .corevalue-card-front,
+  .corevalue-card-back {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto; /* Permitir scroll si el contenido es muy largo */
+    -webkit-overflow-scrolling: touch; /* Para mejor experiencia en iOS */
+  }
+  
+  /* Forzar el fondo correcto explícitamente para móvil */
+  .corevalue-card:not(.flipped) .corevalue-card-front {
+    background: var(--corevalue-bg, #fff) !important;
+    border-radius: 2rem !important; /* Asegurar que el border-radius se mantenga en móvil */
+  }
+  
+  /* Evitar que los fondos se traslapen en móvil */
+  .corevalue-card:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: transparent;
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+/* Contraste y modo oscuro */
+:root {
+  --corevalue-bg: #fff;
+  --corevalue-bg-hover: #f7f7fa;
+  --corevalue-back-bg: #e8f2ff;
+  --corevalue-text: #222;
+  --corevalue-verse: #444;
+  --corevalue-ref: #888;
+}
+[data-theme="dark"], body.dark, html.dark {
+  --corevalue-bg: #23232a;
+  --corevalue-bg-hover: #18181b;
+  --corevalue-back-bg-dark: #2a2a35;
+  --corevalue-text: #fff;
+  --corevalue-verse: #b3d1ff;
+  --corevalue-ref: #b3b3b3;
+}
+.corevalues-section {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.corevalues-particles-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: auto;
+  display: block;
+}
+.corevalues-bg-anim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  animation: corevalues-bg-move 12s linear infinite alternate;
+}
+.corevalues-bg-anim svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* Solo muestra las waves del modo activo */
+.corevalues-bg-anim .wave-light { display: block; }
+.corevalues-bg-anim .wave-dark { display: none; }
+body.dark .corevalues-bg-anim .wave-light,
+[data-theme="dark"] .corevalues-bg-anim .wave-light { display: none; }
+body.dark .corevalues-bg-anim .wave-dark,
+[data-theme="dark"] .corevalues-bg-anim .wave-dark { display: block; }
+@keyframes corevalues-bg-move {
+  0% { transform: translateY(0) scaleX(1); }
+  100% { transform: translateY(-20px) scaleX(1.03); }
+}
+@keyframes float {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-16px) scale(1.01); }
+  100% { transform: translateY(0) scale(1); }
+}
+/* Eleva el grid sobre el fondo */
+.corevalues-section > h2,
+.corevalues-grid {
+  position: relative;
+  z-index: 2;
+}
+/* Delays para la animación float */
+.corevalues-grid .corevalue-card:nth-child(2) { animation-delay: 0.7s; }
+.corevalues-grid .corevalue-card:nth-child(3) { animation-delay: 1.4s; }
+.corevalues-grid .corevalue-card:nth-child(4) { animation-delay: 2.1s; }
+.corevalues-grid .corevalue-card:nth-child(5) { animation-delay: 2.8s; }
+.corevalues-grid .corevalue-card:nth-child(6) { animation-delay: 3.2s; }
+/* Clase especial para gestionar mejor las animaciones sin conflictos */
+.corevalue-card.no-float {
+  animation: none !important;
+}
+
+/* Asegurarse de que la animación float no interfiera con el efecto flip */
+.corevalue-card.flipped:hover {
+  box-shadow: 0 10px 40px 0 rgba(0,0,0,0.18);
+  transform: rotateY(180deg) !important;
+  -webkit-transform: rotateY(180deg) !important;
+  -moz-transform: rotateY(180deg) !important;
+}
+
+/* Asegurar que el border-radius se mantenga en todos los estados */
+.corevalue-card, 
+.corevalue-card.flipped,
+.corevalue-card.flipping,
+.corevalue-card-front,
+.corevalue-card-back,
+.corevalue-card-inner {
+  border-radius: 2rem;
+}
+
+/* Estilos para el logo de ADN en el reverso de las tarjetas */
+.corevalue-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin: 0 auto 1.5rem auto;
+  display: block;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+.corevalue-card:hover .corevalue-logo,
+.corevalue-card:focus .corevalue-logo {
+  opacity: 1;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* Responsivo para móviles */
+@media (max-width: 900px) {
+  .corevalue-logo {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .corevalue-logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.8rem;
+  }
+}

@@ -1,0 +1,70 @@
+/* Media Queries específicas para optimización de videos */
+
+/* Dispositivos de gama baja */
+@media (max-device-width: 480px) and (max-device-height: 854px) {
+  .services-background-video {
+    display: none !important;
+  }
+
+  /* .services-section backgrounds removidos para usar variables globales */
+}
+
+/* Conexión lenta */
+@media (prefers-reduced-data: reduce) {
+  .services-background-video {
+    display: none;
+  }
+
+  /* .services-section backgrounds removidos para usar variables globales */
+}
+
+/* Dispositivos con batería baja */
+@media (max-device-width: 768px) and (orientation: portrait) {
+  .services-background-video {
+    display: none;
+  }
+
+  /* .services-section backgrounds removidos para usar variables globales */
+}
+
+/* Tablets en orientación vertical */
+@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+  .services-background-video {
+    filter: blur(4px);
+    transform: scale(1.05);
+  }
+}
+
+/* Optimización para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .services-background-video {
+    filter: blur(6px);
+  }
+}
+
+/* Modo de contraste alto */
+@media (prefers-contrast: high) {
+  /* .services-section::before {
+    background: rgba(0, 0, 0, 0.6);
+  } */
+
+  .services-content h2,
+  .services-content p {
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Modo sin animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .services-background-video {
+    animation: none !important;
+    transition: none !important;
+    filter: blur(2px);
+  }
+
+  .services-section {
+    transition: none !important;
+    background: var(--bg-section-alt) !important;
+  }
+}
