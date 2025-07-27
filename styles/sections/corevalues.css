@@ -107,17 +107,27 @@ body.dark .corevalue-card-back {
   border: 1px solid rgba(179, 209, 255, 0.15); /* Borde sutil azul claro para modo oscuro */
 }
 .corevalue-title {
+  font-family: 'Abril Fatface', serif;
   font-size: 2.3rem;
   font-weight: 700;
   margin-bottom: 1.3rem;
   letter-spacing: 0.02em;
-  color: var(--primary, #0078d4);
+  color: #7c26ad;
 }
+
+[data-theme="dark"] .corevalue-title {
+  color: #a842e3;
+}
+
 .corevalue-verse {
   font-size: 1.25rem;
   font-style: italic;
   margin-bottom: 1rem;
   color: var(--corevalue-verse, #444);
+}
+
+[data-theme="dark"] .corevalue-verse {
+  color: #e1c4f2;
 }
 .corevalue-ref {
   font-size: 1.1rem;
@@ -141,6 +151,7 @@ body.dark .corevalue-card-back {
     overflow: hidden; /* Evitar que el contenido se salga */
   }
   .corevalue-title {
+    font-family: 'Abril Fatface', serif;
     font-size: 1.5rem;
     margin-bottom: 1rem; /* Reducir el margen para mejor aprovechamiento del espacio */
   }

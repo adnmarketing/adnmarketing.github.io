@@ -85,11 +85,12 @@
 
 
 #Contactus h2 {
+  font-family: 'Abril Fatface', serif;
   margin-bottom: 1.2rem;
 }
 
 #Contactus h3 {
-  color: #734726;
+  color: #7c26ad;
   /* Café capuchino modo claro */
   font-weight: 400;
   letter-spacing: 0.5px;
@@ -97,7 +98,7 @@
 }
 
 [data-theme="dark"] #Contactus h3 {
-  color: #ffe066;
+  color: #a842e3;
   /* Amarillo pastel modo oscuro */
 }
 
@@ -129,7 +130,8 @@
 }
 
 .social-title {
-  color: #7c4f2c;
+  font-family: 'Abril Fatface', serif;
+  color: #7c26ad;
   /* Café capuchino para modo claro */
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -137,6 +139,6 @@
 }
 
 [data-theme="dark"] .social-title {
-  color: #ffe066;
+  color: #a842e3;
   /* Amarillo pastel para modo oscuro */
 }

@@ -1,0 +1,14 @@
+{
+  "slides": [
+    {
+      "subtitle": "Nuestra Misión",
+      "description": "En ADN Marketing Agency, nuestra misión es impulsar el crecimiento de negocios mediante estrategias de marketing creativas, auténticas y efectivas. Nos enfocamos en conectar marcas con personas a través de contenido que emociona, diseños que comunican y campañas que generan resultados reales. Creemos en el poder de las buenas ideas, el trabajo en equipo y el compromiso con la excelencia.",
+      "image": "assets/images/mission-vision/mission.webp"
+    },
+    {
+      "subtitle": "Nuestra Visión",
+      "description": "Ser la agencia de marketing de referencia en la región de los Dos Laredos y más allá, reconocida por nuestra capacidad de transformar negocios a través de una comunicación honesta, visualmente poderosa y estratégicamente pensada. Queremos construir un ecosistema donde las marcas crezcan con propósito y donde cada cliente se sienta parte de algo más grande: una comunidad que cree en el valor del proceso, la innovación constante y la conexión humana.",
+      "image": "assets/images/mission-vision/vision.webp"
+    }
+  ]
+}

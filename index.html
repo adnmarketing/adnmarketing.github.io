@@ -4,6 +4,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Script para determinar tema ANTES de cargar CSS (evita FOUC) -->
+  <script>
+    (function() {
+      // Función para obtener tema por hora (igual que en main.js)
+      function getDefaultThemeByHour() {
+        const now = new Date();
+        const hour = now.getHours();
+        // Noche: de 20 (8pm) a 6:59am
+        return (hour >= 20 || hour < 7) ? "dark" : "light";
+      }
+      
+      // Determinar tema inicial
+      // 1. Primero verificar si hay una preferencia guardada del toggle manual
+      let theme = localStorage.getItem("theme");
+      
+      // 2. Si no hay preferencia guardada, usar la hora del día
+      if (!theme) {
+        theme = getDefaultThemeByHour();
+      }
+      
+      // 3. Aplicar el tema INMEDIATAMENTE al documentElement
+      document.documentElement.setAttribute("data-theme", theme);
+      
+      // 4. También añadir clase al body si es necesario para compatibilidad
+      if (theme === "light") {
+        document.documentElement.classList.add('theme-light');
+      } else {
+        document.documentElement.classList.add('theme-dark');
+      }
+    })();
+  </script>
+  
   <title>ADN Marketing Agency</title>
   <link rel="stylesheet" href="styles/main.css" />
   <link rel="stylesheet" href="styles/footer.css" />
@@ -40,12 +73,13 @@
 
     <div class="nav-menu">
       <ul>
+        <li><a href="#Home">Inicio</a></li>
         <li><a href="#MissionAndVision">Misión y Visión</a></li>
-        <li><a href="#CoreValues ">Valores</a></li>
+        <li><a href="#CoreValues">Valores</a></li>
         <li><a href="#Team">Equipo</a></li>
         <li><a href="#Services">Servicios</a></li>
         <li><a href="#Portfolio">Nuestros clientes</a></li>
-        <li><a href="#Contactus">Contáctanos </a></li>
+        <li><a href="#Contactus">Contáctanos</a></li>
       </ul>
 
       <div class="tdnn">
@@ -54,7 +88,7 @@
     </div>
   </nav>
 
-  <header class="hero">
+  <header id="Home" class="hero">
     <img class="animate-fade-down hero-logo" src="assets/images/logos/adn_logo_b.svg" alt="Logo ADN" />
   </header>
 
@@ -286,64 +320,82 @@
     <h2>Servicios</h2>
     <div class="services-container">
       <!-- Servicio 1: Contenido Visual -->
-      <div class="service-pillar has-background-image from-top" data-service-index="0">
-        <div class="service-bg-blur" style="background-image: url('assets/images/services/content_visual.webp');"></div>
-        <div class="service-content">
-          <h3 class="service-title">Contenido Visual Profesional</h3>
+      <div class="service-pillar-wrapper">
+        <div class="service-pillar has-background-image from-top" data-service-index="0">
+          <div class="service-bg-blur" style="background-image: url('assets/images/services/content_visual.webp');"></div>
+          <div class="service-content">
+            <!-- Contenido visual del pilar sin texto -->
+          </div>
         </div>
+        <h3 class="service-title">Contenido Visual Profesional</h3>
       </div>
 
       <!-- Servicio 2: Producción de Video -->
-      <div class="service-pillar has-background-image from-bottom" data-service-index="1">
-        <div class="service-bg-blur" style="background-image: url('assets/images/services/video_production.webp');"></div>
-        <div class="service-content">
-          <h3 class="service-title">Producción y Edición de Video</h3>
+      <div class="service-pillar-wrapper">
+        <div class="service-pillar has-background-image from-bottom" data-service-index="1">
+          <div class="service-bg-blur" style="background-image: url('assets/images/services/video_production.webp');"></div>
+          <div class="service-content">
+            <!-- Contenido visual del pilar sin texto -->
+          </div>
         </div>
+        <h3 class="service-title">Producción y Edición de Video</h3>
       </div>
 
       <!-- Servicio 3: Diseño Gráfico -->
-      <div class="service-pillar has-background-image from-top" data-service-index="2">
-        <div class="service-bg-blur" style="background-image: url('assets/images/services/graphic_design.webp');"></div>
-        <div class="service-content">
-          <h3 class="service-title">Diseño Gráfico Estratégico</h3>
+      <div class="service-pillar-wrapper">
+        <div class="service-pillar has-background-image from-top" data-service-index="2">
+          <div class="service-bg-blur" style="background-image: url('assets/images/services/graphic_design.webp');"></div>
+          <div class="service-content">
+            <!-- Contenido visual del pilar sin texto -->
+          </div>
         </div>
+        <h3 class="service-title">Diseño Gráfico Estratégico</h3>
       </div>
 
       <!-- Servicio 4: Gestión de Redes -->
-      <div class="service-pillar has-background-image from-bottom" data-service-index="3">
-        <div class="service-bg-blur" style="background-image: url('assets/images/services/social_media_management.webp');"></div>
-        <div class="service-content">
-          <h3 class="service-title">Gestión de Redes Sociales</h3>
+      <div class="service-pillar-wrapper">
+        <div class="service-pillar has-background-image from-bottom" data-service-index="3">
+          <div class="service-bg-blur" style="background-image: url('assets/images/services/social_media_management.webp');"></div>
+          <div class="service-content">
+            <!-- Contenido visual del pilar sin texto -->
+          </div>
         </div>
+        <h3 class="service-title">Gestión de Redes Sociales</h3>
       </div>
 
       <!-- Servicio 5: Publicidad Digital -->
-      <div class="service-pillar has-background-image from-top" data-service-index="4">
-        <div class="service-bg-blur" style="background-image: url('assets/images/services/digital_advertising.webp');"></div>
-        <div class="service-content">
-          <h3 class="service-title">Publicidad Digital</h3>
+      <div class="service-pillar-wrapper">
+        <div class="service-pillar has-background-image from-top" data-service-index="4">
+          <div class="service-bg-blur" style="background-image: url('assets/images/services/digital_advertising.webp');"></div>
+          <div class="service-content">
+            <!-- Contenido visual del pilar sin texto -->
+          </div>
         </div>
+        <h3 class="service-title">Publicidad Digital</h3>
       </div>
 
       <!-- Servicio 6: Consultoría -->
-      <div class="service-pillar has-background-image from-bottom" data-service-index="5">
-        <div class="service-bg-blur" style="background-image: url('assets/images/services/brand_strategy.webp');"></div>
-        <div class="service-content">
-          <h3 class="service-title">Consultoría y Estrategia de Marca</h3>
+      <div class="service-pillar-wrapper">
+        <div class="service-pillar has-background-image from-bottom" data-service-index="5">
+          <div class="service-bg-blur" style="background-image: url('assets/images/services/brand_strategy.webp');"></div>
+          <div class="service-content">
+            <!-- Contenido visual del pilar sin texto -->
+          </div>
         </div>
+        <h3 class="service-title">Consultoría y Estrategia de Marca</h3>
       </div>
 
       <!-- Servicio 7: Automatización -->
-      <div class="service-pillar has-background-image from-top" data-service-index="6">
-        <div class="service-bg-blur" style="background-image: url('assets/images/services/automation_followup.webp');"></div>
-        <div class="service-content">
-          <h3 class="service-title">Automatización y Seguimiento</h3>
+      <div class="service-pillar-wrapper">
+        <div class="service-pillar has-background-image from-top" data-service-index="6">
+          <div class="service-bg-blur" style="background-image: url('assets/images/services/automation_followup.webp');"></div>
+          <div class="service-content">
+            <!-- Contenido visual del pilar sin texto -->
+          </div>
         </div>
+        <h3 class="service-title">Automatización y Seguimiento</h3>
       </div>
     </div>
-
-    <!-- Overlay para mostrar nombre del servicio en hover -->
-    <div class="service-title-overlay"></div>
   </section>
 
   <section id="Portfolio" class="section animate-fade-up">
@@ -450,11 +502,26 @@
         &copy; <span id="footer-year-range"></span> ADN | Marketing Agency. Todos los derechos reservados.
       </div>
       <div class="footer__lang">
-        <label for="footer-lang-select" style="font-size:0.98em;">Idioma:</label>
-        <select id="footer-lang-select" class="footer__select" aria-label="Seleccionar idioma">
-          <option value="es">ES</option>
-          <option value="en">EN</option>
-        </select>
+        <label style="font-size:0.98em;">Idioma:</label>
+        <div class="select-menu">
+          <div class="select-btn">
+            <span class="btn-text">
+              <img src="assets/images/flags/flag-mexico.png" alt="México" class="flag-img" />
+              ES
+            </span>
+            <i class="chevron-down">&#x25BC;</i>
+          </div>
+          <ul class="options">
+            <li class="option" data-value="es">
+              <img src="assets/images/flags/flag-mexico.png" alt="México" class="flag flag-img" />
+              <span class="option-text">Español</span>
+            </li>
+            <li class="option" data-value="en">
+              <img src="assets/images/flags/flag-usa.png" alt="Estados Unidos" class="flag flag-img" />
+              <span class="option-text">English</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </footer>
@@ -463,20 +530,23 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+  
   <script src="scripts/viewport-config.js"></script>
   <script src="scripts/config/video-config.js"></script>
   <script src="scripts/viewport-manager.js"></script>
+  <script src="scripts/navigation-scroll.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/sections/portfolio.js"></script>
   <script src="scripts/sections/mission-vision.js"></script>
   <script src="scripts/sections/services.js"></script>
-  <script src="scripts/sections/services-pillars-static.js"></script>
+  <script src="scripts/sections/services-pillars-simple.js"></script>
   <script src="scripts/sections/corevalues.js"></script>
   <!-- <script src="scripts/sections/corevalues-particles.js"></script> -->
   <!-- <script src="scripts/utils/image-optimization.js"></script> -->
   <script src="scripts/sections/team.js"></script>
   <!-- <script src="scripts/sections/team-background.js"></script> -->
   <script src="scripts/sections/team-modal.js"></script>
+  <script src="scripts/sections/footer.js"></script>
   <script src="scripts/viewport-testing.js"></script>
 </body>
 

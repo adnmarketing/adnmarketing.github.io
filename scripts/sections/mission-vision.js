@@ -54,7 +54,7 @@ class MissionVisionSlider {
 
   async loadSlideData() {
     try {
-      const response = await fetch('assets/data/mission-vision-content.json');
+      const response = await fetch('data/mission-vision-content.json');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -180,6 +180,89 @@ class MissionVisionSlider {
         this.nextSlide();
       }
     });
+
+    // Touch/Swipe navigation for mobile devices
+    this.setupTouchNavigation();
+  }
+
+  setupTouchNavigation() {
+    const glassPanel = document.querySelector('.glass-panel');
+    if (!glassPanel) return;
+
+    let startX = 0;
+    let startY = 0;
+    let startTime = 0;
+    let isScrolling = false;
+
+    // Touch start
+    glassPanel.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      startTime = Date.now();
+      isScrolling = false;
+    }, { passive: true });
+
+    // Touch move - determine if it's a horizontal swipe
+    glassPanel.addEventListener('touchmove', (e) => {
+      if (!startX || !startY) return;
+
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = Math.abs(currentX - startX);
+      const diffY = Math.abs(currentY - startY);
+
+      // Determine scroll direction
+      if (diffY > diffX) {
+        isScrolling = true; // Vertical scroll
+      } else if (diffX > 10 && !isScrolling) {
+        // Horizontal swipe detected, prevent default scrolling
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    // Touch end - execute swipe action
+    glassPanel.addEventListener('touchend', (e) => {
+      if (!startX || !startY || isScrolling) {
+        startX = 0;
+        startY = 0;
+        return;
+      }
+
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffX = startX - endX;
+      const diffY = Math.abs(startY - endY);
+      const diffTime = Date.now() - startTime;
+
+      // Minimum swipe distance and maximum time for a valid swipe
+      const minSwipeDistance = 50;
+      const maxSwipeTime = 300;
+      const maxVerticalDistance = 100;
+
+      // Check if it's a valid horizontal swipe
+      if (Math.abs(diffX) > minSwipeDistance && 
+          diffY < maxVerticalDistance && 
+          diffTime < maxSwipeTime) {
+        
+        if (diffX > 0) {
+          // Swiped left - go to next slide
+          this.nextSlide();
+          console.log('Swipe left - next slide');
+        } else {
+          // Swiped right - go to previous slide
+          this.previousSlide();
+          console.log('Swipe right - previous slide');
+        }
+
+        // Pause auto-advance temporarily after swipe
+        this.pauseAutoAdvance();
+        setTimeout(() => this.resumeAutoAdvance(), 3000);
+      }
+
+      // Reset values
+      startX = 0;
+      startY = 0;
+    }, { passive: true });
   }
 
   goToSlide(index) {

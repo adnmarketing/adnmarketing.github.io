@@ -35,40 +35,29 @@
 .services-container {
   display: flex;
   flex-direction: row;
-  height: 70vh;
+  height: 75vh; /* Aumentar la altura total */
   width: 100%;
   margin: 0;
   gap: 1rem;
   position: relative;
   z-index: 5;
-  align-items: stretch;
+  align-items: flex-start;
   padding: 0 1rem;
 }
 
-/* Overlay para mostrar nombre del servicio en hover (similar a team) */
+/* Wrapper para cada pilar + título */
+.service-pillar-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; /* Espacio entre pilar y título */
+  height: 100%;
+}
+
+/* Overlay para mostrar nombre del servicio - ELIMINADO */
 .service-title-overlay {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--text-heading);
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 100;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="dark"] .service-title-overlay {
-  color: var(--text-heading);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.service-title-overlay.show {
-  opacity: 1;
+  display: none; /* Ya no se usa */
 }
 
 .service-pillar {
@@ -84,9 +73,9 @@
   transition: all 0.3s ease;
   overflow: hidden;
   border: 2px solid transparent;
-  height: 100%;
+  height: calc(100% - 2rem); /* Menos descuento para que sea más grueso */
   cursor: pointer;
-  /* Eliminamos background-clip que puede interferir */
+  width: 100%; /* Asegurar que ocupe todo el ancho disponible */
 }
 
 /* Estilos para pilares con imagen de fondo */
@@ -161,46 +150,63 @@
 
 .service-content {
   position: relative;
-  z-index: 10; /* MUY por encima del separador blur */
+  z-index: 10; /* Por encima del separador blur */
   text-align: center;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: transparent !important; /* Completamente transparente */
-  pointer-events: none; /* No interferir con el hover del pilar */
-}
-
-/* Título simple y limpio */
-.service-pillar.has-background-image .service-title {
-  color: #ffffff !important;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9) !important;
   background: transparent !important;
-  padding: 0 !important;
-  border: none !important;
-  margin: 0 !important;
-  pointer-events: auto;
-  transition: opacity 0.4s ease !important;
-  opacity: 1;
+  pointer-events: none;
+  width: 100%;
 }
 
-/* Ocultar texto en hover */
-.service-pillar:hover .service-title {
-  opacity: 0 !important;
-}
-
+/* Título como texto simple debajo del pilar */
 .service-title {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font-size: 1.2rem; /* Tamaño homologado estándar */
+  font-weight: 400;
   color: var(--text-heading);
-  margin: 0; /* Sin margen */
-  padding: 0; /* Sin padding */
+  margin: 0;
+  padding: 0;
   line-height: 1.3;
   text-align: center;
-  transition: opacity 0.3s ease;
-  background: none; /* Sin fondo por defecto */
-  border: none; /* Sin borde */
+  background: none !important; /* Sin fondo */
+  border: none !important; /* Sin borde */
+  box-shadow: none !important; /* Sin sombra */
+  border-radius: 0 !important; /* Sin border radius */
+  opacity: 0 !important; /* Inicialmente oculto */
+  transform: translateY(20px); /* Inicia un poco abajo */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  font-family: 'Abril Fatface', serif;
+  /* Permitir que el texto se ajuste al ancho del pilar */
+  max-width: 100%;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Clase para mostrar el título después de la animación */
+.service-title.show {
+  opacity: 1 !important;
+  transform: translateY(0);
+}
+
+/* Eliminar todos los estilos especiales anteriores */
+.service-pillar.has-background-image .service-title {
+  color: var(--text-heading) !important;
+  background: none !important;
+  text-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+[data-theme="dark"] .service-pillar.has-background-image .service-title {
+  background: none !important;
+  color: var(--text-heading);
+}
+
+/* Mantener siempre visible en hover */
+.service-pillar:hover .service-title {
+  opacity: 1 !important;
 }
 
 /* Ocultar descripción completamente ya que solo queremos el nombre */
@@ -208,25 +214,17 @@
   display: none;
 }
 
-/* Animaciones GSAP - Estados iniciales */
-.service-pillar.from-top {
-  transform: translateY(-100vh);
-  opacity: 0;
-}
-
-.service-pillar.from-bottom {
-  transform: translateY(100vh);
-  opacity: 0;
-}
-
-.service-pillar.from-left {
-  transform: translateX(-100vw);
-  opacity: 0;
-}
-
+/* Animaciones GSAP - Estados iniciales (GSAP los sobrescribirá) */
+.service-pillar.from-top,
+.service-pillar.from-bottom,
+.service-pillar.from-left,
 .service-pillar.from-right {
-  transform: translateX(100vw);
-  opacity: 0;
+  opacity: 0; /* Solo opacity inicial, GSAP maneja el transform */
+}
+
+/* Estado final después de la animación - sin !important para evitar conflictos */
+.service-pillar.animated {
+  opacity: 1;
 }
 
 /* Responsive - Mobile */
@@ -234,38 +232,41 @@
   .services-container {
     flex-direction: column;
     height: auto;
-    gap: 1.5rem;
+    gap: 2rem;
+  }
+  
+  .service-pillar-wrapper {
+    width: 100%;
+    gap: 0.8rem;
   }
   
   .service-pillar {
-    min-height: 120px;
+    min-height: 140px; /* Más alto */
+    height: 140px; /* Altura fija más generosa en mobile */
     padding: 1.5rem;
-    flex-direction: row;
+    width: 100%;
   }
   
   .service-content {
-    flex-direction: row;
-    text-align: left;
-    align-items: flex-start;
-    gap: 1rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .service-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    min-width: 180px;
-    flex-shrink: 0;
+    font-size: 1.1rem; /* Homologado para tablet */
+    line-height: 1.2;
   }
 
-  /* Ajustes para móvil con imágenes de fondo */
-  .service-pillar.has-background-image .service-title {
-    font-size: 1.2rem;
-    padding: 0.4rem 0.8rem;
-    min-width: auto;
+  /* Los títulos mantienen el mismo comportamiento en mobile */
+  .service-title.show {
+    opacity: 1 !important;
+    transform: translateY(0);
   }
-  
+
   .service-description {
-    display: none; /* Ocultar descripción en móvil también */
+    display: none;
   }
 }
 
@@ -290,7 +291,7 @@
   }
   
   .service-title {
-    font-size: 1.1rem;
+    font-size: 1.0rem; /* Homologado para móvil */
     min-width: 140px;
   }
   
@@ -320,14 +321,9 @@ body.dark .service-pillar:hover {
   border-color: var(--primary, #4299e1);
 }
 
-/* Responsive - Overlay para móviles */
+/* Responsive - Mobile adicional */
 @media (max-width: 768px) {
-  .service-title-overlay {
-    bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
   .service-title {
-    font-size: 1.2rem;
+    font-size: 0.9rem; /* Homologado para móvil pequeño */
   }
 }

@@ -33,19 +33,193 @@
   gap: 0.5em;
 }
 
-.footer__select {
-  padding: 0.3em 1.2em 0.3em 0.7em;
-  border-radius: 0.5em;
-  border: 1px solid #ccc;
-  background: var(--section-bg, #fff);
-  color: var(--text-body, #222);
-  font-size: 1em;
-  outline: none;
-  transition: border 0.2s;
+/* Select personalizado profesional para idiomas */
+.select-menu {
+  position: relative;
+  min-width: 140px;
+  font-family: inherit;
 }
 
-.footer__select:focus {
-  border: 1.5px solid #0078d4;
+.select-menu .select-btn {
+  display: flex;
+  height: 45px;
+  background-color: var(--bg-section, #ffffff);
+  padding: 0 1rem;
+  font-size: 0.95em;
+  font-weight: 400;
+  border-radius: 1rem;
+  align-items: center;
+  cursor: pointer;
+  justify-content: space-between;
+  border: 1px solid var(--section-border, #e0e0e0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  color: var(--text-body, #222);
+  gap: 0.5rem;
+}
+
+.select-menu .select-btn:hover {
+  border-color: var(--primary, #0078d4);
+  box-shadow: 0 4px 12px rgba(0, 120, 212, 0.15);
+  transform: translateY(-1px);
+}
+
+.select-btn .chevron-down {
+  font-size: 0.8em;
+  transition: transform 0.3s ease;
+  opacity: 0.7;
+  font-weight: normal;
+  color: var(--text-body, #222);
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.select-menu.active .select-btn .chevron-down {
+  transform: rotate(180deg);
+}
+
+/* Modo oscuro para el ícono */
+[data-theme="dark"] .select-btn .chevron-down {
+  color: var(--text-body, #e0e0e0);
+  font-style: normal;
+}
+
+.select-menu.active .select-btn {
+  border-color: var(--primary, #0078d4);
+  box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+}
+
+.select-menu .options {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  border-radius: 1rem;
+  background-color: var(--bg-section, #ffffff);
+  border: 1px solid var(--section-border, #e0e0e0);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  list-style: none;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.select-menu.active .options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.options .option {
+  display: flex;
+  height: 45px;
+  cursor: pointer;
+  padding: 0 1rem;
+  align-items: center;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+  gap: 0.5rem;
+}
+
+.options .option:hover {
+  background-color: var(--bg-section-alt, #f5f5f5);
+}
+
+.option .flag {
+  min-width: 1.5em;
+}
+
+/* Banderas con imágenes PNG - Diseño profesional */
+.flag-img {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  margin-right: 0.5rem;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+/* Modo oscuro - ajustar borde de las banderas */
+[data-theme="dark"] .flag-img {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.option .option-text {
+  font-size: 0.95em;
+  color: var(--text-body, #222);
+  flex: 1;
+}
+
+/* Modo oscuro */
+[data-theme="dark"] .select-menu .select-btn {
+  background-color: var(--bg-section-alt, #2a2a2a);
+  color: var(--text-body, #e0e0e0);
+  border-color: var(--section-border, #3a3a3a);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .select-menu .select-btn:hover {
+  border-color: var(--primary-dark, #4299e1);
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
+}
+
+[data-theme="dark"] .select-menu.active .select-btn {
+  border-color: var(--primary-dark, #4299e1);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+[data-theme="dark"] .select-menu .options {
+  background-color: var(--bg-section-alt, #2a2a2a);
+  border-color: var(--section-border, #3a3a3a);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .options .option:hover {
+  background-color: var(--bg-section, #212121);
+}
+
+[data-theme="dark"] .option .option-text {
+  color: var(--text-body, #e0e0e0);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .select-menu {
+    min-width: 120px;
+  }
+  
+  .select-menu .select-btn {
+    height: 40px;
+    font-size: 0.9em;
+    padding: 0 0.8rem;
+  }
+  
+  .options .option {
+    height: 40px;
+    padding: 0 0.8rem;
+  }
+  
+  .option .option-text {
+    font-size: 0.9em;
+  }
+  
+  .flag-img {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .select-btn .chevron-down {
+    font-size: 0.8em;
+  }
 }
 
 @media (max-width: 600px) {
@@ -58,5 +232,47 @@
   .footer {
     font-size: 0.95rem;
     padding: 1.2rem 0.5rem 0.7rem 0.5rem;
+  }
+
+  .footer__lang {
+    align-self: center;
+    margin-top: 0.5rem;
+  }
+
+  .select-menu {
+    min-width: 120px;
+  }
+  
+  .select-menu .select-btn {
+    height: 40px;
+    font-size: 0.9em;
+    padding: 0 0.8rem;
+  }
+  
+  .options .option {
+    height: 40px;
+    padding: 0 0.8rem;
+  }
+  
+  .option .option-text {
+    font-size: 0.9em;
+  }
+}
+
+/* Soporte para sistemas con preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .select-menu .select-btn,
+  .select-menu .options,
+  .select-btn .chevron-down {
+    transition: none;
+    animation: none;
+  }
+  
+  .select-menu .select-btn:hover {
+    transform: none;
+  }
+  
+  .select-menu.active .select-btn .chevron-down {
+    transform: none;
   }
 }

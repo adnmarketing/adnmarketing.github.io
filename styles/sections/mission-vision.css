@@ -14,14 +14,15 @@
   margin-bottom: 3rem;
   text-align: center;
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text-color);
+  font-family: 'Abril Fatface', serif;
 }
 
 .mission-vision-container {
   width: 100%;
   max-width: 95vw;
-  height: 85vh;
+  height: 95vh; /* Altura aumentada para acomodar imagen grande */
   position: relative;
 }
 
@@ -135,7 +136,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
-  align-items: center;
+  align-items: stretch; /* Cambiar a stretch para usar todo el espacio */
   opacity: 0;
   transform: translateX(50px);
   transition: all 0.6s ease;
@@ -152,43 +153,51 @@
   transform: translateX(-50px);
 }
 
-.slide-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.slide-subtitle {
+  .slide-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinear al inicio para consistencia */
+    height: auto; /* Altura automática */
+    padding: 1rem 0; /* Padding reducido y consistente */
+    margin-bottom: 2rem; /* Margen inferior para separación */
+  }.slide-subtitle {
   font-size: 2.2rem;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text-color);
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  font-family: 'Abril Fatface', serif;
 }
 
 .slide-description {
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 2.0rem !important; /* Tamaño grande, casi subtítulo */
+  font-weight: 300 !important; /* Grosor delgado/thin */
+  font-family: 'Space Grotesk', sans-serif !important;
+  line-height: 1.8;
   color: var(--text-color);
   opacity: 0.9;
 }
 
-.slide-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.slide-image img {
+  .slide-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto; /* Altura dinámica */
+  }.slide-image img {
   max-width: 100%;
+  max-height: 80vh; /* Altura mucho mayor - casi todo el viewport */
+  width: auto;
   height: auto;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+  object-fit: contain; /* Mantener proporciones sin recortar */
+  border-radius: 20px; /* Bordes más redondeados */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .slide-image img:hover {
-  transform: scale(1.05);
+  transform: scale(1.03); /* Efecto hover más sutil */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
 
 /* Pagination Dots */
@@ -246,7 +255,8 @@
   
   .mission-vision-container {
     max-width: 90vw;
-    height: 75vh;
+    height: auto; /* Altura dinámica para tablet también */
+    min-height: 85vh; /* Altura mínima */
   }
   
   .glass-panel {
@@ -255,16 +265,40 @@
   
   .slide {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem; /* Gap reducido para mejor aprovechamiento */
     text-align: center;
+    height: auto; /* Altura dinámica para el slide en móvil */
+    position: relative; /* Cambiar de absolute a relative para flujo natural */
+    padding: 1rem 0; /* Padding consistente */
+    display: flex; /* Cambiar a flex para mejor control */
+    flex-direction: column; /* Dirección vertical */
+    justify-content: flex-start; /* Alinear al inicio */
+    touch-action: pan-y; /* Controlar gestos táctiles */
+    -webkit-touch-callout: none; /* Deshabilitar callout en iOS */
+  }
+  
+  .slides-container {
+    height: auto; /* Altura dinámica para el contenedor de slides */
+    min-height: auto; /* Sin altura mínima fija */
+    padding: 1rem 0; /* Padding consistente */
   }
   
   .slide-subtitle {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
   }
   
   .slide-description {
-    font-size: 1rem;
+    font-size: 1.0rem !important; /* Mitad del tamaño de la versión web */
+    font-weight: 300 !important; /* Grosor delgado */
+    font-family: 'Space Grotesk', sans-serif !important;
+  }
+  
+  .slide-image img {
+    max-height: none; /* Sin restricción de altura máxima */
+    width: 90%; /* Ancho ligeramente reducido para tablet */
+    height: auto; /* Altura automática para mantener proporciones */
+    object-fit: contain; /* Mostrar imagen completa */
+    border-radius: 15px; /* Bordes ligeramente menos redondeados */
   }
   
   .nav-arrow {
@@ -294,16 +328,59 @@
   
   .mission-vision-container {
     max-width: 95vw;
-    height: 70vh;
+    height: auto; /* Altura dinámica para ajustarse al contenido */
+    min-height: auto; /* Sin altura mínima fija */
   }
   
   .glass-panel {
     padding: 1.5rem;
     border-radius: 15px;
+    height: auto; /* Altura dinámica para el glass panel */
+    min-height: auto; /* Sin altura mínima fija */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinear contenido al inicio */
+    touch-action: pan-y; /* Permitir scroll vertical, controlar horizontal para swipe */
+    user-select: none; /* Evitar selección de texto durante swipe */
   }
   
   .slide-subtitle {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+  }
+  
+  .slide-description {
+    font-size: 1.0rem !important; /* Mitad del tamaño de la versión web */
+    font-weight: 300 !important; /* Grosor delgado */
+    font-family: 'Space Grotesk', sans-serif !important;
+  }
+  
+  .slide-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinear al inicio para consistencia */
+    height: auto; /* Altura automática */
+    padding: 1rem 0; /* Padding reducido y consistente */
+    margin-bottom: 1rem; /* Margen inferior reducido */
+    order: 1; /* Orden para móvil: texto primero */
+  }
+  
+  .slide-image {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinear al inicio */
+    width: 100%;
+    height: auto; /* Altura dinámica */
+    margin-top: 1rem; /* Margen superior consistente */
+    order: 2; /* Orden para móvil: imagen después */
+  }
+  
+  .slide-image img {
+    width: 100%; /* Ancho completo para llenar el contenedor */
+    height: auto; /* Altura automática para mantener proporciones naturales */
+    max-width: 100%; /* Máximo ancho del contenedor */
+    object-fit: contain; /* Mostrar imagen completa sin recortes */
+    border-radius: 12px; /* Bordes menos redondeados para móviles */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Sombra reducida */
   }
   
   .pagination-dots {

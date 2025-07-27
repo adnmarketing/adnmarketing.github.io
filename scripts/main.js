@@ -149,7 +149,8 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 500);
 });
 
-// 4) Detectar y aplicar tema inicial (por hora local, ignorando localStorage)
+// 4) El tema ya fue aplicado en el <head>, solo necesitamos sincronizar el estado
+// No necesitamos volver a detectar el tema porque ya se hizo antes de cargar CSS
 function getDefaultThemeByHour() {
   const now = new Date();
   const hour = now.getHours();
@@ -157,10 +158,12 @@ function getDefaultThemeByHour() {
   return (hour >= 20 || hour < 7) ? "dark" : "light";
 }
 
-const prefersDark  = window.matchMedia("(prefers-color-scheme: dark)").matches;
-const defaultTheme = getDefaultThemeByHour();
-const isDark = (defaultTheme === "dark");
-root.setAttribute("data-theme", isDark ? "dark" : "light");
+// El tema ya está aplicado desde el HTML, solo verificamos cuál es
+const currentTheme = root.getAttribute("data-theme") || getDefaultThemeByHour();
+// Asegurar que el tema esté aplicado (por si acaso)
+if (!root.getAttribute("data-theme")) {
+  root.setAttribute("data-theme", currentTheme);
+}
 
 // 5) Función para actualizar rutas de los logos según tema
 function updateLogos() {
@@ -187,15 +190,25 @@ if (themeToggle) {
   themeToggle.addEventListener("click", () => {
     const currentlyDark = root.getAttribute("data-theme") === "dark";
     const nextTheme     = currentlyDark ? "light" : "dark";
-    // Aplicar y almacenar el nuevo tema
+    
+    // Aplicar el nuevo tema
     root.setAttribute("data-theme", nextTheme);
-    localStorage.setItem("theme", nextTheme); // El toggle manual sí guarda preferencia
+    
+    // IMPORTANTE: Guardar la preferencia manual del usuario
+    // Esto tendrá prioridad sobre la detección automática por hora
+    localStorage.setItem("theme", nextTheme);
+    
     // Actualizar logos
     updateLogos();
-    // Actualizar toggle visual
+    
+    // Actualizar toggle visual con transición suave
     themeToggle.classList.toggle("day", nextTheme === "light");
     moonToggle.classList.toggle("sun", nextTheme === "light");
     document.body.classList.toggle("light", nextTheme === "light");
+    
+    // Actualizar clases de compatibilidad
+    document.documentElement.classList.toggle('theme-light', nextTheme === "light");
+    document.documentElement.classList.toggle('theme-dark', nextTheme === "dark");
   });
 }
 // Sincronizar el estado visual del toggle al cargar
@@ -292,3 +305,95 @@ if (langSelect) {
     // Aquí podrías disparar lógica de traducción si la implementas después
   });
 }
+
+// Funcionalidad para ocultar/mostrar navegación al hacer scroll
+(function() {
+  const mainNav = document.querySelector('.main-nav');
+  if (!mainNav) return;
+
+  let lastScrollY = window.scrollY;
+  let isScrollingDown = false;
+  let scrollTimeout;
+  
+  // Umbral mínimo de scroll para activar el efecto (evita parpadeos en scrolls pequeños)
+  const scrollThreshold = 10;
+  
+  // Altura mínima desde la parte superior para empezar a ocultar la nav
+  const minScrollDistance = 100;
+
+  function handleScroll() {
+    const currentScrollY = window.scrollY;
+    const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+    
+    // Solo actuar si el scroll supera el umbral mínimo y estamos lejos del top
+    if (scrollDifference < scrollThreshold || currentScrollY < minScrollDistance) {
+      return;
+    }
+
+    // Detectar dirección del scroll
+    if (currentScrollY > lastScrollY && !isScrollingDown) {
+      // Scrolling hacia abajo - ocultar nav
+      isScrollingDown = true;
+      mainNav.classList.remove('nav-visible');
+      mainNav.classList.add('nav-hidden');
+    } else if (currentScrollY < lastScrollY && isScrollingDown) {
+      // Scrolling hacia arriba - mostrar nav
+      isScrollingDown = false;
+      mainNav.classList.remove('nav-hidden');
+      mainNav.classList.add('nav-visible');
+    }
+
+    lastScrollY = currentScrollY;
+  }
+
+  // Usar requestAnimationFrame para optimizar el rendimiento
+  function optimizedScrollHandler() {
+    if (scrollTimeout) return;
+    
+    scrollTimeout = requestAnimationFrame(() => {
+      handleScroll();
+      scrollTimeout = null;
+    });
+  }
+
+  // Añadir el listener de scroll
+  window.addEventListener('scroll', optimizedScrollHandler, { passive: true });
+
+  // Asegurar que la nav esté visible al cargar la página
+  mainNav.classList.add('nav-visible');
+  
+  // También mostrar la nav si el usuario llega al top de la página
+  window.addEventListener('scroll', () => {
+    if (window.scrollY <= minScrollDistance) {
+      mainNav.classList.remove('nav-hidden');
+      mainNav.classList.add('nav-visible');
+      isScrollingDown = false;
+      lastScrollY = window.scrollY;
+    }
+  }, { passive: true });
+})();
+
+// Opcional: Limpiar preferencia manual después de 24 horas para volver al sistema automático
+// (Comentado por defecto - descomenta si quieres esta funcionalidad)
+/*
+(function() {
+  const themeTimestamp = localStorage.getItem("theme-timestamp");
+  const currentTime = Date.now();
+  const oneDayInMs = 24 * 60 * 60 * 1000; // 24 horas
+  
+  // Si han pasado más de 24 horas desde la última preferencia manual, limpiar
+  if (themeTimestamp && (currentTime - parseInt(themeTimestamp)) > oneDayInMs) {
+    localStorage.removeItem("theme");
+    localStorage.removeItem("theme-timestamp");
+  }
+  
+  // Al hacer toggle manual, guardar timestamp
+  const originalToggle = themeToggle?.addEventListener;
+  if (originalToggle) {
+    // Interceptar el click del toggle para añadir timestamp
+    themeToggle.addEventListener("click", () => {
+      localStorage.setItem("theme-timestamp", Date.now().toString());
+    });
+  }
+})();
+*/

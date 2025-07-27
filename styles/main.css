@@ -1,4 +1,5 @@
 @import url("switch.css");
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Space+Grotesk:wght@300..700&display=swap');
 
 :root {
   /* Colores principales */
@@ -80,7 +81,7 @@
 body {
   background: var(--bg-body);
   color: var(--text-body);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
 }
 
@@ -104,24 +105,36 @@ html, body {
 /* ——— Navegación ——— */
 .main-nav {
   position: fixed;
-  inset: 0 0 auto;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--nav-bg);
   color: var(--nav-text);
-  padding: 18px 32px;
+  padding: 12px 32px;
   z-index: 1000;
-  min-height: 72px;
-  height: 84px;
+  min-height: 60px;
+  height: 70px;
   font-size: 1.13rem;
+  transition: top 0.3s ease-in-out;
+}
+
+/* Estados para ocultar/mostrar navegación */
+.main-nav.nav-hidden {
+  top: -70px; /* Ocultar moviendo hacia arriba */
+}
+
+.main-nav.nav-visible {
+  top: 0; /* Mostrar en posición normal */
 }
 
 .nav-logo {
   position: absolute;
   left: 20px;
-  width: 72px;
-  min-width: 56px;
+  width: 60px;
+  min-width: 48px;
 }
 
 /* Menú de enlaces */
@@ -129,6 +142,9 @@ html, body {
   display: flex;
   align-items: center;
   gap: 2rem;
+  font-family: 'Abril Fatface', serif;
+  margin-left: 80px; /* Espacio para evitar solapamiento con logo */
+  margin-right: 80px; /* Espacio para evitar solapamiento con toggle */
 }
 
 .nav-menu ul {
@@ -141,7 +157,63 @@ html, body {
 .main-nav a {
   color: var(--nav-text);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 400; /* Abril Fatface no necesita bold */
+  font-family: 'Abril Fatface', serif;
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.3s ease;
+}
+
+/* Línea inferior en hover */
+.nav-menu a::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: #7c26ad; /* Color morado oscuro para modo claro */
+  border-radius: 50px;
+  transform: scaleX(0);
+  transition: transform 0.2s linear;
+}
+
+/* Modo oscuro - color más claro */
+[data-theme="dark"] .nav-menu a::before {
+  background: #e1c4f2; /* Color morado claro para modo oscuro */
+}
+
+.nav-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+.nav-menu a:hover {
+  color: #7c26ad; /* Color morado oscuro para modo claro */
+}
+
+/* Modo oscuro - color más claro para hover */
+[data-theme="dark"] .nav-menu a:hover {
+  color: #e1c4f2; /* Color morado claro para modo oscuro */
+}
+
+/* Estado activo para la sección actual */
+.nav-menu a.active {
+  color: #7c26ad; /* Color morado oscuro para modo claro */
+}
+
+/* Modo oscuro - color más claro para estado activo */
+[data-theme="dark"] .nav-menu a.active {
+  color: #e1c4f2; /* Color morado claro para modo oscuro */
+}
+
+.nav-menu a.active::before {
+  transform: scaleX(1);
+  background: #7c26ad; /* Color morado oscuro para modo claro */
+}
+
+/* Modo oscuro - línea activa más clara */
+[data-theme="dark"] .nav-menu a.active::before {
+  background: #e1c4f2; /* Color morado claro para modo oscuro */
 }
 
 /* Botón hamburguesa */
@@ -167,9 +239,18 @@ html, body {
 }
 
 /* Transformaciones al abrir menú */
-.nav-open .nav-toggle span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
-.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+.nav-open .nav-toggle span:nth-child(1),
+body.nav-open .nav-toggle span:nth-child(1) { 
+  transform: translateY(9px) rotate(45deg); 
+}
+.nav-open .nav-toggle span:nth-child(2),
+body.nav-open .nav-toggle span:nth-child(2) { 
+  opacity: 0; 
+}
+.nav-open .nav-toggle span:nth-child(3),
+body.nav-open .nav-toggle span:nth-child(3) { 
+  transform: translateY(-9px) rotate(-45deg); 
+}
 
 /* ——— Hero ——— */
 .hero {
@@ -208,6 +289,8 @@ html, body {
   margin-bottom: 15px;
   color: var(--text-heading);
   transition: color 0.3s ease;
+  font-family: 'Abril Fatface', serif;
+  font-weight: 400;
 }
 
 .section p {
@@ -246,6 +329,31 @@ html, body {
 
 #Contactus {
   background: var(--bg-section-alt) !important;
+}
+
+/* ——— Media queries adicionales para prevenir solapamiento ——— */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .nav-menu {
+    gap: 1.5rem; /* Reducir espacio entre enlaces */
+    margin-left: 100px; /* Más espacio para el logo */
+    margin-right: 100px; /* Más espacio para el toggle */
+  }
+  
+  .nav-menu a {
+    font-size: 0.95rem; /* Texto ligeramente más pequeño */
+  }
+}
+
+@media (max-width: 900px) and (min-width: 769px) {
+  .nav-menu {
+    gap: 1rem; /* Aún menos espacio */
+    margin-left: 90px;
+    margin-right: 90px;
+  }
+  
+  .nav-menu a {
+    font-size: 0.9rem;
+  }
 }
 
 /* ——— Mobile ——— */
@@ -291,6 +399,11 @@ html, body {
     min-width: 36px;
     left: 10px;
   }
+  
+  /* En móvil, ocultamos el menú desktop y solo mostramos el toggle */
+  .nav-menu {
+    margin: 0; /* Remover márgenes en móvil */
+  }
   .nav-toggle {
     display: flex;
     margin-left: auto;
@@ -298,7 +411,7 @@ html, body {
     align-self: center;
     width: 36px;
     height: 32px; /* Aumenta el alto para que la X no se corte */
-    z-index: 1002;
+    z-index: 10000; /* Por encima del menú */
   }
   .nav-toggle span {
     height: 4px;
@@ -306,13 +419,16 @@ html, body {
     margin: 3px 0; /* Espaciado entre barras */
     display: block;
   }
-  .nav-open .nav-toggle span:nth-child(1) {
+  .nav-open .nav-toggle span:nth-child(1),
+  body.nav-open .nav-toggle span:nth-child(1) {
     transform: translateY(12px) rotate(45deg);
   }
-  .nav-open .nav-toggle span:nth-child(2) {
+  .nav-open .nav-toggle span:nth-child(2),
+  body.nav-open .nav-toggle span:nth-child(2) {
     opacity: 0;
   }
-  .nav-open .nav-toggle span:nth-child(3) {
+  .nav-open .nav-toggle span:nth-child(3),
+  body.nav-open .nav-toggle span:nth-child(3) {
     transform: translateY(-12px) rotate(-45deg);
   }
 
@@ -331,15 +447,18 @@ html, body {
     box-shadow: -2px 0 5px rgba(0,0,0,0.2);
     gap: 1.5rem;
     display: flex;
-    z-index: 1001; /* Asegurar que esté por encima del overlay */
+    z-index: 9999; /* Aumentar significativamente */
     box-sizing: border-box; /* Garantizar que el padding no afecte el ancho total */
+    margin: 0; /* Remover cualquier margen */
   }
 
-  .nav-open .nav-menu { 
+  .nav-open .nav-menu,
+  body.nav-open .nav-menu { 
     transform: translateX(0); 
   }
   
-  .nav-open::before {
+  .nav-open::before,
+  body.nav-open::before {
     content: "";
     position: fixed;
     inset: 0;
@@ -360,7 +479,42 @@ html, body {
   }
 
   .nav-menu a { 
-    font-size: 1.2rem; 
+    font-size: 1.2rem;
+    font-family: 'Abril Fatface', serif;
+    font-weight: 400;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin: 4px 0;
+    width: 80%;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  /* Efectos en móvil - más simples */
+  .nav-menu a:hover {
+    color: #7c26ad; /* Modo claro */
+    background: rgba(124, 38, 173, 0.1);
+  }
+
+  .nav-menu a.active {
+    color: #7c26ad; /* Modo claro */
+    background: rgba(124, 38, 173, 0.15);
+  }
+
+  /* Modo oscuro en móvil */
+  [data-theme="dark"] .nav-menu a:hover {
+    color: #e1c4f2; /* Modo oscuro */
+    background: rgba(225, 196, 242, 0.1);
+  }
+
+  [data-theme="dark"] .nav-menu a.active {
+    color: #e1c4f2; /* Modo oscuro */
+    background: rgba(225, 196, 242, 0.15);
+  }
+
+  /* Desactivar línea inferior en móvil */
+  .nav-menu a::before {
+    display: none;
   }
 
   .tdnn {
@@ -404,7 +558,7 @@ html, body {
   right: 20px;
   transform: translateY(-50%);
   margin: 0;
-  z-index: 1002;
+  z-index: 1005; /* Menor que el menú móvil */
 }
 
 @media (max-width: 768px) {
