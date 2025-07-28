@@ -315,7 +315,7 @@
   
   .slides-container {
     height: auto;
-    min-height: 105vh; /* Altura mínima MAYOR para asegurar espacio completo */
+    min-height: 130vh; /* Altura mínima MAYOR para asegurar espacio completo */
     flex: 1; /* Ocupar el espacio restante del glass-panel */
     display: flex;
     align-items: flex-start; /* Alinear contenido al inicio */
