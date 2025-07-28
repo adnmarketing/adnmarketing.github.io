@@ -47,7 +47,7 @@
 }
 
 .services-content h2 {
-  font-size: 3rem;
+  font-size: 2rem; /* Normalizado al estándar de otras secciones */
   margin-bottom: 2rem;
   color: var(--text-heading);
   text-shadow: none;
@@ -101,7 +101,7 @@ body.dark-mode .services-content p {
   } */
 
   .services-content h2 {
-    font-size: 2.5rem;
+    font-size: 1.8rem; /* Proporcionalmente más pequeño para móvil pero normalizado */
   }
 
   .services-content p {

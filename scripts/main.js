@@ -70,25 +70,31 @@ document.querySelectorAll('.animate-fade-down').forEach(el => {
 });
 
 document.querySelectorAll('.animate-fade-up').forEach(el => {
+  // Portfolio section should only reverse when exiting upward
+  const isPortfolio = el.id === 'Portfolio';
+  
   gsap.from(el, {
     y: 50,
     opacity: 0,
     duration: 1,
     scrollTrigger: {
       trigger: el,
-      toggleActions: "play reverse play reverse", // Ahora la animación se revierte al salir del viewport
+      toggleActions: isPortfolio ? "play none play reverse" : "play reverse play reverse", // Portfolio keeps animation when scrolling down
     }
   });
 });
 
 document.querySelectorAll('.animate-fade-right').forEach(el => {
+  // Services and Contactus sections should only reverse when exiting upward
+  const isServicesOrContact = el.id === 'Services' || el.id === 'Contactus';
+  
   gsap.from(el, {
     x: -50,
     opacity: 0,
     duration: 1,
     scrollTrigger: {
       trigger: el,
-      toggleActions: "play reverse play reverse", // Ahora la animación se revierte al salir del viewport
+      toggleActions: isServicesOrContact ? "play none play reverse" : "play reverse play reverse", // Services and Contact keep animation when scrolling down
     }
   });
 });

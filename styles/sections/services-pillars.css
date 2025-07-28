@@ -22,14 +22,15 @@
 
 .services-section h2 {
   text-align: center;
-  font-size: 3rem;
-  font-weight: 700;
+  font-size: 2rem; /* Normalizado al estándar de otras secciones */
+  font-weight: 400; /* Normalizado - Abril Fatface no necesita bold */
   margin-bottom: 3rem;
   color: var(--primary);
   position: relative;
   z-index: 10;
   padding: 0 2rem;
   transition: color 0.3s ease;
+  font-family: 'Abril Fatface', serif; /* Agregar la familia de fuente estándar */
 }
 
 .services-container {
@@ -276,7 +277,7 @@
   }
   
   .services-section h2 {
-    font-size: 2.2rem;
+    font-size: 1.8rem; /* Normalizado para móvil */
     margin-bottom: 2rem;
     padding: 0 1rem;
   }

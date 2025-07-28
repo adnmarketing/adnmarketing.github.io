@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isPageVisible || !isTeamSectionVisible) return;
 
     // Definir el texto original constante para el título
-    const ORIGINAL_TITLE_TEXT = "EQUIPO";
+    const ORIGINAL_TITLE_TEXT = "Equipo";
 
     // Guardar el texto actual (por si es diferente)
     const currentText = glitchTitle.textContent;
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isPageVisible || !isTeamSectionVisible) return;
 
     // Definir el texto original constante para el título
-    const ORIGINAL_TITLE_TEXT = "EQUIPO";
+    const ORIGINAL_TITLE_TEXT = "Equipo";
 
     characterGlitchInterval = setInterval(() => {
       if (!isPageVisible || !isTeamSectionVisible) return;
