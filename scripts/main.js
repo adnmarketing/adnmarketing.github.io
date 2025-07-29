@@ -1,6 +1,49 @@
 // 1) Registrar plugin de GSAP
 gsap.registerPlugin(ScrollTrigger);
 
+// NUEVO: Sistema de preload ultra-temprano para eliminar lag completamente
+(function initEarlyPreload() {
+  // Ejecutar tan pronto como el DOM básico esté disponible
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', executeEarlyPreload);
+  } else {
+    executeEarlyPreload();
+  }
+
+  function executeEarlyPreload() {
+    console.log('🚀 Iniciando preload ultra-temprano...');
+    
+    // Preload inmediato de imágenes críticas usando JavaScript
+    const criticalImages = [
+      'assets/images/team/rubi/adn-rubi.avif',
+      'assets/images/team/jack/adn-jack.avif', 
+      'assets/images/team/gabo/adn-gabo.avif',
+      'assets/images/services/content_visual.webp',
+      'assets/images/services/social_media_management.webp'
+    ];
+
+    criticalImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+
+    // Preparar elementos DOM para animaciones fluidas
+    setTimeout(() => {
+      const teamSection = document.querySelector('#Team');
+      const servicesSection = document.querySelector('#Services');
+      
+      if (teamSection) {
+        // Forzar cálculo de estilos para evitar reflow posterior
+        teamSection.style.transform = 'translateZ(0)'; // Activar aceleración por hardware
+      }
+      
+      if (servicesSection) {
+        servicesSection.style.transform = 'translateZ(0)';
+      }
+    }, 100);
+  }
+})();
+
 // Funciones para bloquear/desbloquear scroll del usuario
 let isScrollBlocked = false;
 
@@ -109,6 +152,28 @@ const root         = document.documentElement;
 
 // Scroll automático robusto a la sección de historia después de 2 segundos
 window.addEventListener('DOMContentLoaded', () => {
+  // NUEVO: Sistema de preload inteligente para eliminar lag
+  setTimeout(() => {
+    if (window.viewportManager) {
+      console.log('🚀 Iniciando preload inteligente...');
+      
+      // Preload de la sección Team (la más pesada) después de 1 segundo
+      setTimeout(() => {
+        window.viewportManager.preloadSection('Team');
+      }, 1000);
+      
+      // Preload de Services después de 2 segundos  
+      setTimeout(() => {
+        window.viewportManager.preloadSection('Services');
+      }, 2000);
+      
+      // Preload de Portfolio después de 3 segundos
+      setTimeout(() => {
+        window.viewportManager.preloadSection('Portfolio');
+      }, 3000);
+    }
+  }, 500);
+
   let scrolled = false;
   // Detectar si el usuario ya hizo scroll
   function onUserScroll() {
@@ -381,14 +446,14 @@ if (langSelect) {
 
 // Opcional: Limpiar preferencia manual después de 24 horas para volver al sistema automático
 // (Comentado por defecto - descomenta si quieres esta funcionalidad)
-/*
+
 (function() {
   const themeTimestamp = localStorage.getItem("theme-timestamp");
   const currentTime = Date.now();
-  const oneDayInMs = 24 * 60 * 60 * 1000; // 24 horas
-  
-  // Si han pasado más de 24 horas desde la última preferencia manual, limpiar
-  if (themeTimestamp && (currentTime - parseInt(themeTimestamp)) > oneDayInMs) {
+  const eightHoursInMs = 8 * 60 * 60 * 1000; // 8 horas
+
+  // Si han pasado más de 8 horas desde la última preferencia manual, limpiar
+  if (themeTimestamp && (currentTime - parseInt(themeTimestamp)) > eightHoursInMs) {
     localStorage.removeItem("theme");
     localStorage.removeItem("theme-timestamp");
   }
@@ -402,4 +467,3 @@ if (langSelect) {
     });
   }
 })();
-*/

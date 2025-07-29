@@ -816,3 +816,48 @@ window.testAllGlitch = function (delay = 2000) {
     }, index * delay);
   });
 };
+
+// NUEVO: Función para preparar animaciones del Team sin ejecutarlas (para preload)
+window.prepareTeamAnimations = function () {
+  console.log('🎭 Preparando animaciones de Team para preload...');
+  
+  const glitchTitle = document.querySelector('.glitch');
+  const teamCards = document.querySelectorAll('.team-card[data-member]');
+  
+  if (!glitchTitle) {
+    console.warn('⚠️ Título glitch no encontrado para preparación');
+    return;
+  }
+
+  // Preparar elementos CSS y clases para evitar reflow posterior
+  if (glitchTitle && !glitchTitle.hasAttribute('data-preloaded')) {
+    // Forzar cálculo inicial de estilos
+    window.getComputedStyle(glitchTitle).getPropertyValue('transform');
+    glitchTitle.setAttribute('data-preloaded', 'true');
+  }
+
+  // Preparar imágenes de team cards
+  teamCards.forEach(card => {
+    const img = card.querySelector('img');
+    if (img && !img.hasAttribute('data-preloaded')) {
+      // Forzar cálculo de estilos de imagen
+      window.getComputedStyle(img).getPropertyValue('transform');
+      img.setAttribute('data-preloaded', 'true');
+    }
+  });
+
+  // Pre-calcular variables de configuración
+  if (window.ViewportOptimizationConfig && window.ViewportOptimizationConfig.sections.Team) {
+    const config = window.ViewportOptimizationConfig.sections.Team;
+    
+    // Pre-calcular intervalos para evitar cálculos pesados durante la animación
+    const preCalcTitleInterval = Math.random() * (config.titleGlitchInterval.max - config.titleGlitchInterval.min) + config.titleGlitchInterval.min;
+    const preCalcImageInterval = Math.random() * (config.imageGlitchInterval.max - config.imageGlitchInterval.min) + config.imageGlitchInterval.min;
+    
+    // Almacenar en variables globales para uso posterior
+    window._preCalcTitleInterval = preCalcTitleInterval;
+    window._preCalcImageInterval = preCalcImageInterval;
+  }
+
+  console.log('✅ Animaciones de Team preparadas para ejecución fluida');
+};

@@ -4,13 +4,22 @@ class ViewportManager {
     this.observers = new Map();
     this.sectionStates = new Map();
     this.callbacks = new Map();
+    this.preloadedSections = new Set(); // Nuevo: rastrear secciones precargadas
     this.initialized = false;
 
     // Configuración optimizada del Intersection Observer
     this.observerOptions = {
       root: null,
-      rootMargin: '50px', // Activar 50px antes de que sea visible
-      threshold: [0, 0.1, 0.5] // Múltiples puntos de activación
+      rootMargin: '300px', // Aumentado para preload anticipado
+      threshold: [0, 0.05, 0.1, 0.5] // Más puntos de detección temprana
+    };
+
+    // Configuración de preload específico por sección
+    this.preloadOptions = {
+      Team: { preloadDistance: '400px', enableEarlyInit: true },
+      Services: { preloadDistance: '200px', enableEarlyInit: true },
+      Portfolio: { preloadDistance: '250px', enableEarlyInit: false },
+      CoreValues: { preloadDistance: '200px', enableEarlyInit: false }
     };
 
     this.init();
@@ -41,6 +50,14 @@ class ViewportManager {
       const sectionId = entry.target.id || entry.target.className;
       const isVisible = entry.isIntersecting;
       const visibilityRatio = entry.intersectionRatio;
+
+      // NUEVO: Preload automático cuando la sección está cerca
+      if (visibilityRatio > 0 && !this.preloadedSections.has(sectionId)) {
+        // Solo preload para secciones pesadas
+        if (['Team', 'Services', 'Portfolio'].includes(sectionId)) {
+          this.preloadSection(sectionId);
+        }
+      }
 
       // Actualizar estado de la sección
       this.sectionStates.set(sectionId, {
@@ -149,6 +166,127 @@ class ViewportManager {
   // Verificar si estamos en desarrollo
   isDevelopment() {
     return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  }
+
+  // NUEVO: Sistema de preload inteligente
+  preloadSection(sectionId) {
+    if (this.preloadedSections.has(sectionId)) {
+      console.log(`🔄 Sección ${sectionId} ya está precargada`);
+      return Promise.resolve();
+    }
+
+    console.log(`🚀 Iniciando preload para sección: ${sectionId}`);
+    this.preloadedSections.add(sectionId);
+
+    return new Promise((resolve) => {
+      // Ejecutar preload específico por sección
+      switch (sectionId) {
+        case 'Team':
+          this.preloadTeamSection().then(resolve);
+          break;
+        case 'Services':
+          this.preloadServicesSection().then(resolve);
+          break;
+        case 'Portfolio':
+          this.preloadPortfolioSection().then(resolve);
+          break;
+        default:
+          resolve();
+      }
+    });
+  }
+
+  // Preload específico para la sección Team (la más pesada)
+  preloadTeamSection() {
+    return new Promise((resolve) => {
+      console.log('🎭 Precargando sección Team...');
+      
+      // Preload de imágenes del equipo
+      const teamImages = document.querySelectorAll('#Team img');
+      const imagePromises = Array.from(teamImages).map(img => {
+        return new Promise((resolveImg) => {
+          if (img.complete) {
+            resolveImg();
+          } else {
+            img.addEventListener('load', resolveImg);
+            img.addEventListener('error', resolveImg);
+          }
+        });
+      });
+
+      // Inicializar animaciones de glitch sin ejecutarlas
+      if (typeof window.prepareTeamAnimations === 'function') {
+        window.prepareTeamAnimations();
+      }
+
+      Promise.all(imagePromises).then(() => {
+        console.log('✅ Team section precargada');
+        resolve();
+      });
+    });
+  }
+
+  // Preload para Services
+  preloadServicesSection() {
+    return new Promise((resolve) => {
+      console.log('🔧 Precargando sección Services...');
+      
+      // Preload de imágenes de servicios
+      const serviceImages = document.querySelectorAll('#Services .service-bg-blur');
+      let loadedCount = 0;
+      const totalImages = serviceImages.length;
+
+      if (totalImages === 0) {
+        resolve();
+        return;
+      }
+
+      serviceImages.forEach(bgElement => {
+        const bgImage = window.getComputedStyle(bgElement).backgroundImage;
+        const urlMatch = bgImage.match(/url\("(.+)"\)/);
+        
+        if (urlMatch) {
+          const img = new Image();
+          img.onload = img.onerror = () => {
+            loadedCount++;
+            if (loadedCount === totalImages) {
+              console.log('✅ Services section precargada');
+              resolve();
+            }
+          };
+          img.src = urlMatch[1];
+        } else {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            resolve();
+          }
+        }
+      });
+    });
+  }
+
+  // Preload para Portfolio
+  preloadPortfolioSection() {
+    return new Promise((resolve) => {
+      console.log('📁 Precargando sección Portfolio...');
+      
+      const portfolioImages = document.querySelectorAll('#Portfolio img');
+      const imagePromises = Array.from(portfolioImages).map(img => {
+        return new Promise((resolveImg) => {
+          if (img.complete) {
+            resolveImg();
+          } else {
+            img.addEventListener('load', resolveImg);
+            img.addEventListener('error', resolveImg);
+          }
+        });
+      });
+
+      Promise.all(imagePromises).then(() => {
+        console.log('✅ Portfolio section precargada');
+        resolve();
+      });
+    });
   }
 
   // Limpiar recursos

@@ -2,14 +2,14 @@
 window.ViewportOptimizationConfig = {
   // Configuración del Intersection Observer
   observer: {
-    // Margen para activar antes de que sea visible (en píxeles)
-    rootMargin: '50px',
+    // Margen MAYOR para activar mucho antes de que sea visible (en píxeles)
+    rootMargin: '300px', // Aumentado de 50px a 300px para preload anticipado
 
     // Puntos de activación (0 = apenas visible, 1 = completamente visible)
     threshold: [0, 0.1, 0.5, 0.8],
 
-    // Delay para suavizar transiciones (en milisegundos)
-    transitionDelay: 500
+    // Delay REDUCIDO para transiciones más fluidas (en milisegundos)
+    transitionDelay: 100 // Reducido de 500ms a 100ms
   },
 
   // Configuración específica por sección

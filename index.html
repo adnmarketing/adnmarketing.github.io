@@ -57,10 +57,19 @@
   <link rel="icon" type="image/svg+xml" href="assets/images/logos/adn_logo_b.svg" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" />
 
-  <!-- Preload crítico para las primeras imágenes del equipo -->
+  <!-- Preload crítico para las primeras imágenes del equipo y servicios más importantes -->
   <link rel="preload" as="image" href="assets/images/team/rubi/adn-rubi.avif" type="image/avif">
   <link rel="preload" as="image" href="assets/images/team/jack/adn-jack.avif" type="image/avif">
   <link rel="preload" as="image" href="assets/images/team/gabo/adn-gabo.avif" type="image/avif">
+  
+  <!-- Preload de imágenes de servicios críticas para eliminar lag -->
+  <link rel="preload" as="image" href="assets/images/services/content_visual.webp" type="image/webp">
+  <link rel="preload" as="image" href="assets/images/services/social_media_management.webp" type="image/webp">
+  <link rel="preload" as="image" href="assets/images/services/graphic_design.webp" type="image/webp">
+  
+  <!-- Preload de clientes más importantes -->
+  <link rel="preload" as="image" href="assets/images/customers/colmena.webp" type="image/webp">
+  <link rel="preload" as="image" href="assets/images/customers/el_patron.webp" type="image/webp">
 </head>
 
 <body>
@@ -531,6 +540,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
   
+  <!-- Scripts de configuración temprana para eliminar lag -->
+  <script src="scripts/performance-config.js"></script>
   <script src="scripts/viewport-config.js"></script>
   <script src="scripts/config/video-config.js"></script>
   <script src="scripts/viewport-manager.js"></script>

@@ -5,7 +5,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 4rem 2rem;
+  .slide-image img {
+  max-width: 100%;
+  max-height: 70vh; /* Reducido de 80vh a 70vh */
+  width: auto;
+  height: auto;
+  object-fit: contain; /* Mantener proporciones sin recortar */
+  border-radius: 20px; /* Bordes más redondeados */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  /* Eliminado transition para quitar efectos hover */
+} 4rem 2rem;
   position: relative;
   background: linear-gradient(135deg, var(--bg-section) 0%, var(--bg-section-alt) 100%);
 }
@@ -185,20 +194,17 @@
     align-items: center;
     width: 100%;
     height: auto; /* Altura dinámica */
-  }.slide-image img {
+  }
+
+.slide-image img {
   max-width: 100%;
-  max-height: 80vh; /* Altura mucho mayor - casi todo el viewport */
+  max-height: 70vh; /* Reducido de 80vh a 70vh para hacer las imágenes un poco más pequeñas */
   width: auto;
   height: auto;
   object-fit: contain; /* Mantener proporciones sin recortar */
   border-radius: 20px; /* Bordes más redondeados */
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.slide-image img:hover {
-  transform: scale(1.03); /* Efecto hover más sutil */
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  /* Eliminado transition y hover para quitar efectos de crecimiento */
 }
 
 /* Pagination Dots */
@@ -333,7 +339,7 @@
   }
   
   .slide-image img {
-    max-height: 50vh; /* Altura máxima razonable para tablet */
+    max-height: 45vh; /* Reducido de 50vh a 45vh para tablet */
     width: 90%; /* Ancho ligeramente reducido para tablet */
     height: auto; /* Altura automática para mantener proporciones */
     object-fit: contain; /* Mostrar imagen completa */
