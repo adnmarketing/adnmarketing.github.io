@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
+
   <!-- Script para determinar tema ANTES de cargar CSS (evita FOUC) -->
   <script>
     (function() {
@@ -55,21 +56,25 @@
   <link rel="stylesheet" href="styles/glitch-effect.css" />
   <link rel="stylesheet" href="styles/name-glitch-effect.css" />
   <link rel="icon" type="image/svg+xml" href="assets/images/logos/adn_logo_b.svg" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" />
+  
+  <!-- Fuentes: Space Grotesk para todo el sitio y Space Mono para elementos específicos del team -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" />
 
-  <!-- Preload crítico para las primeras imágenes del equipo y servicios más importantes -->
+  <!-- Preload crítico para las primeras imágenes del equipo (mantener - necesario para navegación directa) -->
   <link rel="preload" as="image" href="assets/images/team/rubi/adn-rubi.avif" type="image/avif">
   <link rel="preload" as="image" href="assets/images/team/jack/adn-jack.avif" type="image/avif">
   <link rel="preload" as="image" href="assets/images/team/gabo/adn-gabo.avif" type="image/avif">
   
-  <!-- Preload de imágenes de servicios críticas para eliminar lag -->
+  <!-- Preload de imágenes de servicios críticas (mantener - evita pop-in en animaciones GSAP) -->
   <link rel="preload" as="image" href="assets/images/services/content_visual.webp" type="image/webp">
   <link rel="preload" as="image" href="assets/images/services/social_media_management.webp" type="image/webp">
   <link rel="preload" as="image" href="assets/images/services/graphic_design.webp" type="image/webp">
   
-  <!-- Preload de clientes más importantes -->
+  <!-- Preload de clientes más importantes (optimizado - primeras 4 visibles en carousel) -->
   <link rel="preload" as="image" href="assets/images/customers/colmena.webp" type="image/webp">
   <link rel="preload" as="image" href="assets/images/customers/el_patron.webp" type="image/webp">
+  <link rel="preload" as="image" href="assets/images/customers/la_mariscana.webp" type="image/webp">
+  <link rel="preload" as="image" href="assets/images/customers/livis.webp" type="image/webp">
 </head>
 
 <body>
@@ -156,8 +161,7 @@
           <div class="corevalue-card-back">
             <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
             <div class="corevalue-back-content">
-              Aquí puedes agregar más información sobre el valor de la Fe, ejemplos, reflexiones o aplicaciones
-              prácticas.
+              Creemos en el poder de las ideas. Con <strong>fe</strong> transformamos cada proyecto en resultados reales para nuestros clientes.
             </div>
           </div>
         </div>
@@ -173,7 +177,7 @@
           <div class="corevalue-card-back">
             <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
             <div class="corevalue-back-content">
-              Más información sobre el valor del Trabajo, su importancia y cómo lo vivimos en la agencia.
+              La excelencia nace del esfuerzo constante. Cada campaña es fruto de dedicación y pasión por el <strong>marketing</strong>.
             </div>
           </div>
         </div>
@@ -188,7 +192,7 @@
           <div class="corevalue-card-back">
             <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
             <div class="corevalue-back-content">
-              Aquí puedes explicar cómo el orden es clave en el trabajo y la vida diaria.
+              Estructura y metodología en cada estrategia. El <strong>orden</strong> nos permite entregar campañas exitosas y medibles.
             </div>
           </div>
         </div>
@@ -204,7 +208,7 @@
           <div class="corevalue-card-back">
             <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
             <div class="corevalue-back-content">
-              Detalla cómo la comunicación efectiva es un pilar en la agencia y en la fe.
+              Escuchamos, entendemos y creamos. La <strong>comunicación</strong> efectiva es el corazón de toda estrategia exitosa.
             </div>
           </div>
         </div>
@@ -220,7 +224,7 @@
           <div class="corevalue-card-back">
             <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
             <div class="corevalue-back-content">
-              Explica cómo la confianza se vive en el equipo y con los clientes.
+              Construimos relaciones sólidas. La <strong>confianza</strong> mutua con nuestros clientes es la base de nuestro éxito.
             </div>
           </div>
         </div>
@@ -235,7 +239,7 @@
           <div class="corevalue-card-back">
             <img src="assets/images/logos/adn_logo_b.svg" alt="ADN Logo" class="corevalue-logo">
             <div class="corevalue-back-content">
-              Aquí puedes poner ejemplos de respeto en la agencia y su fundamento bíblico.
+              Valoramos cada idea y perspectiva. El <strong>respeto</strong> por nuestro equipo y clientes impulsa nuestra creatividad.
             </div>
           </div>
         </div>
@@ -541,10 +545,11 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
   
   <!-- Scripts de configuración temprana para eliminar lag -->
-  <script src="scripts/performance-config.js"></script>
-  <script src="scripts/viewport-config.js"></script>
+  <!-- TEMPORALMENTE COMENTADO: Sistema de viewport-manager para testing -->
+  <!-- <script src="scripts/performance-config.js"></script> -->
+  <!-- <script src="scripts/viewport-config.js"></script> -->
   <script src="scripts/config/video-config.js"></script>
-  <script src="scripts/viewport-manager.js"></script>
+  <!-- <script src="scripts/viewport-manager.js"></script> -->
   <script src="scripts/navigation-scroll.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/sections/portfolio.js"></script>
@@ -558,7 +563,8 @@
   <!-- <script src="scripts/sections/team-background.js"></script> -->
   <script src="scripts/sections/team-modal.js"></script>
   <script src="scripts/sections/footer.js"></script>
-  <script src="scripts/viewport-testing.js"></script>
+  <!-- TEMPORALMENTE COMENTADO: Testing del viewport-manager -->
+  <!-- <script src="scripts/viewport-testing.js"></script> -->
 </body>
 
 </html>

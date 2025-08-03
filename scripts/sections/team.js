@@ -2,62 +2,390 @@
 
 // Variables globales para control de performance
 let isPageVisible = true;
-let isTeamSectionVisible = false; // Nueva variable para viewport
+let isTeamSectionVisible = false;
+let isTeamSectionNearby = false; // Nueva variable para detección temprana
 let glitchAnimationFrame = null;
 let titleGlitchTimeout = null;
 let characterGlitchInterval = null;
-let imageGlitchTimeout = null; // Definida globalmente para resolver el error de scope
-let isImageGlitchActive = false; // Definida globalmente para resolver el error de scope
-let activeGlitchCards = new Set(); // Mantener registro de tarjetas con animación activa
-let cardsWithHover = new Set(); // Mantener registro de tarjetas con hover (mouse encima)
-let currentGlitchingCard = null; // Nueva variable para rastrear la tarjeta actualmente con glitch
+let imageGlitchTimeout = null;
+let isImageGlitchActive = false;
+let activeGlitchCards = new Set();
+let cardsWithHover = new Set();
+let currentGlitchingCard = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-  const glitchTitle = document.querySelector('.glitch');
-  const teamSection = document.querySelector('#Team');
+// Nuevas variables para el sistema anti-lag mejorado
+let glitchElementsPreloaded = false;
+let intersectionObserver = null;
+let teamSectionElement = null;
+let glitchSystemInitialized = false;
+let titleGlitchLoopActive = false;
+let characterGlitchActive = false;
 
-  if (!glitchTitle || !teamSection) return;
-
-  // Configurar observación de viewport para la sección Team
-  const handleTeamVisibility = (isVisible, visibilityRatio, element, isPageHidden = false) => {
-    isTeamSectionVisible = isVisible && !isPageHidden;
-
-    if (!isTeamSectionVisible) {
-      // Pausar todas las animaciones cuando la sección no es visible
-      if (titleGlitchTimeout) clearTimeout(titleGlitchTimeout);
-      if (characterGlitchInterval) clearInterval(characterGlitchInterval);
-      if (glitchAnimationFrame) cancelAnimationFrame(glitchAnimationFrame);
-      if (imageGlitchTimeout) clearTimeout(imageGlitchTimeout);
-    } else {
-      // Reanudar animaciones cuando la sección es visible
-      setTimeout(() => {
-        if (isTeamSectionVisible) {
-          startOptimizedGlitchLoop();
-          startCharacterGlitch();
-          scheduleNextImageGlitch();
-        }
-      }, 500); // Pequeño delay para suavizar la transición
-    }
-  };
-
-  // Registrar la sección para observación de viewport
-  if (window.viewportManager) {
-    window.viewportManager.observeSection(teamSection, 'Team', [handleTeamVisibility]);
-  } else {
-    // Fallback si ViewportManager no está disponible
-    console.warn('ViewportManager no disponible, usando detección básica');
-    isTeamSectionVisible = true;
+// Sistema de logs detallado para debugging
+const TEAM_GLITCH_DEBUG = true;
+function debugLog(message, data = null) {
+  if (TEAM_GLITCH_DEBUG) {
+    const timestamp = new Date().toLocaleTimeString();
+    console.log(`[TEAM-GLITCH ${timestamp}] ${message}`, data || '');
   }
+}
+
+// SISTEMA DE INICIALIZACIÓN ROBUSTO - Maneja navegación directa y scroll
+function initializeTeamGlitchSystem() {
+  debugLog('🚀 Iniciando sistema de glitch para Team...');
+  
+  if (glitchSystemInitialized) {
+    debugLog('⚠️ Sistema ya inicializado, saltando...');
+    return;
+  }
+
+  const glitchTitle = document.querySelector('.glitch');
+  teamSectionElement = document.querySelector('#Team');
+
+  if (!glitchTitle || !teamSectionElement) {
+    debugLog('❌ Elementos no encontrados', { 
+      glitchTitle: !!glitchTitle, 
+      teamSection: !!teamSectionElement 
+    });
+    return;
+  }
+
+  debugLog('✅ Elementos encontrados correctamente');
+  glitchSystemInitialized = true;
+
+  // DETECCIÓN DE NAVEGACIÓN DIRECTA (#Team)
+  checkDirectNavigation();
+
+  // SISTEMA ANTI-LAG: Preparación temprana e Intersection Observer optimizado
+  initializeAntiLagGlitchSystem();
 
   // Detectar cuando la página no está visible (para pausar animaciones)
   document.addEventListener('visibilitychange', () => {
     isPageVisible = !document.hidden;
-    // La lógica de pausa/reanudación ahora se maneja en handleTeamVisibility
+    debugLog(`👁️ Visibilidad de página: ${isPageVisible ? 'VISIBLE' : 'OCULTA'}`);
   });
+
+  // Preparar elementos inmediatamente para evitar lag
+  preloadGlitchElements();
+
+  // INICIALIZAR ANIMACIONES DE TÍTULO
+  initializeTitleGlitchAnimations(glitchTitle);
+
+  debugLog('🎯 Sistema de glitch completamente inicializado');
+}
+
+// DETECCIÓN DE NAVEGACIÓN DIRECTA A #Team - MEJORADO
+function checkDirectNavigation() {
+  const currentHash = window.location.hash;
+  debugLog('🔗 Hash actual detectado:', currentHash);
+  
+  if (currentHash === '#Team') {
+    debugLog('🎯 Navegación directa a #Team detectada');
+    // Marcar como visible inmediatamente
+    isTeamSectionVisible = true;
+    isTeamSectionNearby = true;
+    
+    // Forzar inicialización después de un pequeño delay
+    setTimeout(() => {
+      debugLog('⚡ Forzando inicialización por navegación directa');
+      forceGlitchActivation();
+      
+      // NUEVO: También forzar inicio de glitch de imágenes
+      setTimeout(() => {
+        forceImageGlitchStart();
+      }, 1000);
+    }, 500);
+  }
+
+  // Escuchar cambios de hash para navegación SPA
+  window.addEventListener('hashchange', () => {
+    const newHash = window.location.hash;
+    debugLog('🔄 Cambio de hash detectado:', newHash);
+    
+    if (newHash === '#Team') {
+      debugLog('🎯 Navegación a #Team por hash');
+      isTeamSectionVisible = true;
+      isTeamSectionNearby = true;
+      setTimeout(() => {
+        forceGlitchActivation();
+        
+        // NUEVO: También forzar inicio de glitch de imágenes
+        setTimeout(() => {
+          forceImageGlitchStart();
+        }, 800);
+      }, 300);
+    } else {
+      debugLog('👋 Saliendo de sección Team');
+      stopAllGlitchAnimations();
+    }
+  });
+}
+
+// NUEVA FUNCIÓN: Forzar inicio del glitch de imágenes
+function forceImageGlitchStart() {
+  debugLog('🖼️ FORZANDO inicio de glitch de imágenes');
+  
+  const teamCardsWithMembers = document.querySelectorAll('.team-card[data-member]');
+  if (teamCardsWithMembers.length === 0) {
+    debugLog('❌ No se encontraron tarjetas con miembros');
+    return;
+  }
+  
+  // Reiniciar el sistema de glitch de imágenes
+  isImageGlitchActive = false;
+  
+  // Limpiar cualquier timeout existente
+  if (imageGlitchTimeout) {
+    clearTimeout(imageGlitchTimeout);
+    imageGlitchTimeout = null;
+  }
+  
+  // Iniciar inmediatamente
+  setTimeout(() => {
+    if (isTeamSectionVisible) {
+      debugLog('🚀 Iniciando glitch de imágenes forzado');
+      applySequentialImageGlitch();
+    }
+  }, 500);
+}
+
+// FORZAR ACTIVACIÓN DE GLITCH (para navegación directa)
+function forceGlitchActivation() {
+  debugLog('💥 FORZANDO activación de glitch');
+  
+  if (!glitchElementsPreloaded) {
+    preloadGlitchElements();
+  }
+  
+  // Activar título inmediatamente
+  if (!titleGlitchLoopActive) {
+    debugLog('🎬 Activando animaciones de título');
+    const glitchTitle = document.querySelector('.glitch');
+    if (glitchTitle) {
+      triggerTitleGlitch();
+      startOptimizedGlitchLoop();
+    }
+  }
+  
+  // Activar caracteres distorsionados
+  if (!characterGlitchActive) {
+    debugLog('🔤 Activando glitch de caracteres');
+    startCharacterGlitch();
+  }
+}
+
+// PARAR TODAS LAS ANIMACIONES GLITCH
+function stopAllGlitchAnimations() {
+  debugLog('🛑 Deteniendo todas las animaciones glitch');
+  
+  isTeamSectionVisible = false;
+  isTeamSectionNearby = false;
+  titleGlitchLoopActive = false;
+  characterGlitchActive = false;
+  
+  // Limpiar timeouts
+  if (titleGlitchTimeout) {
+    clearTimeout(titleGlitchTimeout);
+    titleGlitchTimeout = null;
+  }
+  
+  if (characterGlitchInterval) {
+    clearInterval(characterGlitchInterval);
+    characterGlitchInterval = null;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  debugLog('📄 DOM cargado, inicializando Team Glitch System...');
+  initializeTeamGlitchSystem();
+});
+
+// TAMBIÉN INICIALIZAR EN window.onload por si DOM ya estaba listo
+window.addEventListener('load', () => {
+  debugLog('🌐 Window load event, verificando inicialización...');
+  if (!glitchSystemInitialized) {
+    debugLog('🔄 Sistema no inicializado, intentando de nuevo...');
+    initializeTeamGlitchSystem();
+  }
+});
+
+  // IMPLEMENTACIÓN DE FUNCIONES ANTI-LAG MEJORADAS
+  function initializeAntiLagGlitchSystem() {
+    debugLog('🔍 Inicializando Intersection Observer...');
+    
+    // Observer optimizado con thresholds específicos para detección temprana
+    const observerOptions = {
+      root: null,
+      rootMargin: '150px 0px 150px 0px', // MAYOR margen para detección MÁS temprana (especialmente para scroll desde abajo)
+      threshold: [0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 0.9, 1.0] // MÁS puntos de detección, especialmente en el rango bajo
+    };
+
+    // Crear Intersection Observer específico para Team
+    intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const intersectionRatio = entry.intersectionRatio;
+        const boundingRect = entry.boundingClientRect;
+        const isEnteringFromBottom = boundingRect.top < window.innerHeight && boundingRect.bottom > 0;
+        const isEnteringFromTop = boundingRect.top > 0 && boundingRect.top < window.innerHeight;
+        
+        debugLog(`👀 Intersection - Ratio: ${intersectionRatio.toFixed(3)}, Top: ${boundingRect.top.toFixed(0)}, Bottom: ${boundingRect.bottom.toFixed(0)}`);
+        debugLog(`📍 Dirección - Desde abajo: ${isEnteringFromBottom}, Desde arriba: ${isEnteringFromTop}`);
+        
+        // Sistema de proximidad por niveles MEJORADO
+        if (intersectionRatio > 0) {
+          if (!isTeamSectionNearby) {
+            isTeamSectionNearby = true;
+            debugLog('🎯 Sección Team NEARBY - Precargando elementos...');
+            preloadGlitchElements();
+          }
+          
+          // REDUCIR umbral para activación más temprana (especialmente importante para scroll desde abajo)
+          if (intersectionRatio > 0.05) { // Reducido de 0.1 a 0.05
+            if (!isTeamSectionVisible) {
+              isTeamSectionVisible = true;
+              debugLog('✨ Sección Team VISIBLE - Activando glitch...', {
+                ratio: intersectionRatio,
+                fromBottom: isEnteringFromBottom,
+                fromTop: isEnteringFromTop
+              });
+              
+              // Activar animaciones con delay MÁS corto para scroll desde abajo
+              const activationDelay = isEnteringFromBottom ? 50 : 100; // Más rápido desde abajo
+              setTimeout(() => {
+                activateGlitchAnimations();
+                
+                // Forzar inicio de glitch de imágenes también
+                setTimeout(() => {
+                  if (isTeamSectionVisible) {
+                    forceImageGlitchStart();
+                  }
+                }, 500);
+              }, activationDelay);
+            }
+          }
+        } else {
+          // Sección ya no está cerca
+          if (isTeamSectionNearby || isTeamSectionVisible) {
+            debugLog('👋 Sección Team ya no visible - Deteniendo glitch...');
+            isTeamSectionNearby = false;
+            isTeamSectionVisible = false;
+            stopAllGlitchAnimations();
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observar la sección Team
+    if (teamSectionElement) {
+      intersectionObserver.observe(teamSectionElement);
+      debugLog('👁️ Observer configurado para Team section con detección mejorada');
+    }
+  }
+
+  function preloadGlitchElements() {
+    if (glitchElementsPreloaded) {
+      debugLog('⚠️ Elementos ya precargados');
+      return;
+    }
+    
+    debugLog('⚡ Precargando elementos glitch...');
+    
+    try {
+      // Pre-calcular y almacenar referencias DOM
+      const teamCards = document.querySelectorAll('#Team .team-card');
+      const glitchElements = document.querySelectorAll('#Team .glitch');
+      const teamImages = document.querySelectorAll('#Team .team-card img');
+      
+      debugLog('🔍 Elementos encontrados:', {
+        teamCards: teamCards.length,
+        glitchElements: glitchElements.length,
+        teamImages: teamImages.length
+      });
+      
+      // Marcar como precargado
+      glitchElementsPreloaded = true;
+      
+      // Pre-aplicar estilos base para evitar reflow
+      teamCards.forEach((card, index) => {
+        card.style.visibility = 'visible';
+        card.style.opacity = '1';
+        debugLog(`📦 Card ${index + 1} preparada`);
+      });
+      
+      // Optimizar rendimiento de elementos glitch
+      glitchElements.forEach((element, index) => {
+        element.style.willChange = 'transform, opacity';
+        debugLog(`✨ Glitch element ${index + 1} optimizado`);
+      });
+      
+      // Precargar imágenes si no están cargadas
+      teamImages.forEach((img, index) => {
+        if (!img.complete) {
+          debugLog(`🖼️ Precargando imagen ${index + 1}...`);
+          img.loading = 'eager';
+        } else {
+          debugLog(`✅ Imagen ${index + 1} ya cargada`);
+        }
+      });
+      
+      debugLog('✅ Precarga completada exitosamente');
+      
+    } catch (error) {
+      debugLog('❌ Error en preload de elementos glitch:', error);
+    }
+  }
+
+  // ACTIVAR TODAS LAS ANIMACIONES GLITCH
+  function activateGlitchAnimations() {
+    debugLog('🎬 Activando todas las animaciones glitch...');
+    
+    const glitchTitle = document.querySelector('.glitch');
+    if (!glitchTitle) {
+      debugLog('❌ Título glitch no encontrado');
+      return;
+    }
+    
+    // Activar título glitch si no está activo
+    if (!titleGlitchLoopActive) {
+      debugLog('🎯 Iniciando loop de título glitch');
+      triggerTitleGlitch();
+      startOptimizedGlitchLoop();
+    }
+    
+    // Activar caracteres distorsionados si no está activo
+    if (!characterGlitchActive) {
+      debugLog('🔤 Iniciando glitch de caracteres');
+      startCharacterGlitch();
+    }
+  }
+
+  // INICIALIZAR ANIMACIONES DEL TÍTULO
+  function initializeTitleGlitchAnimations(glitchTitle) {
+    debugLog('🎭 Configurando animaciones del título glitch...');
+    
+    // Mantener interactividad del clic
+    glitchTitle.addEventListener('click', () => {
+      debugLog('👆 Click en título detectado');
+      triggerTitleGlitch();
+    }, { passive: true });
+    
+    debugLog('✅ Título glitch configurado correctamente');
+  }
 
   // Función optimizada para activar el efecto glitch del título
   function triggerTitleGlitch() {
-    if (!isPageVisible || !isTeamSectionVisible) return;
+    if (!isPageVisible || !isTeamSectionVisible) {
+      debugLog('⏸️ Glitch de título cancelado - página no visible o sección no activa');
+      return;
+    }
+
+    debugLog('🎬 Ejecutando glitch de título...');
+
+    const glitchTitle = document.querySelector('.glitch');
+    if (!glitchTitle) {
+      debugLog('❌ Título glitch no encontrado para trigger');
+      return;
+    }
 
     // Definir el texto original constante para el título
     const ORIGINAL_TITLE_TEXT = "Equipo";
@@ -68,61 +396,108 @@ document.addEventListener('DOMContentLoaded', () => {
     // Asegurar que el texto es EQUIPO antes de aplicar el glitch
     if (currentText !== ORIGINAL_TITLE_TEXT) {
       glitchTitle.textContent = ORIGINAL_TITLE_TEXT;
+      debugLog('🔄 Texto restaurado a:', ORIGINAL_TITLE_TEXT);
     }
 
     glitchTitle.classList.add('glitching');
+    debugLog('✨ Clase glitching añadida');
 
     // Usar setTimeout más eficiente
     titleGlitchTimeout = setTimeout(() => {
       glitchTitle.classList.remove('glitching');
       // Asegurar que el texto vuelva a ser EQUIPO después del glitch
       glitchTitle.textContent = ORIGINAL_TITLE_TEXT;
+      debugLog('🎭 Glitch de título completado');
     }, 1700);
   }
 
   // Loop optimizado con control de frecuencia
   function startOptimizedGlitchLoop() {
-    if (!isPageVisible || !isTeamSectionVisible) return;
-
-    // Reducir frecuencia: cada 5-8 segundos en lugar de 3-6
-    const randomTime = Math.random() * 3000 + 5000; // Entre 5 y 8 segundos
-
-    titleGlitchTimeout = setTimeout(() => {
-      triggerTitleGlitch();
-      startOptimizedGlitchLoop();
-    }, randomTime);
-  }
-
-  // Inicializar con delay optimizado (solo si la sección es visible)
-  setTimeout(() => {
-    if (isTeamSectionVisible) {
-      triggerTitleGlitch();
-      startOptimizedGlitchLoop();
+    if (!isPageVisible || !isTeamSectionVisible) {
+      debugLog('⏸️ Loop de glitch cancelado - condiciones no cumplidas');
+      return;
     }
-  }, 2000);
 
-  // Mantener interactividad del clic
-  glitchTitle.addEventListener('click', triggerTitleGlitch, { passive: true });
+    if (titleGlitchLoopActive) {
+      debugLog('⚠️ Loop de glitch ya activo');
+      return;
+    }
+
+    titleGlitchLoopActive = true;
+    debugLog('🔄 Iniciando loop optimizado de glitch');
+
+    function scheduleNextGlitch() {
+      if (!isPageVisible || !isTeamSectionVisible || !titleGlitchLoopActive) {
+        debugLog('🛑 Loop detenido - condiciones no cumplidas');
+        titleGlitchLoopActive = false;
+        return;
+      }
+
+      // Reducir frecuencia: cada 5-8 segundos en lugar de 3-6
+      const randomTime = Math.random() * 3000 + 5000; // Entre 5 y 8 segundos
+      debugLog(`⏰ Próximo glitch en ${(randomTime/1000).toFixed(1)}s`);
+
+      titleGlitchTimeout = setTimeout(() => {
+        triggerTitleGlitch();
+        scheduleNextGlitch(); // Programar el siguiente
+      }, randomTime);
+    }
+
+    // Iniciar el primer glitch inmediatamente
+    triggerTitleGlitch();
+    
+    // Programar el siguiente
+    setTimeout(() => {
+      scheduleNextGlitch();
+    }, 2000);
+  }
 
   // Optimizar efecto de caracteres distorsionados
   function startCharacterGlitch() {
-    if (!isPageVisible || !isTeamSectionVisible) return;
+    if (!isPageVisible || !isTeamSectionVisible) {
+      debugLog('⏸️ Glitch de caracteres cancelado - condiciones no cumplidas');
+      return;
+    }
+
+    if (characterGlitchActive) {
+      debugLog('⚠️ Glitch de caracteres ya activo');
+      return;
+    }
+
+    characterGlitchActive = true;
+    debugLog('🔤 Iniciando glitch de caracteres');
+
+    const glitchTitle = document.querySelector('.glitch');
+    if (!glitchTitle) {
+      debugLog('❌ Título no encontrado para glitch de caracteres');
+      return;
+    }
 
     // Definir el texto original constante para el título
     const ORIGINAL_TITLE_TEXT = "Equipo";
 
     characterGlitchInterval = setInterval(() => {
-      if (!isPageVisible || !isTeamSectionVisible) return;
+      if (!isPageVisible || !isTeamSectionVisible || !characterGlitchActive) {
+        debugLog('🛑 Glitch de caracteres detenido');
+        characterGlitchActive = false;
+        if (characterGlitchInterval) {
+          clearInterval(characterGlitchInterval);
+          characterGlitchInterval = null;
+        }
+        return;
+      }
 
-      // Reducir probabilidad del 20% al 10%
-      if (Math.random() < 0.1) {
+      // Reducir probabilidad del 20% al 8%
+      if (Math.random() < 0.08) {
+        debugLog('🎲 Ejecutando distorsión de caracteres');
+        
         // Optimizar generación de texto glitch
         const glitchChars = '!@#$%^&*()-_=+[]{}|;:,.<>?/';
         const textArray = ORIGINAL_TITLE_TEXT.split('');
 
-        // Cambiar solo 20% de caracteres en lugar de 30%
+        // Cambiar solo 15% de caracteres en lugar de 20%
         for (let i = 0; i < textArray.length; i++) {
-          if (Math.random() < 0.2) {
+          if (Math.random() < 0.15) {
             textArray[i] = glitchChars[Math.floor(Math.random() * glitchChars.length)];
           }
         }
@@ -132,18 +507,160 @@ document.addEventListener('DOMContentLoaded', () => {
         // Restaurar más rápido
         setTimeout(() => {
           glitchTitle.textContent = ORIGINAL_TITLE_TEXT;
-        }, 100);
+        }, 80);
       }
     }, 6000); // Aumentar intervalo de 4s a 6s
   }
 
-  startCharacterGlitch();
+// ===== EFECTOS DE IMAGEN OPTIMIZADOS =====
+const teamCardsWithMembers = document.querySelectorAll('.team-card[data-member]');
 
-  // ===== EFECTOS DE IMAGEN OPTIMIZADOS =====
-  const teamCardsWithMembers = document.querySelectorAll('.team-card[data-member]');
+// FUNCIONES GLOBALES DE GLITCH DE IMÁGENES - Definidas fuera del bloque condicional
+// Función optimizada para efecto de glitch - muestra las 3 imágenes en secuencia usando superposición
+function applySequentialImageGlitch() {
+  if (!isPageVisible || !isTeamSectionVisible || isImageGlitchActive) {
+    debugLog('⏸️ Glitch de imagen cancelado', {
+      pageVisible: isPageVisible,
+      sectionVisible: isTeamSectionVisible,
+      glitchActive: isImageGlitchActive
+    });
+    return;
+  }
 
-  // Preparar los contenedores de glitch para cada tarjeta
-  teamCardsWithMembers.forEach(card => {
+  debugLog('🖼️ Iniciando glitch secuencial de imagen...');
+  isImageGlitchActive = true;
+
+  // Filtrar tarjetas disponibles (no en hover, no animándose actualmente)
+  const availableCards = Array.from(teamCardsWithMembers).filter(card =>
+    !card.matches(':hover') &&
+    !activeGlitchCards.has(card) &&
+    !cardsWithHover.has(card)
+  );
+
+  debugLog(`🎯 Tarjetas disponibles para glitch: ${availableCards.length}/${teamCardsWithMembers.length}`);
+
+  if (availableCards.length === 0) {
+    debugLog('⚠️ No hay tarjetas disponibles, reprogramando...');
+    isImageGlitchActive = false;
+    scheduleNextImageGlitch();
+    return;
+  }
+
+  // Seleccionar solo 1 tarjeta aleatoria
+  const randomIndex = Math.floor(Math.random() * availableCards.length);
+  const selectedCard = availableCards[randomIndex];
+  const memberName = selectedCard.getAttribute('data-member');
+
+  debugLog(`✨ Tarjeta seleccionada para glitch: ${memberName}`);
+
+  // Marcar como activa
+  activeGlitchCards.add(selectedCard);
+  currentGlitchingCard = selectedCard;
+
+  // Verificar que todas las imágenes glitch estén presentes
+  const glitchContainer = selectedCard.querySelector('.glitch-container');
+  const glitchImages = selectedCard.querySelectorAll('.glitch-image');
+
+  if (!glitchContainer || glitchImages.length !== 3) {
+    debugLog('❌ Elementos de glitch faltantes para:', memberName);
+    activeGlitchCards.delete(selectedCard);
+    currentGlitchingCard = null;
+    isImageGlitchActive = false;
+    scheduleNextImageGlitch();
+    return;
+  }
+
+  // Añadir clase para activar el contenedor de glitch
+  selectedCard.classList.add('active-glitch-card');
+  debugLog(`🎬 Iniciando secuencia de glitch para: ${memberName}`);
+
+  // Función para mostrar las imágenes glitcheadas en secuencia usando requestAnimationFrame
+  let currentFrame = 0;
+  let lastTime = performance.now();
+  const frameDuration = 60; // ms por frame
+
+  function showNextGlitchFrameOptimized(timestamp) {
+    const elapsed = timestamp - lastTime;
+
+    if (elapsed < frameDuration) {
+      // Si no ha pasado suficiente tiempo, programar el siguiente frame
+      requestAnimationFrame(showNextGlitchFrameOptimized);
+      return;
+    }
+
+    lastTime = timestamp;
+
+    if (currentFrame < 3) {  // 3 imágenes glitch
+      // Limpiar frames anteriores
+      selectedCard.classList.remove('glitch-frame-1', 'glitch-frame-2', 'glitch-frame-3');
+
+      // Mostrar frame actual
+      currentFrame++;
+      selectedCard.classList.add(`glitch-frame-${currentFrame}`);
+      debugLog(`🎞️ Frame ${currentFrame}/3 para ${memberName}`);
+
+      // Programar el siguiente frame
+      requestAnimationFrame(showNextGlitchFrameOptimized);
+    } else {
+      // Quitar todas las clases de glitch
+      selectedCard.classList.remove('active-glitch-card', 'glitch-frame-1', 'glitch-frame-2', 'glitch-frame-3');
+
+      // Limpiar estado
+      activeGlitchCards.delete(selectedCard);
+      currentGlitchingCard = null;
+      isImageGlitchActive = false;
+
+      debugLog(`✅ Glitch completado para: ${memberName}`);
+
+      // Programar el siguiente efecto
+      scheduleNextImageGlitch();
+    }
+  }
+
+  // Iniciar la secuencia con requestAnimationFrame
+  requestAnimationFrame(showNextGlitchFrameOptimized);
+}
+
+// Programación optimizada con tiempos aleatorios basados en la configuración
+function scheduleNextImageGlitch() {
+  if (imageGlitchTimeout) {
+    clearTimeout(imageGlitchTimeout);
+  }
+
+  // Si la página o sección no está visible, no programar nuevos efectos
+  if (!isPageVisible || !isTeamSectionVisible) {
+    debugLog('⏸️ No programando siguiente glitch - sección no visible');
+    return;
+  }
+
+  // Verificar si hay tarjetas disponibles (no en hover, no con animación activa)
+  const availableCards = Array.from(teamCardsWithMembers).filter(card =>
+    !activeGlitchCards.has(card) && !cardsWithHover.has(card)
+  );
+
+  // Si no hay tarjetas disponibles, reprogramar con un tiempo más largo
+  if (availableCards.length === 0) {
+    debugLog('⏳ No hay tarjetas disponibles, reintentando en 2s...');
+    imageGlitchTimeout = setTimeout(scheduleNextImageGlitch, 2000); // Mayor tiempo de espera para mejorar rendimiento
+    return;
+  }
+
+  // Usar tiempos más largos para reducir la carga de CPU
+  let minDelay = 2000;  // 2 segundos (reducido para más actividad)
+  let maxDelay = 5000;  // 5 segundos (reducido para más actividad)
+
+  // Calcular tiempo aleatorio entre min y max
+  const delay = Math.random() * (maxDelay - minDelay) + minDelay;
+  debugLog(`⏰ Próximo glitch de imagen en ${(delay/1000).toFixed(1)}s`);
+
+  // Usar requestAnimationFrame para sincronizar con el ciclo de renderizado del navegador
+  requestAnimationFrame(() => {
+    imageGlitchTimeout = setTimeout(applySequentialImageGlitch, delay);
+  });
+}
+
+// Preparar los contenedores de glitch para cada tarjeta
+teamCardsWithMembers.forEach(card => {
     const member = card.getAttribute('data-member');
     const inner = card.querySelector('.team-card-inner');
 
@@ -170,133 +687,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  if (teamCardsWithMembers.length > 0) {
-    // Función optimizada para efecto de glitch - muestra las 3 imágenes en secuencia usando superposición
-    function applySequentialImageGlitch() {
-      if (!isPageVisible || !isTeamSectionVisible || isImageGlitchActive) return;
+// INICIALIZACIÓN DE EVENTOS Y LÓGICA DE GLITCH DE IMÁGENES
+if (teamCardsWithMembers.length > 0) {
+  // Optimizar eventos de hover usando un debounce para evitar múltiples llamadas
+  let hoverDebounceTimeout;
 
-      isImageGlitchActive = true;
-
-      // Filtrar tarjetas disponibles (no en hover, no animándose actualmente)
-      const availableCards = Array.from(teamCardsWithMembers).filter(card =>
-        !card.matches(':hover') &&
-        !activeGlitchCards.has(card) &&
-        !cardsWithHover.has(card)
-      );
-
-      if (availableCards.length === 0) {
-        isImageGlitchActive = false;
-        scheduleNextImageGlitch();
-        return;
-      }
-
-      // Seleccionar solo 1 tarjeta aleatoria
-      const randomIndex = Math.floor(Math.random() * availableCards.length);
-      const selectedCard = availableCards[randomIndex];
-
-      // Marcar como activa
-      activeGlitchCards.add(selectedCard);
-      currentGlitchingCard = selectedCard;
-
-      // Verificar que todas las imágenes glitch estén presentes
-      const glitchContainer = selectedCard.querySelector('.glitch-container');
-      const glitchImages = selectedCard.querySelectorAll('.glitch-image');
-
-      if (!glitchContainer || glitchImages.length !== 3) {
-        console.warn('Faltan elementos de glitch para esta tarjeta');
-        activeGlitchCards.delete(selectedCard);
-        currentGlitchingCard = null;
-        isImageGlitchActive = false;
-        scheduleNextImageGlitch();
-        return;
-      }
-
-      // Añadir clase para activar el contenedor de glitch
-      selectedCard.classList.add('active-glitch-card');
-
-      // Función para mostrar las imágenes glitcheadas en secuencia usando requestAnimationFrame
-      let currentFrame = 0;
-      let lastTime = performance.now();
-      const frameDuration = 60; // ms por frame
-
-      function showNextGlitchFrameOptimized(timestamp) {
-        const elapsed = timestamp - lastTime;
-
-        if (elapsed < frameDuration) {
-          // Si no ha pasado suficiente tiempo, programar el siguiente frame
-          requestAnimationFrame(showNextGlitchFrameOptimized);
-          return;
-        }
-
-        lastTime = timestamp;
-
-        if (currentFrame < 3) {  // 3 imágenes glitch
-          // Limpiar frames anteriores
-          selectedCard.classList.remove('glitch-frame-1', 'glitch-frame-2', 'glitch-frame-3');
-
-          // Mostrar frame actual
-          currentFrame++;
-          selectedCard.classList.add(`glitch-frame-${currentFrame}`);
-
-          // Programar el siguiente frame
-          requestAnimationFrame(showNextGlitchFrameOptimized);
-        } else {
-          // Quitar todas las clases de glitch
-          selectedCard.classList.remove('active-glitch-card', 'glitch-frame-1', 'glitch-frame-2', 'glitch-frame-3');
-
-          // Limpiar estado
-          activeGlitchCards.delete(selectedCard);
-          currentGlitchingCard = null;
-          isImageGlitchActive = false;
-
-          // Programar el siguiente efecto
-          scheduleNextImageGlitch();
-        }
-      }
-
-      // Iniciar la secuencia con requestAnimationFrame
-      requestAnimationFrame(showNextGlitchFrameOptimized);
-    }
-
-    // Programación optimizada con tiempos aleatorios basados en la configuración
-    function scheduleNextImageGlitch() {
-      if (imageGlitchTimeout) {
-        clearTimeout(imageGlitchTimeout);
-      }
-
-      // Si la página o sección no está visible, no programar nuevos efectos
-      if (!isPageVisible || !isTeamSectionVisible) {
-        return;
-      }
-
-      // Verificar si hay tarjetas disponibles (no en hover, no con animación activa)
-      const availableCards = Array.from(teamCardsWithMembers).filter(card =>
-        !activeGlitchCards.has(card) && !cardsWithHover.has(card)
-      );
-
-      // Si no hay tarjetas disponibles, reprogramar con un tiempo más largo
-      if (availableCards.length === 0) {
-        imageGlitchTimeout = setTimeout(scheduleNextImageGlitch, 2000); // Mayor tiempo de espera para mejorar rendimiento
-        return;
-      }
-
-      // Usar tiempos más largos para reducir la carga de CPU
-      let minDelay = 2500;  // 2.5 segundos
-      let maxDelay = 6000;  // 6 segundos
-
-      // Calcular tiempo aleatorio entre min y max
-      const delay = Math.random() * (maxDelay - minDelay) + minDelay;
-
-      // Usar requestAnimationFrame para sincronizar con el ciclo de renderizado del navegador
-      requestAnimationFrame(() => {
-        imageGlitchTimeout = setTimeout(applySequentialImageGlitch, delay);
-      });
-    }
-
-    // Optimizar eventos de hover usando un debounce para evitar múltiples llamadas
-    let hoverDebounceTimeout;
-
-    teamCardsWithMembers.forEach(card => {
+  teamCardsWithMembers.forEach(card => {
       // Evento al poner el mouse encima
       card.addEventListener('mouseenter', () => {
         // Limpiar timeout anterior si existe
@@ -337,15 +733,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }, { passive: true });
     });
 
-    // Iniciar con delay corto (solo si la sección es visible)
-    setTimeout(() => {
-      if (isPageVisible && isTeamSectionVisible) {
-        scheduleNextImageGlitch();
-      }
-    }, 2000); // Delay inicial reducido a 2s para ver efectos más pronto
-  }
+  // INICIALIZACIÓN DE GLITCH DE IMÁGENES
+  debugLog('🖼️ Configurando sistema de glitch de imágenes...');
+  
+  // Iniciar con delay corto (solo si la sección es visible)
+  setTimeout(() => {
+    if (isPageVisible && isTeamSectionVisible) {
+      debugLog('🚀 Iniciando programación de glitch de imágenes');
+      scheduleNextImageGlitch();
+    } else {
+      debugLog('⏸️ Sección no visible, esperando activación...');
+    }
+  }, 1500); // Delay inicial reducido para mayor actividad
+}
 
-  // ===== ANIMACIONES DE CARGA OPTIMIZADAS =====
+  // ===== ANIMACIONES DE CARGA OPTIMIZADAS - TEMPORALMENTE DESACTIVADAS =====
+  // COMENTARIO TEMPORAL: Desactivando animaciones de entrada GSAP para probar rendimiento
+  /*
   const teamCards = document.querySelectorAll('.team-card');
   teamCards.forEach((card, index) => {
     // Usar requestAnimationFrame para animaciones suaves
@@ -366,7 +770,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }, { once: true, passive: true });
     }
   });
-});
+  */
+  
+  // VERSIÓN SIMPLIFICADA SIN ANIMACIONES - para probar rendimiento
+  const teamCards = document.querySelectorAll('.team-card');
+  teamCards.forEach((card, index) => {
+    // Mostrar directamente sin animaciones
+    card.style.opacity = '1';
+    card.style.transform = 'none';
+    
+    // Solo mantener el event listener de carga de imágenes
+    const img = card.querySelector('img');
+    if (img) {
+      img.addEventListener('load', () => {
+        img.classList.add('loaded');
+      }, { once: true, passive: true });
+    }
+  });
 
 // ===== CARGA OPTIMIZADA DE DATOS DEL EQUIPO =====
 async function loadOptimizedTeamData() {

@@ -5,7 +5,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  .slide-image img {
+  padding: 4rem 2rem;
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-section) 0%, var(--bg-section-alt) 100%);
+}
+
+.mission-vision-section .slide-image img {
   max-width: 100%;
   max-height: 70vh; /* Reducido de 80vh a 70vh */
   width: auto;
@@ -13,19 +18,16 @@
   object-fit: contain; /* Mantener proporciones sin recortar */
   border-radius: 20px; /* Bordes más redondeados */
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-  /* Eliminado transition para quitar efectos hover */
-} 4rem 2rem;
-  position: relative;
-  background: linear-gradient(135deg, var(--bg-section) 0%, var(--bg-section-alt) 100%);
+  /* transition eliminado */
 }
 
 .mission-vision-section h2 {
   margin-bottom: 3rem;
   text-align: center;
   font-size: 2.5rem;
-  font-weight: 400;
+  font-weight: 600; /* SemiBold para títulos importantes */
   color: var(--text-color);
-  font-family: 'Abril Fatface', serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .mission-vision-container {
@@ -79,6 +81,16 @@
 .nav-arrow:hover {
   cursor: pointer !important;
   transform: translateY(-50%) scale(1.2);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Colores específicos para cada tema en hover */
+[data-theme="light"] .nav-arrow:hover {
+  color: rgba(0, 0, 0, 0.9);
+  text-shadow: 0 3px 12px rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .nav-arrow:hover {
   color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
 }
@@ -171,11 +183,11 @@
     margin-bottom: 2rem; /* Margen inferior para separación */
   }.slide-subtitle {
   font-size: 2.2rem;
-  font-weight: 400;
+  font-weight: 600; /* SemiBold para títulos importantes */
   color: var(--text-color);
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  font-family: 'Abril Fatface', serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .slide-description {

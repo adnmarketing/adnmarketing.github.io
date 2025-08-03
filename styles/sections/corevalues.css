@@ -79,7 +79,7 @@
 }
 
 .corevalue-card-back {
-  background: var(--corevalue-back-bg, #e8f2ff); /* Fondo más contrastante para el reverso */
+  background: var(--corevalue-back-bg, #f9f9f9); /* Fondo más contrastante para el reverso */
   border-radius: 2rem; /* Restaurar border-radius */
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra interna sutil */
   border: 1px solid rgba(0, 123, 255, 0.1); /* Borde sutil azul para modo claro */
@@ -91,7 +91,7 @@
 .corevalue-card-back {
   z-index: 1;
   transform: rotateY(180deg);
-  background: var(--corevalue-back-bg, #e8f2ff);
+  background: var(--corevalue-back-bg, #f9f9f9);
   color: var(--corevalue-text, #222);
 }
 .corevalue-back-content {
@@ -107,15 +107,25 @@ body.dark .corevalue-card-back {
   border: 1px solid rgba(179, 209, 255, 0.15); /* Borde sutil azul claro para modo oscuro */
 }
 .corevalue-title {
-  font-family: 'Abril Fatface', serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 2.3rem;
-  font-weight: 700;
+  font-weight: 600; /* SemiBold para títulos importantes */
   margin-bottom: 1.3rem;
   letter-spacing: 0.02em;
   color: #7c26ad;
 }
 
 [data-theme="dark"] .corevalue-title {
+  color: #a842e3;
+}
+
+/* Estilos para palabras en negritas dentro de las tarjetas de valores */
+.corevalue-card strong {
+  color: #7c26ad;
+  font-weight: 700; /* Extra bold para mayor contraste */
+}
+
+[data-theme="dark"] .corevalue-card strong {
   color: #a842e3;
 }
 
@@ -151,8 +161,9 @@ body.dark .corevalue-card-back {
     overflow: hidden; /* Evitar que el contenido se salga */
   }
   .corevalue-title {
-    font-family: 'Abril Fatface', serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.5rem;
+    font-weight: 600; /* SemiBold para títulos importantes */
     margin-bottom: 1rem; /* Reducir el margen para mejor aprovechamiento del espacio */
   }
   .corevalue-verse {
@@ -204,7 +215,7 @@ body.dark .corevalue-card-back {
 :root {
   --corevalue-bg: #fff;
   --corevalue-bg-hover: #f7f7fa;
-  --corevalue-back-bg: #e8f2ff;
+  --corevalue-back-bg: #f9f9f9;
   --corevalue-text: #222;
   --corevalue-verse: #444;
   --corevalue-ref: #888;

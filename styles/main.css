@@ -1,5 +1,5 @@
 @import url("switch.css");
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 :root {
   /* Colores principales */
@@ -142,7 +142,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 2rem;
-  font-family: 'Abril Fatface', serif;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; /* SemiBold para textos importantes */
   margin-left: 80px; /* Espacio para evitar solapamiento con logo */
   margin-right: 80px; /* Espacio para evitar solapamiento con toggle */
 }
@@ -157,8 +158,8 @@ html, body {
 .main-nav a {
   color: var(--nav-text);
   text-decoration: none;
-  font-weight: 400; /* Abril Fatface no necesita bold */
-  font-family: 'Abril Fatface', serif;
+  font-weight: 600; /* SemiBold para enlaces importantes */
+  font-family: 'Space Grotesk', sans-serif;
   position: relative;
   padding: 8px 0;
   transition: color 0.3s ease;
@@ -289,8 +290,8 @@ body.nav-open .nav-toggle span:nth-child(3) {
   margin-bottom: 15px;
   color: var(--text-heading);
   transition: color 0.3s ease;
-  font-family: 'Abril Fatface', serif;
-  font-weight: 400;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; /* SemiBold para títulos importantes */
 }
 
 .section p {
@@ -480,8 +481,8 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
   .nav-menu a { 
     font-size: 1.2rem;
-    font-family: 'Abril Fatface', serif;
-    font-weight: 400;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; /* SemiBold para enlaces importantes */
     padding: 12px 20px;
     border-radius: 8px;
     margin: 4px 0;

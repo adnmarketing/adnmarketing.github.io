@@ -85,14 +85,15 @@
 
 
 #Contactus h2 {
-  font-family: 'Abril Fatface', serif;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; /* SemiBold para títulos importantes */
   margin-bottom: 1.2rem;
 }
 
 #Contactus h3 {
   color: #7c26ad;
   /* Café capuchino modo claro */
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.5px;
   transition: color 0.2s;
 }
@@ -105,7 +106,7 @@
 #Contactus h3 a {
   color: var(--nav-text);
   /* Mantiene el color original del enlace */
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -130,10 +131,10 @@
 }
 
 .social-title {
-  font-family: 'Abril Fatface', serif;
+  font-family: 'Space Grotesk', sans-serif;
   color: #7c26ad;
   /* Café capuchino para modo claro */
-  font-weight: 600;
+  font-weight: 600; /* SemiBold para títulos importantes */
   letter-spacing: 0.5px;
   transition: color 0.2s;
 }

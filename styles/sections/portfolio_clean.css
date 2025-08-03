@@ -719,7 +719,8 @@ img[src*="just_logo"] {
 }
 
 .section-header h4 {
-  font-family: 'Abril Fatface', serif;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; /* SemiBold para títulos importantes */
   margin: 0;
   font-size: 1rem;
   color: #333;

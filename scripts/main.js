@@ -1,7 +1,8 @@
 // 1) Registrar plugin de GSAP
 gsap.registerPlugin(ScrollTrigger);
 
-// NUEVO: Sistema de preload ultra-temprano para eliminar lag completamente
+// TEMPORALMENTE COMENTADO: Sistema de preload ultra-temprano para testing sin viewport-manager
+/*
 (function initEarlyPreload() {
   // Ejecutar tan pronto como el DOM básico esté disponible
   if (document.readyState === 'loading') {
@@ -43,6 +44,7 @@ gsap.registerPlugin(ScrollTrigger);
     }, 100);
   }
 })();
+*/
 
 // Funciones para bloquear/desbloquear scroll del usuario
 let isScrollBlocked = false;
@@ -152,7 +154,8 @@ const root         = document.documentElement;
 
 // Scroll automático robusto a la sección de historia después de 2 segundos
 window.addEventListener('DOMContentLoaded', () => {
-  // NUEVO: Sistema de preload inteligente para eliminar lag
+  // TEMPORALMENTE COMENTADO: Sistema de preload inteligente para testing sin viewport-manager
+  /*
   setTimeout(() => {
     if (window.viewportManager) {
       console.log('🚀 Iniciando preload inteligente...');
@@ -173,6 +176,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }, 3000);
     }
   }, 500);
+  */
 
   let scrolled = false;
   // Detectar si el usuario ya hizo scroll
@@ -254,6 +258,37 @@ updateLogos();
 // 7) Listener para abrir/cerrar menú hamburguesa
 navToggle.addEventListener("click", () => {
   document.body.classList.toggle("nav-open");
+});
+
+// MEJORA UX: Cerrar menú mobile haciendo clic fuera del área del menú
+document.addEventListener("click", (e) => {
+  // Solo actuar si el menú está abierto
+  if (!document.body.classList.contains("nav-open")) return;
+  
+  // Verificar si el click fue fuera del menú y del botón toggle
+  const navMenu = document.querySelector(".nav-menu");  
+  const isClickInsideMenu = navMenu && navMenu.contains(e.target);
+  const isClickOnToggle = navToggle && navToggle.contains(e.target);
+  
+  // Si el click no fue en el menú ni en el botón toggle, cerrar menú
+  if (!isClickInsideMenu && !isClickOnToggle) {
+    document.body.classList.remove("nav-open");
+  }
+});
+
+// MEJORA UX: También cerrar menú al hacer clic en cualquier enlace del menú
+document.querySelectorAll('.nav-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    // Cerrar menú cuando se hace clic en cualquier enlace
+    document.body.classList.remove("nav-open");
+  });
+});
+
+// MEJORA UX: Cerrar menú con tecla Escape
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && document.body.classList.contains("nav-open")) {
+    document.body.classList.remove("nav-open");
+  }
 });
 
 // 8) Listener para alternar tema

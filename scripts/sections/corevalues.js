@@ -4,7 +4,8 @@
 let isCoreValuesSectionVisible = false;
 
 window.addEventListener('DOMContentLoaded', () => {
-  // Configurar observación de viewport para la sección CoreValues
+  // TEMPORALMENTE COMENTADO: Configurar observación de viewport para la sección CoreValues
+  /*
   const coreValuesSection = document.querySelector('#CoreValues');
 
   if (coreValuesSection && window.viewportManager) {
@@ -21,6 +22,10 @@ window.addEventListener('DOMContentLoaded', () => {
     // Fallback si ViewportManager no está disponible
     isCoreValuesSectionVisible = true;
   }
+  */
+  
+  // MODO TESTING: Sin viewport-manager, siempre activar funcionalidad
+  isCoreValuesSectionVisible = true;
 
   const cards = document.querySelectorAll('.corevalue-card');
   let lastClickedCard = null;

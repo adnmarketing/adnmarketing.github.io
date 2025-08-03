@@ -195,7 +195,8 @@ const customerInfo = {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-  // Configurar observación de viewport para la sección Portfolio
+  // TEMPORALMENTE COMENTADO: Configurar observación de viewport para la sección Portfolio
+  /*
   const portfolioSection = document.querySelector('#Portfolio');
 
   if (portfolioSection && window.viewportManager) {
@@ -217,6 +218,10 @@ window.addEventListener('DOMContentLoaded', () => {
     // Fallback si ViewportManager no está disponible
     isPortfolioSectionVisible = true;
   }
+  */
+  
+  // MODO TESTING: Sin viewport-manager, siempre activar animaciones
+  isPortfolioSectionVisible = true;
 
   // Cargar datos de clientes desde JSON
 

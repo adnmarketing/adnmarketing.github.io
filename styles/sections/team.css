@@ -1,6 +1,5 @@
 /* Estilos para la sección de Equipo */
-/* Space Mono 700 */
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap');
+/* Team section styles - optimizado para Space Grotesk y Space Mono */
 
 .team-section {
   position: relative;
@@ -34,8 +33,8 @@
 }
 
 .glitch {
-  font-family: 'Abril Fatface', serif;
-  font-weight: 400;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; /* SemiBold para títulos importantes */
   color: #ffffff;
   font-size: 4rem;
   display: inline-block;
