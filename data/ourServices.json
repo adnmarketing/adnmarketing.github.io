@@ -2,36 +2,43 @@
     {
     "service": "Contenido Visual Profesional",
     "description": "Capturamos lo mejor de tu marca con fotografía y video de alta calidad para redes sociales, menús, eventos y más.",
-    "image": "assets/images/services/content_visual.webp"
+    "image": "assets/images/services/content_visual.webp",
+    "icon": "assets/images/services/content_visual.svg"
   },
   {
     "service": "Producción y Edición de Video",
     "description": "Creamos reels, spots y contenido emocional con narrativa, edición profesional, efectos, branding y llamados a la acción.",
-    "image": "assets/images/services/video_production.webp"
+    "image": "assets/images/services/video_production.webp",
+    "icon": "assets/images/services/video_production.svg"
   },
   {
     "service": "Diseño Gráfico Estratégico",
     "description": "Desde flyers, carruseles y contenido visual para redes, hasta identidad visual completa para presentar tu marca con impacto.",
-    "image": "assets/images/services/graphic_design.webp"
+    "image": "assets/images/services/graphic_design.webp",
+    "icon": "assets/images/services/graphic_design.svg"
   },
   {
     "service": "Gestión de Redes Sociales",
     "description": "Creamos calendarios de contenido, respondemos mensajes, gestionamos comentarios y hacemos crecer tu comunidad.",
-    "image": "assets/images/services/social_media_management.webp"
+    "image": "assets/images/services/social_media_management.webp",
+    "icon": "assets/images/services/social_media_management.svg"
   },
   {
     "service": "Publicidad Digital",
     "description": "Diseñamos campañas desde la estrategia hasta el monitoreo. Segmentamos audiencias, optimizamos resultados y entregamos reportes mensuales.",
-    "image": "assets/images/services/digital_advertising.webp"
+    "image": "assets/images/services/digital_advertising.webp",
+    "icon": "assets/images/services/digital_advertising.svg"
   },
   {
     "service": "Consultoría y Estrategia de Marca",
     "description": "Te ayudamos a definir el ADN de tu negocio: diferenciadores, tono de comunicación, branding, organización interna y más.",
-    "image": "assets/images/services/brand_strategy.webp"
+    "image": "assets/images/services/brand_strategy.webp",
+    "icon": "assets/images/services/brand_strategy.svg"
   },
   {
     "service": "Automatización y Seguimiento",
     "description": "Implementamos sistemas de respuesta automática, asesoría de ventas, y seguimiento de leads para que nunca pierdas una oportunidad.",
-    "image": "assets/images/services/automation_followup.webp"
+    "image": "assets/images/services/automation_followup.webp",
+    "icon": "assets/images/services/automation_followup.svg"
   }
 ]

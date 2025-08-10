@@ -46,8 +46,6 @@
   <link rel="stylesheet" href="styles/sections/portfolio.css" />
   <link rel="stylesheet" href="styles/sections/contactus.css" />
   <link rel="stylesheet" href="styles/sections/services.css" />
-  <link rel="stylesheet" href="styles/sections/services-responsive.css" />
-  <link rel="stylesheet" href="styles/sections/services-pillars.css" />
   <link rel="stylesheet" href="styles/sections/team.css" />
   <link rel="stylesheet" href="styles/sections/team-modal.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
@@ -64,11 +62,6 @@
   <link rel="preload" as="image" href="assets/images/team/rubi/adn-rubi.avif" type="image/avif">
   <link rel="preload" as="image" href="assets/images/team/jack/adn-jack.avif" type="image/avif">
   <link rel="preload" as="image" href="assets/images/team/gabo/adn-gabo.avif" type="image/avif">
-  
-  <!-- Preload de imágenes de servicios críticas (mantener - evita pop-in en animaciones GSAP) -->
-  <link rel="preload" as="image" href="assets/images/services/content_visual.webp" type="image/webp">
-  <link rel="preload" as="image" href="assets/images/services/social_media_management.webp" type="image/webp">
-  <link rel="preload" as="image" href="assets/images/services/graphic_design.webp" type="image/webp">
   
   <!-- Preload de clientes más importantes (optimizado - primeras 4 visibles en carousel) -->
   <link rel="preload" as="image" href="assets/images/customers/colmena.webp" type="image/webp">
@@ -330,83 +323,71 @@
   </section>
 
   <section id="Services" class="section services-section animate-fade-right">
-    <h2>Servicios</h2>
-    <div class="services-container">
-      <!-- Servicio 1: Contenido Visual -->
-      <div class="service-pillar-wrapper">
-        <div class="service-pillar has-background-image from-top" data-service-index="0">
-          <div class="service-bg-blur" style="background-image: url('assets/images/services/content_visual.webp');"></div>
-          <div class="service-content">
-            <!-- Contenido visual del pilar sin texto -->
+    <div class="services-content">
+      <h2>Servicios</h2>
+      <div class="services-grid">
+        <!-- Servicio 1 -->
+        <div class="service-card" data-service-index="0">
+          <div class="service-icon">
+            <!-- SVG se cargará dinámicamente -->
           </div>
+          <h3 class="service-title"><!-- Título se cargará dinámicamente --></h3>
+          <p class="service-description"><!-- Descripción se cargará dinámicamente --></p>
         </div>
-        <h3 class="service-title">Contenido Visual Profesional</h3>
-      </div>
 
-      <!-- Servicio 2: Producción de Video -->
-      <div class="service-pillar-wrapper">
-        <div class="service-pillar has-background-image from-bottom" data-service-index="1">
-          <div class="service-bg-blur" style="background-image: url('assets/images/services/video_production.webp');"></div>
-          <div class="service-content">
-            <!-- Contenido visual del pilar sin texto -->
+        <!-- Servicio 2 -->
+        <div class="service-card" data-service-index="1">
+          <div class="service-icon">
+            <!-- SVG se cargará dinámicamente -->
           </div>
+          <h3 class="service-title"><!-- Título se cargará dinámicamente --></h3>
+          <p class="service-description"><!-- Descripción se cargará dinámicamente --></p>
         </div>
-        <h3 class="service-title">Producción y Edición de Video</h3>
-      </div>
 
-      <!-- Servicio 3: Diseño Gráfico -->
-      <div class="service-pillar-wrapper">
-        <div class="service-pillar has-background-image from-top" data-service-index="2">
-          <div class="service-bg-blur" style="background-image: url('assets/images/services/graphic_design.webp');"></div>
-          <div class="service-content">
-            <!-- Contenido visual del pilar sin texto -->
+        <!-- Servicio 3 -->
+        <div class="service-card" data-service-index="2">
+          <div class="service-icon">
+            <!-- SVG se cargará dinámicamente -->
           </div>
+          <h3 class="service-title"><!-- Título se cargará dinámicamente --></h3>
+          <p class="service-description"><!-- Descripción se cargará dinámicamente --></p>
         </div>
-        <h3 class="service-title">Diseño Gráfico Estratégico</h3>
-      </div>
 
-      <!-- Servicio 4: Gestión de Redes -->
-      <div class="service-pillar-wrapper">
-        <div class="service-pillar has-background-image from-bottom" data-service-index="3">
-          <div class="service-bg-blur" style="background-image: url('assets/images/services/social_media_management.webp');"></div>
-          <div class="service-content">
-            <!-- Contenido visual del pilar sin texto -->
+        <!-- Servicio 4 -->
+        <div class="service-card" data-service-index="3">
+          <div class="service-icon">
+            <!-- SVG se cargará dinámicamente -->
           </div>
+          <h3 class="service-title"><!-- Título se cargará dinámicamente --></h3>
+          <p class="service-description"><!-- Descripción se cargará dinámicamente --></p>
         </div>
-        <h3 class="service-title">Gestión de Redes Sociales</h3>
-      </div>
 
-      <!-- Servicio 5: Publicidad Digital -->
-      <div class="service-pillar-wrapper">
-        <div class="service-pillar has-background-image from-top" data-service-index="4">
-          <div class="service-bg-blur" style="background-image: url('assets/images/services/digital_advertising.webp');"></div>
-          <div class="service-content">
-            <!-- Contenido visual del pilar sin texto -->
+        <!-- Servicio 5 (Segunda fila) -->
+        <div class="service-card" data-service-index="4">
+          <div class="service-icon">
+            <!-- SVG se cargará dinámicamente -->
           </div>
+          <h3 class="service-title"><!-- Título se cargará dinámicamente --></h3>
+          <p class="service-description"><!-- Descripción se cargará dinámicamente --></p>
         </div>
-        <h3 class="service-title">Publicidad Digital</h3>
-      </div>
 
-      <!-- Servicio 6: Consultoría -->
-      <div class="service-pillar-wrapper">
-        <div class="service-pillar has-background-image from-bottom" data-service-index="5">
-          <div class="service-bg-blur" style="background-image: url('assets/images/services/brand_strategy.webp');"></div>
-          <div class="service-content">
-            <!-- Contenido visual del pilar sin texto -->
+        <!-- Servicio 6 (Segunda fila) -->
+        <div class="service-card" data-service-index="5">
+          <div class="service-icon">
+            <!-- SVG se cargará dinámicamente -->
           </div>
+          <h3 class="service-title"><!-- Título se cargará dinámicamente --></h3>
+          <p class="service-description"><!-- Descripción se cargará dinámicamente --></p>
         </div>
-        <h3 class="service-title">Consultoría y Estrategia de Marca</h3>
-      </div>
 
-      <!-- Servicio 7: Automatización -->
-      <div class="service-pillar-wrapper">
-        <div class="service-pillar has-background-image from-top" data-service-index="6">
-          <div class="service-bg-blur" style="background-image: url('assets/images/services/automation_followup.webp');"></div>
-          <div class="service-content">
-            <!-- Contenido visual del pilar sin texto -->
+        <!-- Servicio 7 (Segunda fila) -->
+        <div class="service-card" data-service-index="6">
+          <div class="service-icon">
+            <!-- SVG se cargará dinámicamente -->
           </div>
+          <h3 class="service-title"><!-- Título se cargará dinámicamente --></h3>
+          <p class="service-description"><!-- Descripción se cargará dinámicamente --></p>
         </div>
-        <h3 class="service-title">Automatización y Seguimiento</h3>
       </div>
     </div>
   </section>
@@ -555,7 +536,6 @@
   <script src="scripts/sections/portfolio.js"></script>
   <script src="scripts/sections/mission-vision.js"></script>
   <script src="scripts/sections/services.js"></script>
-  <script src="scripts/sections/services-pillars-simple.js"></script>
   <script src="scripts/sections/corevalues.js"></script>
   <!-- <script src="scripts/sections/corevalues-particles.js"></script> -->
   <!-- <script src="scripts/utils/image-optimization.js"></script> -->
